@@ -3,7 +3,7 @@ title: "Okinawa Hardening project"
 pubDate: 2026-01-17
 updateDate: 2026-01-18
 description: "2025 Oct 8 - 10"
-type: note
+type: article
 hashtags: ["CyberSecurity","Event"]
 ---
 

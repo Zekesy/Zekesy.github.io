@@ -8,12 +8,13 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<div class="note-card-wrapper" data-note-id={entry.id}>
+<div class="note-card-wrapper" >
     {(() => {
       switch (entry.data.type) {
         case "tweet":
           return <TweetNote entry={entry} />
         case "article":
+          return <ArticleNote entry={entry} />
         case "note": 
           return <ArticleNote entry={entry} />
         default:

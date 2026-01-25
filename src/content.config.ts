@@ -45,10 +45,11 @@ const notes = defineCollection({
         pubDate: z.coerce.date(),
         updateDate: z.coerce.date().optional(),
         description: z.string().optional(),
-        type: z.enum(["tweet", "article", "note"]),
+        type: z.enum(["tweet", "article", "note", "blog"]),
         hashtags: z.array(z.string()).optional(),
         avatar: z.string().optional(),
         photo: z.string().optional(),
+        content_path: z.string().optional(),
         related: z.array(
             z.union([
                 reference('blog'),
