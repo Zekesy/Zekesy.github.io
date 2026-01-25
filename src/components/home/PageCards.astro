@@ -1,0 +1,263 @@
+---
+// PageCards.astro
+---
+
+<section id="page-cards">
+    <div class="cards-container">
+        <!-- Projects Card -->
+        <div class="page-card projects-card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                </svg>
+            </div>
+            <h3>Projects</h3>
+            <p>Explore my latest work and side projects. From web apps to creative experiments.</p>
+            <a href="/projects" class="card-btn">
+                View Projects
+                <span class="arrow">→</span>
+            </a>
+            <div class="card-decoration"></div>
+        </div>
+
+        <!-- Articles Card -->
+        <div class="page-card articles-card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                </svg>
+            </div>
+            <h3>Articles</h3>
+            <p>In-depth technical articles and tutorials on web development and design.</p>
+            <a href="/articles" class="card-btn">
+                Read Articles
+                <span class="arrow">→</span>
+            </a>
+            <div class="card-decoration"></div>
+        </div>
+
+        <!-- Blogs Card -->
+        <div class="page-card blogs-card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 20h9"/>
+                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                </svg>
+            </div>
+            <h3>Blogs</h3>
+            <p>Thoughts, insights, and reflections on tech, creativity, and life.</p>
+            <a href="/blogs" class="card-btn">
+                Explore Blogs
+                <span class="arrow">→</span>
+            </a>
+            <div class="card-decoration"></div>
+        </div>
+
+        <!-- Resume Card -->
+        <div class="page-card resume-card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/>
+                    <path d="M16 13H8"/>
+                    <path d="M16 17H8"/>
+                    <path d="M10 9H8"/>
+                </svg>
+            </div>
+            <h3>Resume</h3>
+            <p>My professional journey, skills, experience, and what I bring to the table.</p>
+            <a href="/resume" class="card-btn">
+                View Resume
+                <span class="arrow">→</span>
+            </a>
+            <div class="card-decoration"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    #page-cards {
+        width: 100%;
+        padding: 60px 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .page-card {
+        position: relative;
+        background: white;
+        border-radius: 16px;
+        padding: 32px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        border: 2px solid transparent;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--card-color-1), var(--card-color-2));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    .page-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .page-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        border-color: var(--card-color-1);
+    }
+
+    .card-decoration {
+        position: absolute;
+        bottom: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
+        border-radius: 50%;
+        opacity: 0.1;
+        transition: all 0.4s ease;
+    }
+
+    .page-card:hover .card-decoration {
+        bottom: -30px;
+        right: -30px;
+        opacity: 0.15;
+    }
+
+    .card-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: transform 0.4s ease;
+    }
+
+    .page-card:hover .card-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: #1a1a1a;
+    }
+
+    p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #666;
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    .card-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        margin-top: 8px;
+    }
+
+    .card-btn:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .arrow {
+        transition: transform 0.3s ease;
+        font-size: 1.2rem;
+    }
+
+    .card-btn:hover .arrow {
+        transform: translateX(4px);
+    }
+
+    /* Individual card color schemes */
+    .projects-card {
+        --card-color-1: #667eea;
+        --card-color-2: #764ba2;
+    }
+
+    .articles-card {
+        --card-color-1: #f093fb;
+        --card-color-2: #f5576c;
+    }
+
+    .blogs-card {
+        --card-color-1: #4facfe;
+        --card-color-2: #00f2fe;
+    }
+
+    .resume-card {
+        --card-color-1: #43e97b;
+        --card-color-2: #38f9d7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .cards-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .cards-container {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .page-card {
+            padding: 28px 20px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+        }
+
+        .card-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>

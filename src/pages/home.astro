@@ -1,0 +1,511 @@
+---
+import CherryBlossoms from '../components/backgrounds/CherryBlossoms.astro';
+import NavBar from '../components/NavBar.astro'
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import "../styles/global.css";
+import NotesFeed from '../components/notes/NotesFeed.astro';
+import Hero from '../components/home/Hero.astro';
+import SearchBar from '../components/SearchBar.astro';
+import PageCards from '../components/home/PageCards.astro';
+
+const notes: CollectionEntry<'notes'>[] =
+  (await getCollection('notes')).sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  );
+
+console.log("notes", notes);
+//astro content entries cannot be turned into JSON so must be changed directly 
+const serializedNotes = notes.map(note => ({
+  id: note.id,
+  slug: note.slug,
+  data: {
+    title: note.data.title,
+    pubDate: note.data.pubDate.toISOString(),
+    hashtags: note.data.hashtags || [],
+    type: note.data.type,
+    avatar: note.data.avatar,
+    description: note.data.description
+  }
+}));
+---
+
+<Layout>
+  <div class="home-page min-h-screen">
+    <NavBar />
+    <Hero />
+    <PageCards />
+    <main class="main-grid">
+      <aside class="left-col"></aside>
+      <section class="center-col">
+        <SearchBar />
+        <NotesFeed notes={notes}/>
+      </section>
+      <aside class="right-col"></aside>
+    </main>
+  </div>
+</Layout>
+
+
+
+<script type="application/json" id="notes-data" data-notes={JSON.stringify(serializedNotes)}></script>
+
+<script>
+// DEBUG VERSION - Replace your home page script with this temporarily
+
+interface NoteData {
+  id: string;
+  slug: string;
+  data: {
+    title: string;
+    pubDate: string;
+    hashtags: string[];
+    type: 'tweet' | 'article' | 'note';
+    avatar?: string;
+    description?: string;
+  };
+}
+
+interface FilterState {
+  query: string;
+  hashtag: string | null;
+  type: string;
+  sort: 'asc' | 'desc';
+  interaction: 'all' | 'liked' | 'bookmarked';
+}
+
+let state: FilterState = {
+  query: "",
+  hashtag: null,
+  type: "all",
+  sort: "desc",
+  interaction: "all"
+};
+
+const notesDataEl = document.getElementById("notes-data");
+const allNotes: NoteData[] = JSON.parse(notesDataEl?.dataset.notes || "[]");
+const container = document.getElementById("notes-container");
+const searchInput = document.getElementById("search-input") as HTMLInputElement;
+const typeFilter = document.getElementById("type-filter") as HTMLSelectElement;
+const sortButton = document.getElementById("sort-button") as HTMLButtonElement;
+const sortText = document.getElementById("sort-text") as HTMLSpanElement;
+const clearFiltersBtn = document.getElementById("clear-filters") as HTMLButtonElement;
+const activeHashtagDiv = document.getElementById("active-hashtag") as HTMLDivElement;
+const hashtagValue = document.getElementById("hashtag-value") as HTMLSpanElement;
+const removeHashtagBtn = document.getElementById("remove-hashtag") as HTMLButtonElement;
+const resultsCount = document.getElementById("results-count") as HTMLSpanElement;
+
+// Filter tabs
+const filterTabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+const allCountEl = document.getElementById('all-count');
+const likedCountEl = document.getElementById('liked-count');
+const bookmarkedCountEl = document.getElementById('bookmarked-count');
+
+// DEBUG: Check what IDs we have
+console.log('All notes:', allNotes);
+console.log('All note IDs:', allNotes.map(n => n.id));
+
+// Check rendered cards
+setTimeout(() => {
+  const cards = document.querySelectorAll('[data-note-id]');
+  console.log('Rendered cards:', cards.length);
+  console.log('Card IDs:', Array.from(cards).map(c => (c as HTMLElement).dataset.noteId));
+}, 1000);
+
+function matchesSearchQuery(note: NoteData, query: string): boolean {
+  const lowerQuery = query.toLowerCase();
+  
+  if (note.data.title.toLowerCase().includes(lowerQuery)) return true;
+  if (note.data.hashtags.some(tag => tag.toLowerCase().includes(lowerQuery))) return true;
+  if (note.data.description?.toLowerCase().includes(lowerQuery)) return true;
+  
+  const date = new Date(note.data.pubDate);
+  const year = date.getFullYear().toString();
+  const month = date.toLocaleDateString("en-US", { month: "short" });
+  const monthLong = date.toLocaleDateString("en-US", { month: "long" });
+  const fullDate = date.toLocaleDateString("en-US");
+  
+  if (year.includes(lowerQuery)) return true;
+  if (month.toLowerCase().includes(lowerQuery)) return true;
+  if (monthLong.toLowerCase().includes(lowerQuery)) return true;
+  if (fullDate.toLowerCase().includes(lowerQuery)) return true;
+  
+  return false;
+}
+
+function matchesInteractionFilter(noteId: string): boolean {
+  if (state.interaction === 'all') return true;
+  
+  const likes = JSON.parse(localStorage.getItem('note-likes') || '{}');
+  const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
+  
+  if (state.interaction === 'liked') {
+    return likes[noteId] === true;
+  }
+  
+  if (state.interaction === 'bookmarked') {
+    return bookmarks[noteId] === true;
+  }
+  
+  return true;
+}
+
+function applyFilters() {
+  console.group('🔍 Applying Filters');
+  console.log('Current state:', state);
+  
+  let filtered = [...allNotes];
+  console.log('Starting with:', filtered.length, 'notes');
+
+  // Search query
+  if (state.query) {
+    filtered = filtered.filter(note => matchesSearchQuery(note, state.query));
+    console.log('After search filter:', filtered.length, 'notes');
+  }
+
+  // Hashtag filter
+  if (state.hashtag) {
+    console.log('Filtering by hashtag:', state.hashtag);
+    filtered = filtered.filter(n => {
+      const hasHashtag = n.data.hashtags?.includes(state.hashtag!);
+      console.log(`Note ${n.id} has hashtag #${state.hashtag}:`, hasHashtag, 'Hashtags:', n.data.hashtags);
+      return hasHashtag;
+    });
+    console.log('After hashtag filter:', filtered.length, 'notes');
+  }
+
+  // Type filter
+  if (state.type !== "all") {
+    filtered = filtered.filter(n => n.data.type === state.type);
+    console.log('After type filter:', filtered.length, 'notes');
+  }
+
+  // Interaction filter
+  if (state.interaction !== 'all') {
+    filtered = filtered.filter(n => matchesInteractionFilter(n.id));
+    console.log('After interaction filter:', filtered.length, 'notes');
+  }
+
+  // Date sort
+  filtered.sort((a, b) => {
+    const dateA = new Date(a.data.pubDate).getTime();
+    const dateB = new Date(b.data.pubDate).getTime();
+    return state.sort === "asc" ? dateA - dateB : dateB - dateA;
+  });
+
+  console.log('Final filtered IDs:', filtered.map(n => n.id));
+  console.groupEnd();
+  
+  renderNotes(filtered);
+  updateResultsCount(filtered.length);
+}
+
+function renderNotes(notes: NoteData[]) {
+  console.group('🎨 Rendering Notes');
+  
+  if (!container) {
+    console.error('Container not found!');
+    console.groupEnd();
+    return;
+  }
+
+  const allCards = Array.from(container.querySelectorAll('[data-note-id]'));
+  const matchingIds = new Set(notes.map(n => n.id));
+  
+  console.log('Cards to show:', Array.from(matchingIds));
+  console.log('Total cards in DOM:', allCards.length);
+  
+  // Hide/show cards
+  let visibleCount = 0;
+  allCards.forEach((card) => {
+    const htmlCard = card as HTMLElement;
+    htmlCard.style.order = '0';
+    const noteId = htmlCard.dataset.noteId;
+    
+    if (matchingIds.has(noteId || '')) {
+      htmlCard.style.display = 'block';
+      visibleCount++;
+      console.log(`✅ Showing card: ${noteId}`);
+    } else {
+      htmlCard.style.display = 'none';
+      console.log(`❌ Hiding card: ${noteId}`);
+    }
+  });
+  
+  console.log('Visible cards:', visibleCount);
+
+  // Reorder visible cards
+  notes.forEach((note, index) => {
+    const card = container.querySelector(`[data-note-id="${note.id}"]`) as HTMLElement;
+    if (card) {
+      card.style.order = index.toString();
+    } else {
+      console.warn(`Card not found for note ID: ${note.id}`);
+    }
+  });
+
+  // Remove old empty states
+  document.getElementById('no-results')?.remove();
+  document.getElementById('empty-interaction-state')?.remove();
+
+  // Show appropriate empty state
+  if (notes.length === 0) {
+    console.log('No notes to display, showing empty state');
+    const emptyState = document.createElement('div');
+    
+    if (state.interaction !== 'all') {
+      emptyState.id = 'empty-interaction-state';
+      emptyState.className = 'text-center py-12';
+      
+      const emoji = state.interaction === 'liked' ? '❤️' : '🔖';
+      const message = state.interaction === 'liked' 
+        ? 'No liked notes yet' 
+        : 'No saved notes yet';
+      const subtitle = state.interaction === 'liked'
+        ? 'Click the heart icon on notes you enjoy'
+        : 'Click the bookmark icon to save notes for later';
+      
+      emptyState.innerHTML = `
+        <div class="text-6xl mb-4">${emoji}</div>
+        <p class="text-xl font-semibold text-gray-700">${message}</p>
+        <p class="text-sm text-gray-500 mt-2">${subtitle}</p>
+      `;
+    } else {
+      emptyState.id = 'no-results';
+      emptyState.className = 'text-center py-8 text-base-content/60';
+      emptyState.innerHTML = `
+        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <p class="text-lg">No notes found</p>
+        <p class="text-sm mt-2">Try adjusting your filters</p>
+      `;
+    }
+    
+    container.appendChild(emptyState);
+  }
+  
+  console.groupEnd();
+}
+
+function updateResultsCount(count: number) {
+  if (resultsCount) {
+    resultsCount.textContent = count.toString();
+  }
+}
+
+function updateInteractionCounts() {
+  const likes = JSON.parse(localStorage.getItem('note-likes') || '{}');
+  const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
+  
+  if (allCountEl) allCountEl.textContent = allNotes.length.toString();
+  if (likedCountEl) likedCountEl.textContent = Object.keys(likes).length.toString();
+  if (bookmarkedCountEl) bookmarkedCountEl.textContent = Object.keys(bookmarks).length.toString();
+}
+
+function updateHashtagDisplay() {
+  if (state.hashtag) {
+    activeHashtagDiv?.classList.remove('hidden');
+    if (hashtagValue) hashtagValue.textContent = `#${state.hashtag}`;
+  } else {
+    activeHashtagDiv?.classList.add('hidden');
+  }
+}
+
+function clearAllFilters() {
+  console.log('🧹 Clearing all filters');
+  state = {
+    query: "",
+    hashtag: null,
+    type: "all",
+    sort: "desc",
+    interaction: "all"
+  };
+  
+  if (searchInput) searchInput.value = "";
+  if (typeFilter) typeFilter.value = "all";
+  if (sortButton) sortButton.dataset.sort = "desc";
+  if (sortText) sortText.textContent = "Newest First";
+  
+  // Reset interaction filter tabs
+  filterTabs.forEach(tab => {
+    tab.classList.remove('active');
+    if (tab.dataset.filter === 'all') {
+      tab.classList.add('active');
+    }
+  });
+  
+  // Remove hashtag highlighting
+  document.querySelectorAll('.hashtag-filter').forEach(el => {
+    el.classList.remove('font-bold', 'underline', 'text-secondary');
+  });
+  
+  updateHashtagDisplay();
+  applyFilters();
+}
+
+// Event Listeners
+
+// Search input
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    state.query = (e.target as HTMLInputElement).value;
+    console.log('Search query changed:', state.query);
+    applyFilters();
+  });
+}
+
+// Type filter
+if (typeFilter) {
+  typeFilter.addEventListener('change', (e) => {
+    state.type = (e.target as HTMLSelectElement).value;
+    console.log('Type filter changed:', state.type);
+    applyFilters();
+  });
+}
+
+// Sort button
+if (sortButton) {
+  sortButton.addEventListener('click', () => {
+    state.sort = state.sort === 'desc' ? 'asc' : 'desc';
+    sortButton.dataset.sort = state.sort;
+    if (sortText) sortText.textContent = state.sort === 'desc' ? 'Newest First' : 'Oldest First';
+    console.log('Sort changed:', state.sort);
+    applyFilters();
+  });
+}
+
+// Clear filters
+if (clearFiltersBtn) {
+  clearFiltersBtn.addEventListener('click', clearAllFilters);
+}
+
+// Remove hashtag filter
+if (removeHashtagBtn) {
+  removeHashtagBtn.addEventListener('click', () => {
+    console.log('Removing hashtag filter');
+    state.hashtag = null;
+    document.querySelectorAll('.hashtag-filter').forEach(el => {
+      el.classList.remove('font-bold', 'underline', 'text-secondary');
+    });
+    updateHashtagDisplay();
+    applyFilters();
+  });
+}
+
+// Interaction filter tabs
+filterTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    filterTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    state.interaction = (tab.dataset.filter as 'all' | 'liked' | 'bookmarked') || 'all';
+    console.log('Interaction filter changed:', state.interaction);
+    
+    applyFilters();
+  });
+});
+
+// Hashtag click handler
+document.addEventListener('click', (e) => {
+  const target = e.target as HTMLElement;
+  if (target.classList.contains('hashtag-filter')) {
+    e.preventDefault();
+    const hashtag = target.dataset.hashtag;
+    console.log('Hashtag clicked:', hashtag);
+    
+    if (state.hashtag === hashtag) {
+      console.log('Clearing hashtag filter');
+      state.hashtag = null;
+      document.querySelectorAll('.hashtag-filter').forEach(el => {
+        el.classList.remove('font-bold', 'underline', 'text-secondary');
+      });
+    } else {
+      console.log('Setting hashtag filter to:', hashtag);
+      state.hashtag = hashtag || null;
+      
+      document.querySelectorAll('.hashtag-filter').forEach(el => {
+        el.classList.remove('font-bold', 'underline', 'text-secondary');
+      });
+      
+      if (hashtag) {
+        document.querySelectorAll(`[data-hashtag="${hashtag}"]`).forEach(el => {
+          el.classList.add('font-bold', 'underline', 'text-secondary');
+        });
+      }
+    }
+    
+    updateHashtagDisplay();
+    applyFilters();
+  }
+});
+
+// Listen for like/bookmark changes
+window.addEventListener('notesFilterChange', () => {
+  console.log('Notes filter change event received');
+  updateInteractionCounts();
+  applyFilters();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    searchInput?.focus();
+  }
+  
+  if (e.key === 'Escape' && searchInput === document.activeElement) {
+    if (searchInput) searchInput.value = '';
+    state.query = '';
+    applyFilters();
+  }
+});
+
+// Initialize
+console.log('🚀 Initializing filters');
+updateResultsCount(allNotes.length);
+updateInteractionCounts();
+updateHashtagDisplay();
+applyFilters(); // Add this to ensure filters apply on load
+</script>
+
+<style>
+  .home-page {
+    width: 100%;
+    min-height: 100vh;
+  }
+  nav {
+    width: 100%;
+  }
+
+  .main-grid{
+    display:grid;
+    grid-template-columns: 1fr minmax(500px,700px) 1fr;
+    gap: 24px;
+    padding: 24px;
+    background:white;
+  }
+
+  .center-col{
+    width: 100%; 
+    background: white;
+  }
+
+  .left-col,
+  .right-col {
+    min-height: 100px; 
+  }
+
+  @media (max-width: 900px) {
+    .main-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .left-col,
+    .right-col {
+      display: none;
+    }
+  }
+</style>

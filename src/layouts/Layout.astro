@@ -1,14 +1,30 @@
+---
+import "../styles/global.css";
+---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		 <style>
+			@view-transition {
+				navigation: auto;
+			}
+			::view-transition-old(root),
+			::view-transition-new(root) {
+				animation-duration: 500ms;
+			}
+		</style>
 	</head>
 	<body>
-		<slot />
+		<!-- 🌸 Background layer -->
+		<div id="bg-root">
+			<div class="bg-base">
+			</div>
+		</div>
+		<div class="content">
+      		<slot />
+    	</div>
 	</body>
 </html>
 
@@ -19,4 +35,79 @@
 		width: 100%;
 		height: 100%;
 	}
+	/* root layer */
+	:root {
+	--bg-top: 79 141 255;     /* blue */
+	--bg-bottom: 79 141 255; /*  249 250 251; near white */
+	}
+	#bg-root {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+	}
+
+	/* base layer */
+	.bg-base {
+	position: absolute;
+	inset: 0;
+	background: rgb(79 141 255);
+	/* background: linear-gradient(
+		to bottom,
+		rgb(var(--bg-top)),
+		rgb(var(--bg-bottom))
+	);
+	transition: background 0.1s linear; */
+	}
+
+
+	.content {
+		position: relative;
+		min-height: 100vh;
+		z-index: 1;
+	}
 </style>
+
+<script>
+  const root = document.documentElement;
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function updateBackground() {
+    const scrollTop = window.scrollY;
+    const maxScroll =
+      document.body.scrollHeight - window.innerHeight;
+
+    const t = Math.min(scrollTop / maxScroll, 1);
+
+    // Cartoon Network blue → soft white
+    const topColor = [
+      lerp(79, 240, t),
+      lerp(141, 242, t),
+      lerp(255, 248, t),
+    ];
+
+    const bottomColor = [
+      lerp(43, 249, t),
+      lerp(111, 250, t),
+      lerp(255, 251, t),
+    ];
+
+    root.style.setProperty(
+      "--bg-top",
+      topColor.map(v => Math.round(v)).join(" ")
+    );
+
+    root.style.setProperty(
+      "--bg-bottom",
+      bottomColor.map(v => Math.round(v)).join(" ")
+    );
+  }
+
+  window.addEventListener("scroll", updateBackground);
+  window.addEventListener("resize", updateBackground);
+
+  updateBackground(); // run once on load
+</script>

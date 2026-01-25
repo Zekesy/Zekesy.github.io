@@ -1,0 +1,402 @@
+---
+import { Image } from 'astro:assets';
+import { render } from "astro:content";
+import astroLogo from '../../assets/astro.svg';
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const {
+  avatar,
+  pubDate,
+  hashtags = [],
+} = entry.data;
+
+const formattedDate = pubDate.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+---
+
+<article class="tweet-card">
+    <div class="tweet-content">
+        <!-- Avatar -->
+        <div class="avatar-container">
+            <img 
+                src={astroLogo.src} 
+                alt="Zeke Sy profile" 
+                class="avatar" 
+                loading="lazy"
+            />
+        </div>
+
+        <!-- Main content -->
+        <div class="tweet-main">
+            <!-- Header -->
+            <div class="tweet-header">
+                <div class="user-info">
+                    <span class="username">Zeke Sy</span>
+                    <span class="handle">@zekesy</span>
+                    <span class="separator">·</span>
+                    <time class="timestamp">{formattedDate}</time>
+                </div>
+            </div>
+            
+            <!-- Tweet text -->
+            <div class="tweet-text">
+                <Content />
+            </div>
+
+            <!-- Hashtags -->
+            {hashtags.length > 0 && (
+                <div class="hashtags">
+                    {hashtags.map((tag: string) => (
+                        <a 
+                            href="#" 
+                            class="hashtag hashtag-filter"
+                            data-hashtag={tag}
+                        >
+                            #{tag}
+                        </a>
+                    ))}
+                </div>
+            )}
+
+            <!-- Tweet actions -->
+            <div class="tweet-actions">
+                <button class="action-btn comment-btn" aria-label="Comment" data-note-id={entry.id}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <span class="action-count comment-count" data-note-id={entry.id}>0</span>
+                </button>
+                
+                <button class="action-btn like-btn" aria-label="Like" data-note-id={entry.id}>
+                    <svg class="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    <span class="action-count like-count" data-note-id={entry.id}>0</span>
+                </button>
+                
+                <button class="action-btn bookmark-btn" aria-label="Bookmark" data-note-id={entry.id}>
+                    <svg class="bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </button>
+                
+                <button class="action-btn share-btn" aria-label="Share" data-note-id={entry.id}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="18" cy="5" r="3"/>
+                        <circle cx="6" cy="12" r="3"/>
+                        <circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                </button>
+            </div>
+
+            <script>
+                // Like functionality with localStorage
+                document.addEventListener('DOMContentLoaded', () => {
+                    const likeButtons = document.querySelectorAll<HTMLButtonElement>('.like-btn');
+                    const bookmarkButtons = document.querySelectorAll<HTMLButtonElement>('.bookmark-btn');
+                    const shareButtons = document.querySelectorAll<HTMLButtonElement>('.share-btn');
+
+                    // Initialize likes from localStorage
+                    likeButtons.forEach(btn => {
+                        const noteId = btn.dataset.noteId;
+                        if (!noteId) return;
+
+                        const likeCount = btn.querySelector<HTMLSpanElement>('.like-count');
+                        const heartIcon = btn.querySelector<SVGElement>('.heart-icon');
+                        
+                        if (!likeCount || !heartIcon) return;
+                        
+                        // Get stored likes
+                        const likes = JSON.parse(localStorage.getItem('note-likes') || '{}');
+                        const isLiked = likes[noteId] || false;
+                        
+                        if (isLiked) {
+                            btn.classList.add('liked');
+                            heartIcon.style.fill = '#e63946';
+                            likeCount.textContent = '1';
+                        }
+
+                        // Toggle like on click
+                        btn.addEventListener('click', () => {
+                            const currentLikes = JSON.parse(localStorage.getItem('note-likes') || '{}');
+                            const wasLiked = currentLikes[noteId] || false;
+                            
+                            if (wasLiked) {
+                                // Unlike
+                                delete currentLikes[noteId];
+                                btn.classList.remove('liked');
+                                heartIcon.style.fill = 'none';
+                                likeCount.textContent = '0';
+                            } else {
+                                // Like
+                                currentLikes[noteId] = true;
+                                btn.classList.add('liked');
+                                heartIcon.style.fill = '#e63946';
+                                likeCount.textContent = '1';
+                                
+                                // Add heart animation
+                                btn.classList.add('heart-pop');
+                                setTimeout(() => btn.classList.remove('heart-pop'), 300);
+                            }
+                            
+                            localStorage.setItem('note-likes', JSON.stringify(currentLikes));
+                            
+                            // Dispatch custom event for filters
+                            window.dispatchEvent(new CustomEvent('notesFilterChange'));
+                        });
+                    });
+
+                    // Initialize bookmarks from localStorage
+                    bookmarkButtons.forEach(btn => {
+                        const noteId = btn.dataset.noteId;
+                        if (!noteId) return;
+
+                        const bookmarkIcon = btn.querySelector<SVGElement>('.bookmark-icon');
+                        if (!bookmarkIcon) return;
+                        
+                        const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
+                        const isBookmarked = bookmarks[noteId] || false;
+                        
+                        if (isBookmarked) {
+                            btn.classList.add('bookmarked');
+                            bookmarkIcon.style.fill = '#f9a825';
+                        }
+
+                        btn.addEventListener('click', () => {
+                            const currentBookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
+                            const wasBookmarked = currentBookmarks[noteId] || false;
+                            
+                            if (wasBookmarked) {
+                                delete currentBookmarks[noteId];
+                                btn.classList.remove('bookmarked');
+                                bookmarkIcon.style.fill = 'none';
+                            } else {
+                                currentBookmarks[noteId] = true;
+                                btn.classList.add('bookmarked');
+                                bookmarkIcon.style.fill = '#f9a825';
+                            }
+                            
+                            localStorage.setItem('note-bookmarks', JSON.stringify(currentBookmarks));
+                            
+                            // Dispatch custom event for filters
+                            window.dispatchEvent(new CustomEvent('notesFilterChange'));
+                        });
+                    });
+
+                    // Share functionality
+                    shareButtons.forEach(btn => {
+                        btn.addEventListener('click', async () => {
+                            const noteId = btn.dataset.noteId;
+                            if (!noteId) return;
+
+                            const url = window.location.origin + '/notes/' + noteId;
+                            
+                            if (navigator.share) {
+                                // Use native share if available
+                                try {
+                                    await navigator.share({
+                                        title: 'Check out this note',
+                                        url: url
+                                    });
+                                } catch (err) {
+                                    console.log('Share cancelled');
+                                }
+                            } else {
+                                // Fallback: copy to clipboard
+                                navigator.clipboard.writeText(url);
+                                
+                                // Show feedback
+                                const originalHTML = btn.innerHTML;
+                                btn.innerHTML = '<span style="font-size: 0.85rem;">✓ Copied!</span>';
+                                setTimeout(() => {
+                                    btn.innerHTML = originalHTML;
+                                }, 2000);
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</article>
+
+<style>
+    .tweet-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.2s ease;
+    }
+
+    .tweet-card:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .tweet-content {
+        display: flex;
+        gap: 12px;
+    }
+
+    .avatar-container {
+        flex-shrink: 0;
+    }
+
+    .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .tweet-main {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .tweet-header {
+        margin-bottom: 8px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+    }
+
+    .username {
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .handle,
+    .timestamp {
+        color: #6b7280;
+    }
+
+    .separator {
+        color: #6b7280;
+    }
+
+    .tweet-text {
+        margin-bottom: 12px;
+        line-height: 1.5;
+        color: #1a1a1a;
+        word-wrap: break-word;
+    }
+
+    .tweet-text :global(p) {
+        margin: 0 0 8px 0;
+    }
+
+    .tweet-text :global(p:last-child) {
+        margin-bottom: 0;
+    }
+
+    .hashtags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+    }
+
+    .hashtag {
+        color: #667eea;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .hashtag:hover {
+        text-decoration: underline;
+        color: #5568d3;
+    }
+
+    .tweet-actions {
+        display: flex;
+        justify-content: space-between;
+        max-width: 425px;
+        padding-top: 8px;
+        border-top: 1px solid #f3f4f6;
+        margin-top: 12px;
+    }
+
+    .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        color: #6b7280;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+        background: #f3f4f6;
+    }
+
+    .comment-btn:hover {
+        color: #667eea;
+    }
+
+    .like-btn:hover {
+        color: #e63946;
+    }
+
+    .like-btn.liked {
+        color: #e63946;
+    }
+
+    .like-btn:hover .heart-icon,
+    .like-btn.liked .heart-icon {
+        fill: #e63946;
+        stroke: #e63946;
+    }
+
+    .bookmark-btn:hover {
+        color: #f9a825;
+    }
+
+    .bookmark-btn.bookmarked {
+        color: #f9a825;
+    }
+
+    .bookmark-btn:hover .bookmark-icon,
+    .bookmark-btn.bookmarked .bookmark-icon {
+        fill: #f9a825;
+        stroke: #f9a825;
+    }
+
+    .share-btn:hover {
+        color: #10b981;
+    }
+
+    /* Heart pop animation */
+    @keyframes heart-pop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+    }
+
+    .like-btn.heart-pop .heart-icon {
+        animation: heart-pop 0.3s ease;
+    }
+
+    .action-count {
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+</style>

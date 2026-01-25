@@ -1,0 +1,203 @@
+---
+// SearchBar.astro
+import "../styles/global.css";
+---
+
+<div class="search-container justify-between w-full">
+  <div class="flex flex-col gap-3 p-4 bg-base-200 rounded-lg">
+    <div class="flex items-start justify-between">
+      <!-- Search Input -->
+      <label class="input input-bordered flex items-center gap-2">
+        <svg class="h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input 
+          type="search" 
+          id="search-input"
+          class="grow" 
+          placeholder="Search by title, hashtag, or date (e.g., 2024, Jan 2024)..." 
+        />
+        <kbd class="kbd kbd-sm">⌘</kbd>
+        <kbd class="kbd kbd-sm">K</kbd>
+      </label>
+
+      <!-- Filters Row -->
+      <div class="flex flex-wrap gap-3 items-center mt-1">
+        <!-- Type Filter -->
+        <div class="flex items-center gap-2">
+          <select id="type-filter" class="select select-bordered select-sm w-full max-w-xs">
+            <option value="all">All Types</option>
+            <option value="tweet">Tweet</option>
+            <option value="article">Article</option>
+            <option value="note">Blog</option>
+          </select>
+        </div>
+
+        <!-- Clear Filters Button -->
+        <button id="clear-filters" class="btn btn-sm btn-ghost">
+          Clear Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter Tabs (Likes/Bookmarks) -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <span class="tab-label">All</span>
+        <span class="count" id="all-count">0</span>
+      </button>
+
+      <button class="filter-tab" data-filter="liked">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <span class="tab-label">Liked</span>
+        <span class="count" id="liked-count">0</span>
+      </button>
+
+      <button class="filter-tab" data-filter="bookmarked">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span class="tab-label">Saved</span>
+        <span class="count" id="bookmarked-count">0</span>
+      </button>
+    </div>
+
+    <!-- Active Hashtag Filter Display -->
+    <div id="active-hashtag" class="hidden">
+      <div class="flex items-center gap-2 bg-primary/10 rounded-lg px-3 py-2">
+        <span class="text-sm font-medium">Filtering by:</span>
+        <span id="hashtag-value" class="text-primary font-bold"></span>
+        <button id="remove-hashtag" class="btn btn-xs btn-circle btn-ghost">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Results Count -->
+    <div class="text-sm text-base-content/60">
+      Showing <span id="results-count" class="font-semibold">0</span> notes
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-container {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: inherit;
+    padding-bottom: 1rem;
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .filter-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6b7280;
+  }
+
+  .filter-tab svg {
+    flex-shrink: 0;
+  }
+
+  .filter-tab .count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 6px;
+    background: #f3f4f6;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+  }
+
+  .filter-tab:hover {
+    border-color: #cbd5e1;
+    background: #f9fafb;
+  }
+
+  .filter-tab.active {
+    border-color: #667eea;
+    background: #eef2ff;
+    color: #667eea;
+  }
+
+  .filter-tab.active .count {
+    background: #667eea;
+    color: white;
+  }
+
+  .filter-tab.active svg {
+    stroke: #667eea;
+  }
+
+  .filter-tab[data-filter="liked"].active {
+    border-color: #e63946;
+    background: #fef2f2;
+    color: #e63946;
+  }
+
+  .filter-tab[data-filter="liked"].active .count {
+    background: #e63946;
+  }
+
+  .filter-tab[data-filter="liked"].active svg {
+    stroke: #e63946;
+    fill: #e63946;
+  }
+
+  .filter-tab[data-filter="bookmarked"].active {
+    border-color: #f9a825;
+    background: #fffbeb;
+    color: #f9a825;
+  }
+
+  .filter-tab[data-filter="bookmarked"].active .count {
+    background: #f9a825;
+  }
+
+  .filter-tab[data-filter="bookmarked"].active svg {
+    stroke: #f9a825;
+    fill: #f9a825;
+  }
+
+  @media (max-width: 640px) {
+    .filter-tab .tab-label {
+      display: none;
+    }
+
+    .filter-tab {
+      padding: 10px 12px;
+    }
+  }
+</style>

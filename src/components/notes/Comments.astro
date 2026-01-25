@@ -1,0 +1,73 @@
+---
+// Comments.astro
+// Replace the data-repo and IDs with your values from giscus.app
+
+const { 
+  repo = "your-username/your-repo-name",
+  repoId = "YOUR_REPO_ID", 
+  category = "General",
+  categoryId = "YOUR_CATEGORY_ID"
+} = Astro.props;
+---
+
+<div class="comments-section">
+  <div class="comments-header">
+    <h3>💬 Comments</h3>
+    <p>Join the discussion on GitHub</p>
+  </div>
+  
+  <div id="giscus-container"></div>
+</div>
+
+<script 
+  is:inline
+  src="https://giscus.app/client.js"
+  data-repo={repo}
+  data-repo-id={repoId}
+  data-category={category}
+  data-category-id={categoryId}
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="top"
+  data-theme="light"
+  data-lang="en"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async>
+</script>
+
+<style>
+  .comments-section {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 2px solid #e5e7eb;
+  }
+
+  .comments-header {
+    margin-bottom: 24px;
+  }
+
+  .comments-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: #1a1a1a;
+  }
+
+  .comments-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+
+  #giscus-container {
+    margin-top: 20px;
+  }
+
+  /* Style the giscus iframe to match your design */
+  :global(.giscus) {
+    width: 100%;
+  }
+</style>

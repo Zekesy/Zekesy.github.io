@@ -1,0 +1,100 @@
+---
+// CherryBlossoms.astro
+---
+
+<div id="cherry-blossoms"></div>
+
+<style>
+  #cherry-blossoms {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ffb3d9;
+    pointer-events: none;
+    image-rendering: pixelated;
+    opacity: 0.8;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+    }
+  }
+
+  @keyframes sway {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(40px);
+    }
+  }
+</style>
+
+<script>
+  function createPetal() {
+    const container = document.getElementById('cherry-blossoms');
+    if (!container) return;
+
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    
+    // Random starting position
+    const startX = Math.random() * window.innerWidth;
+    petal.style.left = startX + 'px';
+    petal.style.top = '-20px';
+    
+    // Random animation duration
+    const duration = 10 + Math.random() * 10; // 10-20 seconds
+    const swayDuration = 3 + Math.random() * 2; // 3-5 seconds
+    
+    // Random petal colors (pink pixel art palette)
+    const petalColors = ['#ffb3d9', '#ffc9e3', '#ff9ec7', '#ffd4e8', '#ff85c0'];
+    petal.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+    
+    // Random size variation
+    const size = 8 + Math.floor(Math.random() * 4); // 8-11px
+    petal.style.width = size + 'px';
+    petal.style.height = size + 'px';
+    
+    // Apply animations
+    petal.style.animation = `fall ${duration}s linear, sway ${swayDuration}s ease-in-out infinite`;
+    petal.style.animationDelay = `0s, ${Math.random() * 2}s`;
+    
+    container.appendChild(petal);
+    
+    // Remove petal after animation
+    setTimeout(() => {
+      petal.remove();
+    }, duration * 1000);
+  }
+
+  // Create initial petals
+  function init() {
+    // Create a burst of initial petals
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => createPetal(), i * 200);
+    }
+    
+    // Continue creating petals periodically
+    setInterval(createPetal, 400);
+  }
+
+  // Start animation when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

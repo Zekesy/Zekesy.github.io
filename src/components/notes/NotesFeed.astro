@@ -1,0 +1,52 @@
+---
+import NoteCard from "../NoteCard.astro";
+import type { CollectionEntry } from 'astro:content';
+
+const { notes } = Astro.props;
+---
+
+<div id="notes-feed">
+    <div class="feed-header">
+        <h2>Latest Updates</h2>
+        <p>Thoughts, projects, and everything in between</p>
+    </div>
+    
+    <div class="feed-container" id="notes-container">
+        {notes.map((note: CollectionEntry<'notes'>) => (
+            <NoteCard entry={note} />
+        ))}
+    </div>
+</div>
+
+<style>
+    #notes-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+    }
+
+    .feed-header {
+        padding: 20px 0;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .feed-header h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        color: #1a1a1a;
+    }
+
+    .feed-header p {
+        margin: 0;
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .feed-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+</style>

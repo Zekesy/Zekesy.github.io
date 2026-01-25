@@ -1,0 +1,42 @@
+---
+import "../styles/global.css";
+import TweetNote from "../components/notes/TweetNote.astro";
+import ArticleNote from "../components/notes/ArticleNote.astro";
+import { render } from "astro:content";
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<div class="note-card-wrapper" data-note-id={entry.id}>
+    {(() => {
+      switch (entry.data.type) {
+        case "tweet":
+          return <TweetNote entry={entry} />
+        case "article":
+        case "note": 
+          return <ArticleNote entry={entry} />
+        default:
+            return (
+                <div class="note-card error-card">
+                    <p>⚠️ Unknown note type: {entry.data.type}</p>
+                </div>
+            );
+      }
+    })()}
+</div>
+
+<style>
+    .note-card-wrapper {
+        width: 100%;
+        transition: transform 0.2s ease;
+    }
+
+    .error-card {
+        padding: 20px;
+        background: #fee;
+        border: 1px solid #fcc;
+        border-radius: 12px;
+        color: #c33;
+    }
+</style>
