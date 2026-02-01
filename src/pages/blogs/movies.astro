@@ -1,4 +1,72 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+---
 
-<div class="">
-    <p>Movies page</p>
-</div>
+<BlogLayout title="Movies" bg="#FFF4C2">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-5xl font-bold text-white mb-8 text-center">Movies</h1>
+    
+    <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
+      <canvas id="canvas" class="w-full h-96 bg-black rounded-lg mb-6"></canvas>
+      
+      <div class="prose max-w-none">
+        <h2 class="text-2xl font-semibold mb-4">My Movie Collection</h2>
+        <p class="text-gray-700">Your movie content goes here...</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as draw from "/src/scripts/draw.js";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      draw.initCanvas("canvas");
+
+      const vs = [
+        {x:  0.25, y:  0.25, z:  0.25},
+        {x: -0.25, y:  0.25, z:  0.25},
+        {x: -0.25, y: -0.25, z:  0.25},
+        {x:  0.25, y: -0.25, z:  0.25},
+
+        {x:  0.25, y:  0.25, z: -0.25},
+        {x: -0.25, y:  0.25, z: -0.25},
+        {x: -0.25, y: -0.25, z: -0.25},
+        {x:  0.25, y: -0.25, z: -0.25},
+      ];
+      
+      const fs = [
+        [0, 1, 2, 3], // front
+        [4, 5, 6, 7], // back
+        [0, 4],
+        [1, 5],
+        [2, 6],
+        [3, 7],
+      ];
+
+      let FPS = 30; 
+      let angle = 0; 
+      
+      function animate(){
+        const dt = 1 / FPS;
+        angle += Math.PI * dt;
+        draw.clear();
+        
+        for (const v of vs){
+          draw.drawPoint(draw.translate_z(draw.rotate_xz(v, angle), 5));
+        }
+        
+        for (const f of fs){
+          for(let i = 0; i < f.length; ++i){
+            const a = draw.translate_z(draw.rotate_xz(vs[f[i]], angle), 5);
+            const b = draw.translate_z(draw.rotate_xz(vs[f[(i+1) % f.length]], angle), 5); 
+            draw.drawLine(a, b);
+          }
+        }
+        
+        setTimeout(animate, 1000 / FPS);
+      }
+
+      animate();
+    }); 
+  </script>
+</BlogLayout>

@@ -1,0 +1,90 @@
+---
+import BlogNavBar from "../components/blogs/BlogNavBar.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  bg?: string;
+  // navbar props — all forwarded directly to BlogNavBar
+  tabColor?: string;
+  tabHoverColor?: string;
+  tabActiveColor?: string;
+  tabTitleColor?: string;
+  tabTitleHoverColor?: string;
+  tabTitleActiveColor?: string;
+  navBarBackground?: string;
+  navBarBorder?: string;
+  faviconColor?: string;
+  faviconActiveColor?: string;
+}
+
+const {
+  title,
+  bg = "linear-gradient(135deg, #4285f4 0%, #5a9aed 50%, #7fb3f7 100%)",
+  tabColor,
+  tabHoverColor,
+  tabActiveColor,
+  tabTitleColor,
+  tabTitleHoverColor,
+  tabTitleActiveColor,
+  navBarBackground,
+  navBarBorder,
+  faviconColor,
+  faviconActiveColor,
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    {title && <title>{title}</title>}
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 500ms;
+      }
+    </style>
+  </head>
+  <body class="blog-body" style={`--page-bg: ${bg};`}>
+    <BlogNavBar
+      tabColor={tabColor}
+      tabHoverColor={tabHoverColor}
+      tabActiveColor={tabActiveColor}
+      tabTitleColor={tabTitleColor}
+      tabTitleHoverColor={tabTitleHoverColor}
+      tabTitleActiveColor={tabTitleActiveColor}
+      navBarBackground={navBarBackground}
+      navBarBorder={navBarBorder}
+      faviconColor={faviconColor}
+      faviconActiveColor={faviconActiveColor}
+    />
+
+    <div class="blog-content">
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .blog-body {
+    background: var(--page-bg);
+  }
+
+  .blog-content {
+    position: relative;
+    min-height: 100vh;
+    z-index: 1;
+    padding: 20px;
+  }
+</style>

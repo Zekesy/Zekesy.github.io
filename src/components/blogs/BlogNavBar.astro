@@ -1,0 +1,274 @@
+---
+const currentPath = Astro.url.pathname;
+
+const tabs = [
+  { name: 'About', href: '../blogs/about' },
+  { name: 'Movies', href: '../blogs/movies' },
+  { name: 'TV Shows', href: '../blogs/tv-shows' },
+  { name: 'Music', href: '../blogs/music' },
+  { name: 'Books', href: '../blogs/books' },
+  { name: 'Games', href: '../blogs/games' },
+  { name: 'Anime', href: '../blogs/anime' },
+  { name: 'Personal Projects', href: '../blogs/projects' },
+];
+
+interface Props {
+  tabColor?: string;
+  tabHoverColor?: string;
+  tabActiveColor?: string;
+  tabTitleColor?: string;
+  tabTitleHoverColor?: string;
+  tabTitleActiveColor?: string;
+  navBarBackground?: string;
+  navBarBorder?: string;
+  faviconColor?: string;
+  faviconActiveColor?: string;
+}
+
+const {
+  tabColor            = '#d4d4d4',
+  tabHoverColor       = '#e0e0e0',
+  tabActiveColor      = '#ffffff',
+  tabTitleColor       = '#6b6b6b',
+  tabTitleHoverColor  = '#333333',
+  tabTitleActiveColor = '#1a1a1a',
+  navBarBackground    = '#e8e8e8',
+  navBarBorder        = '#b8b8b8',
+  faviconColor        = '#b0b0b0',
+  faviconActiveColor  = '#4285f4',
+} = Astro.props;
+
+const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
+
+const cssVars = `
+  --tab-color: ${tabColor};
+  --tab-hover-color: ${tabHoverColor};
+  --tab-active-color: ${tabActiveColor};
+  --tab-title-color: ${tabTitleColor};
+  --tab-title-hover-color: ${tabTitleHoverColor};
+  --tab-title-active-color: ${tabTitleActiveColor};
+  --navbar-bg: ${navBarBackground};
+  --navbar-border: ${navBarBorder};
+  --favicon-color: ${faviconColor};
+  --favicon-active-color: ${faviconActiveColor};
+`;
+---
+
+<nav class="chrome-navbar" style={cssVars}>
+  <div class="chrome-tabstrip">
+    <div class="tabs-container">
+      {tabs.map((tab) => {
+        const active = isActive(tab.href);
+        return (
+          <a
+            href={tab.href}
+            class={`chrome-tab ${active ? 'active' : ''}`}
+          >
+            {/* Left curve */}
+            <svg class="tab-curve-left" viewBox="0 0 12 12" preserveAspectRatio="none">
+              <path d="M 0 12 Q 0 0 12 0 L 12 12 Z" />
+            </svg>
+
+            <div class="tab-inner">
+              <div class="favicon-dot"></div>
+              <span class="tab-title">{tab.name}</span>
+            </div>
+
+            {/* Right curve */}
+            <svg class="tab-curve-right" viewBox="0 0 12 12" preserveAspectRatio="none">
+              <path d="M 0 0 Q 12 0 12 12 L 0 12 Z" />
+            </svg>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Home Button -->
+    <a href="/home" class="home-button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+      </svg>
+      <span>Home</span>
+    </a>
+  </div>
+</nav>
+
+<div class="navbar-spacer" style={`background: ${tabActiveColor};`}></div>
+
+<style>
+  .chrome-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 40px;
+    background: var(--navbar-bg);
+  }
+
+  .chrome-tabstrip {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    padding: 0 8px 0 8px;
+  }
+
+  .tabs-container {
+    display: flex;
+    align-items: flex-end;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    height: 100%;
+  }
+
+  .tabs-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ─── Tab ─── */
+  .chrome-tab {
+    position: relative;
+    min-width: 160px;
+    max-width: 220px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: stretch;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    z-index: 1;
+  }
+
+  .chrome-tab:hover { z-index: 2; }
+  .chrome-tab.active { z-index: 3; height: 36px; }
+
+  /* ─── Curves ─── */
+  .tab-curve-left,
+  .tab-curve-right {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    align-self: flex-end;
+  }
+
+  .tab-curve-left path,
+  .tab-curve-right path {
+    fill: var(--tab-color);
+    transition: fill 0.15s;
+  }
+
+  .chrome-tab:hover .tab-curve-left path,
+  .chrome-tab:hover .tab-curve-right path {
+    fill: var(--tab-hover-color);
+  }
+
+  .chrome-tab.active .tab-curve-left path,
+  .chrome-tab.active .tab-curve-right path {
+    fill: var(--tab-active-color);
+  }
+
+  /* ─── Tab Inner ─── */
+  .tab-inner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    background: var(--tab-color);
+    transition: background 0.15s;
+    align-self: flex-end;
+    height: calc(100% - 2px);
+  }
+
+  .chrome-tab:hover .tab-inner {
+    background: var(--tab-hover-color);
+  }
+
+  .chrome-tab.active .tab-inner {
+    background: var(--tab-active-color);
+    height: 100%;
+  }
+
+  /* ─── Favicon ─── */
+  .favicon-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--favicon-color);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .chrome-tab.active .favicon-dot {
+    background: var(--favicon-active-color);
+  }
+
+  /* ─── Title ─── */
+  .tab-title {
+    flex: 1;
+    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--tab-title-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.15s;
+  }
+
+  .chrome-tab:hover .tab-title {
+    color: var(--tab-title-hover-color);
+  }
+
+  .chrome-tab.active .tab-title {
+    color: var(--tab-title-active-color);
+  }
+
+  /* ─── Bottom border (active tab punches through) ─── */
+  .chrome-tabstrip::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--navbar-border);
+    z-index: 0;
+  }
+
+  /* ─── Home Button ─── */
+  .home-button {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 12px;
+    margin-left: 12px;
+    margin-bottom: 4px;
+    background: #4285f4;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .home-button:hover { background: #3367d6; }
+
+  .home-button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ─── Spacer ─── */
+  .navbar-spacer {
+    height: 40px;
+  }
+</style>
