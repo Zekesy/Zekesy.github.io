@@ -64,20 +64,10 @@ const cssVars = `
             href={tab.href}
             class={`chrome-tab ${active ? 'active' : ''}`}
           >
-            {/* Left curve */}
-            <svg class="tab-curve-left" viewBox="0 0 12 12" preserveAspectRatio="none">
-              <path d="M 0 12 Q 0 0 12 0 L 12 12 Z" />
-            </svg>
-
             <div class="tab-inner">
               <div class="favicon-dot"></div>
               <span class="tab-title">{tab.name}</span>
             </div>
-
-            {/* Right curve */}
-            <svg class="tab-curve-right" viewBox="0 0 12 12" preserveAspectRatio="none">
-              <path d="M 0 0 Q 12 0 12 12 L 0 12 Z" />
-            </svg>
           </a>
         );
       })}
@@ -123,6 +113,7 @@ const cssVars = `
     scrollbar-width: none;
     -ms-overflow-style: none;
     height: 100%;
+    gap: 4px;
   }
 
   .tabs-container::-webkit-scrollbar {

@@ -1,72 +1,144 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
+
+// 
+const movies = [
+  { title: "Movie 1", link: "/movies/movie-1" },
+  { title: "Movie 2", link: "/movies/movie-2" },
+  { title: "Movie 3", link: "/movies/movie-3" },
+  { title: "Movie 4", link: "/movies/movie-4" },
+  { title: "Movie 5", link: "/movies/movie-5" },
+  { title: "Movie 6", link: "/movies/movie-6" },
+  { title: "Movie 7", link: "/movies/movie-7" },
+  { title: "Movie 8", link: "/movies/movie-8" },
+  { title: "Movie 9", link: "/movies/movie-9" },
+  { title: "Movie 10", link: "/movies/movie-10" },
+  // Add as many movies as you want
+];
 ---
 
 <BlogLayout title="Movies" bg="#FFF4C2">
-  <div class="max-w-6xl mx-auto">
-    <h1 class="text-5xl font-bold text-white mb-8 text-center">Movies</h1>
+  <div class="max-w-7xl mx-auto px-4">
+    <h1 class="text-5xl font-bold text-black mb-8 text-left">Movies</h1>
     
-    <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
-      <canvas id="canvas" class="w-full h-96 bg-black rounded-lg mb-6"></canvas>
-      
-      <div class="prose max-w-none">
-        <h2 class="text-2xl font-semibold mb-4">My Movie Collection</h2>
-        <p class="text-gray-700">Your movie content goes here...</p>
-      </div>
+    <!-- Movie Grid -->
+    <div class="movie-grid mb-12">
+      {movies.map((movie, index) => (
+        <a href={movie.link} class="movie-item">
+          <canvas id={`canvas-${index}`} class="movie-canvas"></canvas>
+          <h3 class="movie-title">{movie.title}</h3>
+        </a>
+      ))}
     </div>
   </div>
 
-  <script type="module">
-    import * as draw from "/src/scripts/draw.js";
+  <style>
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      draw.initCanvas("canvas");
-
-      const vs = [
-        {x:  0.25, y:  0.25, z:  0.25},
-        {x: -0.25, y:  0.25, z:  0.25},
-        {x: -0.25, y: -0.25, z:  0.25},
-        {x:  0.25, y: -0.25, z:  0.25},
-
-        {x:  0.25, y:  0.25, z: -0.25},
-        {x: -0.25, y:  0.25, z: -0.25},
-        {x: -0.25, y: -0.25, z: -0.25},
-        {x:  0.25, y: -0.25, z: -0.25},
-      ];
-      
-      const fs = [
-        [0, 1, 2, 3], // front
-        [4, 5, 6, 7], // back
-        [0, 4],
-        [1, 5],
-        [2, 6],
-        [3, 7],
-      ];
-
-      let FPS = 30; 
-      let angle = 0; 
-      
-      function animate(){
-        const dt = 1 / FPS;
-        angle += Math.PI * dt;
-        draw.clear();
-        
-        for (const v of vs){
-          draw.drawPoint(draw.translate_z(draw.rotate_xz(v, angle), 5));
-        }
-        
-        for (const f of fs){
-          for(let i = 0; i < f.length; ++i){
-            const a = draw.translate_z(draw.rotate_xz(vs[f[i]], angle), 5);
-            const b = draw.translate_z(draw.rotate_xz(vs[f[(i+1) % f.length]], angle), 5); 
-            draw.drawLine(a, b);
-          }
-        }
-        
-        setTimeout(animate, 1000 / FPS);
+    @media (max-width: 1024px) {
+      .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
       }
+    }
 
-      animate();
+    @media (max-width: 640px) {
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .movie-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .movie-item:hover {
+      transform: scale(1.1);
+    }
+
+    .movie-item:hover .movie-title {
+      color: #ffffff;
+    }
+
+    .movie-canvas {
+      width: 100%;
+      aspect-ratio: 1;
+      background: transparent;
+    }
+
+    .movie-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      margin-top: 0rem;
+      transition: color 0.3s ease;
+    }
+  </style>
+
+  <script type="module">
+    import { Renderer3D } from "/src/scripts/rendering.js";
+    import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
+    import { createClapperboard, createStripedClapperboard} from "/src/scripts/shapes.js";
+  
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        // Fetch the OBJ file
+        const response = await fetch('/src/assets/models/clapperboard.obj');
+
+        if (!response.ok) {
+          throw new Error(`Failed to load OBJ file: ${response.status}`);
+        }
+        
+        const objContent = await response.text();
+        
+        // Parse and prepare the mesh
+        const parsedMesh = parseOBJ(objContent);
+        const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
+        const clapperMesh = triangulate(normalizedMesh);
+
+        console.log('Loaded clapperboard:', clapperMesh); // Debug
+
+        const FPS = 30;
+        const movieCanvases = document.querySelectorAll('[id^="canvas-"]');
+
+        movieCanvases.forEach((canvas, index) => {
+          const canvasId = canvas.id;
+          const renderer = new Renderer3D(canvasId);
+          
+          let movieAngle = index * 0.3;
+          let uprightAngle = -Math.PI / 2;
+          function animateMovie() {
+            const dt = 1 / FPS;
+            movieAngle += Math.PI * dt * 0.7;
+            
+            renderer.clear({r: 0, g: 0, b: 0, a: 0});
+            
+            renderer.render(clapperMesh, {
+              rotation: {x: uprightAngle , y: movieAngle, z: 0},
+              translation: {x: 0, y: 0, z: 6},
+              scale: 1
+            });
+            
+            requestAnimationFrame(animateMovie); // Smoother than setTimeout
+          }
+          
+          animateMovie();
+        });
+        
+      } catch (error) {
+        console.error('Error loading clapperboard model:', error);
+      }
     }); 
   </script>
 </BlogLayout>

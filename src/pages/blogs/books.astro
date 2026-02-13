@@ -1,9 +1,144 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
 
+
+const books = [
+  { title: "book 1", link: "/books/book-1" },
+  { title: "book 2", link: "/books/book-2" },
+  { title: "book 3", link: "/books/book-3" },
+  { title: "book 4", link: "/books/book-4" },
+  { title: "book 5", link: "/books/book-5" },
+  { title: "book 6", link: "/books/book-6" },
+  { title: "book 7", link: "/books/book-7" },
+  { title: "book 8", link: "/books/book-8" },
+  { title: "book 9", link: "/books/book-9" },
+  { title: "book 10", link: "/books/book-10" },
+  // Add as many books as you want
+];
 ---
 
-<BlogLayout title="Books" bg="#FFF4C2">
+<BlogLayout title="Books" bg="#FFFFFF">
+ <div class="max-w-7xl mx-auto px-4">
+    <h1 class="text-5xl font-bold text-black mb-8 text-left">Books</h1>
+    
+    <!-- book Grid -->
+    <div class="book-grid mb-12">
+      {books.map((book, index) => (
+        <a href={book.link} class="book-item">
+          <canvas id={`canvas-${index}`} class="book-canvas"></canvas>
+          <h3 class="book-title">{book.title}</h3>
+        </a>
+      ))}
+    </div>
+  </div>
 
+  <style>
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .book-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .book-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .book-item:hover {
+      transform: scale(1.1);
+    }
+
+    .book-item:hover .book-title {
+      color: #ffffff;
+    }
+
+    .book-canvas {
+      width: 100%;
+      aspect-ratio: 1;
+      background: transparent;
+    }
+
+    .book-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      margin-top: 0rem;
+      transition: color 0.3s ease;
+    }
+  </style>
+
+  <script type="module">
+    import { Renderer3D } from "/src/scripts/rendering.js";
+    import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        // Fetch the OBJ file
+        const response = await fetch('/src/assets/models/book.obj');
+        //const response = await fetch('/src/assets/models/spinningTop.obj');
+        if (!response.ok) {
+          throw new Error(`Failed to load OBJ file: ${response.status}`);
+        }
+        
+        const objContent = await response.text();
+        
+        // Parse and prepare the mesh
+        const parsedMesh = parseOBJ(objContent);
+        const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
+        const clapperMesh = triangulate(normalizedMesh);
+
+        console.log('Loaded clapperboard:', clapperMesh); // Debug
+
+        const FPS = 30;
+        const bookCanvases = document.querySelectorAll('[id^="canvas-"]');
+
+        bookCanvases.forEach((canvas, index) => {
+          const canvasId = canvas.id;
+          const renderer = new Renderer3D(canvasId);
+          
+          let bookAngle = index * 0.3;
+          let uprightAngle = -Math.PI / 2;
+          function animatebook() {
+            const dt = 1 / FPS;
+            bookAngle += Math.PI * dt * 0.7;
+            
+            renderer.clear({r: 0, g: 0, b: 0, a: 0});
+            
+            renderer.render(clapperMesh, {
+              rotation: {x: uprightAngle , y: bookAngle, z: 0},
+              translation: {x: 0, y: 0, z: 6},
+              scale: 1
+            });
+            
+            requestAnimationFrame(animatebook); // Smoother than setTimeout
+          }
+          
+          animatebook();
+        });
+        
+      } catch (error) {
+        console.error('Error loading clapperboard model:', error);
+      }
+    }); 
+  </script>
 
 </BlogLayout>
