@@ -1,0 +1,57 @@
+---
+import { getCollection, render } from 'astro:content';
+import BlogContentLayout from '../../../layouts/BlogContentLayout.astro';
+
+export async function getStaticPaths() {
+  const allBlogs = await getCollection('blog');
+  // Only movies
+  const movies = allBlogs.filter(entry => entry.id.startsWith('movies/'));
+
+  return movies.map(entry => ({
+    params: { slug: entry.id.replace('movies/', '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BlogContentLayout title={entry.data.title}>
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="/blogs/movies" class="back-btn">← Back to Movies</a>
+    <h1 class="text-4xl font-bold mt-6 mb-2">{entry.data.title}</h1>
+    <p class="text-sm text-gray-500 mb-8">
+      {entry.data.pubDate.toLocaleDateString()}
+    </p>
+    <article class="prose">
+      <Content />
+    </article>
+  </div>
+</BlogContentLayout>
+
+<style>
+  .back-btn {
+    display: inline-block;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .back-btn:hover {
+    color: #000;
+  }
+  .prose {
+    line-height: 1.75;
+    color: #333;
+  }
+  .prose h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose p {
+    margin-bottom: 1rem;
+  }
+</style>

@@ -1,23 +1,19 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getCollection } from 'astro:content';
 
-// 
-const movies = [
-  { title: "Movie 1", link: "/movies/movie-1" },
-  { title: "Movie 2", link: "/movies/movie-2" },
-  { title: "Movie 3", link: "/movies/movie-3" },
-  { title: "Movie 4", link: "/movies/movie-4" },
-  { title: "Movie 5", link: "/movies/movie-5" },
-  { title: "Movie 6", link: "/movies/movie-6" },
-  { title: "Movie 7", link: "/movies/movie-7" },
-  { title: "Movie 8", link: "/movies/movie-8" },
-  { title: "Movie 9", link: "/movies/movie-9" },
-  { title: "Movie 10", link: "/movies/movie-10" },
-  // Add as many movies as you want
-];
+const allBlogs = await getCollection('blog');
+console.log(allBlogs);
+const movies = allBlogs
+  .filter(entry => entry.id.startsWith('movies/'))
+  .map(entry => ({
+    title: entry.data.title,
+    link: `/blogs/movies/${entry.id.replace('movies/', '')}`,
+    }));
+
 ---
 
-<BlogLayout title="Movies" bg="#FFF4C2">
+<BlogLayout title="Movies" bg="#dbeafe">
   <div class="max-w-7xl mx-auto px-4">
     <h1 class="text-5xl font-bold text-black mb-8 text-left">Movies</h1>
     
