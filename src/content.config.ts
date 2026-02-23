@@ -12,6 +12,7 @@ const blog = defineCollection({
         title: z.string(),
         pubDate: z.coerce.date(),
         updatedDate: z.coerce.date().optional(),
+        rating: z.string().optional(),
         related: z.array(
             z.union([
                 reference('blog'),

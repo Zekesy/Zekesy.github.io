@@ -4,29 +4,35 @@ import BlogContentLayout from '../../../layouts/BlogContentLayout.astro';
 
 export async function getStaticPaths() {
   const allBlogs = await getCollection('blog');
-  // Only movies
-  const movies = allBlogs.filter(entry => entry.id.startsWith('movies/'));
 
-  return movies.map(entry => ({
-    params: { slug: entry.id.replace('movies/', '') },
-    props: { entry },
-  }));
+  return allBlogs.map(entry => {
+    // entry.id is like "movies/30DaysOfnight" or "books/Dune"
+    const parts = entry.id.split('/');
+    const category = parts[0];
+    const slug = parts[1];
+
+    return {
+      params: { category, slug },
+      props: { entry },
+    };
+  });
 }
-
+const { category, slug } = Astro.params;
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<BlogContentLayout title={entry.data.title}>
-  <div class="max-w-3xl mx-auto px-4 py-8">
-    <a href="/blogs/movies" class="back-btn">← Back to Movies</a>
+<BlogContentLayout title={entry.data.title} color="#dbeafe">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <a href={`/blogs/${category}`} class="back-btn">← Back to Movies</a>
     <h1 class="text-4xl font-bold mt-6 mb-2">{entry.data.title}</h1>
-    <p class="text-sm text-gray-500 mb-8">
+    <p class="text-sm text-gray-500 mb-2">
       {entry.data.pubDate.toLocaleDateString()}
     </p>
     <article class="prose">
       <Content />
     </article>
+    <h2 class="text-xl font-bold mt-4 mb-8">Rating: {entry.data.rating} / 10</h2>
   </div>
 </BlogContentLayout>
 

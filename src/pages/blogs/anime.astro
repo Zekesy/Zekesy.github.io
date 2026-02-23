@@ -1,9 +1,139 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
-
+import { getCollection } from 'astro:content';
+const allBlogs = await getCollection("blog");
+const animes = allBlogs
+  .filter(entry => entry.id.startsWith('anime/'))
+  .map(entry => ({
+    title: entry.data.title,
+    pubDate: entry.data.pubDate.toLocaleDateString("sv-SE"),
+    link: `/blogs/anime/${entry.id.replace('anime/', '')}`,
+    }));
 ---
 
-<BlogLayout title="Anime" bg="#FFF4C2">
+<BlogLayout title="Anime" bg="#dbeafe">
+ <div class="max-w-7xl mx-auto px-4">
+    <h1 class="text-5xl font-bold text-black mb-8 text-left">Anime</h1>
+    
+    <!-- anime Grid -->
+    <div class="anime-grid mb-12">
+      {animes.map((anime, index) => (
+        <a href={anime.link} class="anime-item">
+          <canvas id={`canvas-${index}`} class="anime-canvas"></canvas>
+          <h3 class="anime-title">{anime.title}</h3>
+          <h4 class="anime-date">{anime.pubDate}</h4>
+        </a>
+      ))}
+    </div>
+  </div>
 
+  <style>
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .anime-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .anime-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .anime-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .anime-item:hover {
+      transform: scale(1.1);
+    }
+
+    .anime-item:hover .anime-title {
+      color: #ffffff;
+    }
+
+    .anime-canvas {
+      width: 100%;
+      aspect-ratio: 1;
+      background: transparent;
+    }
+
+    .anime-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      margin-top: 0rem;
+      transition: color 0.3s ease;
+    }
+  </style>
+
+  <script type="module">
+    import { Renderer3D } from "/src/scripts/rendering.js";
+    import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        // Fetch the OBJ file
+        const response = await fetch('/src/assets/models/book.obj');
+        //const response = await fetch('/src/assets/models/spinningTop.obj');
+        if (!response.ok) {
+          throw new Error(`Failed to load OBJ file: ${response.status}`);
+        }
+        
+        const objContent = await response.text();
+        
+        // Parse and prepare the mesh
+        const parsedMesh = parseOBJ(objContent);
+        const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
+        const clapperMesh = triangulate(normalizedMesh);
+
+        console.log('Loaded clapperboard:', clapperMesh); // Debug
+
+        const FPS = 30;
+        const animeCanvases = document.querySelectorAll('[id^="canvas-"]');
+
+        animeCanvases.forEach((canvas, index) => {
+          const canvasId = canvas.id;
+          const renderer = new Renderer3D(canvasId);
+          
+          let animeAngle = index * 0.3;
+          let uprightAngle = -Math.PI / 2;
+          function animateanime() {
+            const dt = 1 / FPS;
+            animeAngle += Math.PI * dt * 0.7;
+            
+            renderer.clear({r: 0, g: 0, b: 0, a: 0});
+            
+            renderer.render(clapperMesh, {
+              rotation: {x: uprightAngle , y: animeAngle, z: 0},
+              translation: {x: 0, y: 0, z: 6},
+              scale: 1
+            });
+            
+            requestAnimationFrame(animateanime); // Smoother than setTimeout
+          }
+          
+          animateanime();
+        });
+        
+      } catch (error) {
+        console.error('Error loading clapperboard model:', error);
+      }
+    }); 
+  </script>
 
 </BlogLayout>

@@ -2,14 +2,14 @@
 const currentPath = Astro.url.pathname;
 
 const tabs = [
-  { name: 'About', href: '../blogs/about' },
-  { name: 'Movies', href: '../blogs/movies' },
-  { name: 'TV Shows', href: '../blogs/tv-shows' },
-  { name: 'Music', href: '../blogs/music' },
-  { name: 'Books', href: '../blogs/books' },
-  { name: 'Games', href: '../blogs/games' },
-  { name: 'Anime', href: '../blogs/anime' },
-  { name: 'Personal Projects', href: '../blogs/projects' },
+  { name: 'About', href: '../blogs/about', icon: '★' },
+  { name: 'Movies', href: '../blogs/movies', icon: '🎬' },
+  { name: 'TV Shows', href: '../blogs/tvshows', icon: '📺' },
+  { name: 'Music', href: '../blogs/music', icon: '🎵' },
+  { name: 'Books', href: '../blogs/books', icon: '📚' },
+  { name: 'Games', href: '../blogs/games', icon: '🎮' },
+  { name: 'Anime', href: '../blogs/anime', icon: '⛩' },
+  { name: 'Projects', href: '../blogs/personalProjects', icon: '💾' },
 ];
 
 interface Props {
@@ -39,227 +39,507 @@ const {
 } = Astro.props;
 
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
-
-const cssVars = `
-  --tab-color: ${tabColor};
-  --tab-hover-color: ${tabHoverColor};
-  --tab-active-color: ${tabActiveColor};
-  --tab-title-color: ${tabTitleColor};
-  --tab-title-hover-color: ${tabTitleHoverColor};
-  --tab-title-active-color: ${tabTitleActiveColor};
-  --navbar-bg: ${navBarBackground};
-  --navbar-border: ${navBarBorder};
-  --favicon-color: ${faviconColor};
-  --favicon-active-color: ${faviconActiveColor};
-`;
 ---
 
-<nav class="chrome-navbar" style={cssVars}>
-  <div class="chrome-tabstrip">
-    <div class="tabs-container">
-      {tabs.map((tab) => {
-        const active = isActive(tab.href);
-        return (
-          <a
-            href={tab.href}
-            class={`chrome-tab ${active ? 'active' : ''}`}
-          >
-            <div class="tab-inner">
-              <div class="favicon-dot"></div>
-              <span class="tab-title">{tab.name}</span>
-            </div>
-          </a>
-        );
-      })}
+<nav class="retro-navbar">
+  <!-- Title Bar -->
+  <div class="title-bar">
+    <div class="title-bar-left">
+      <div class="title-bar-buttons">
+        <span class="tb-btn tb-close"></span>
+        <span class="tb-btn tb-min"></span>
+        <span class="tb-btn tb-max"></span>
+      </div>
+      <span class="title-bar-text">🌐 Zeke's Blog — Microsoft Internet Explorer</span>
+    </div>
+    <div class="title-bar-right">
+      <span class="title-bar-date" id="retro-date"></span>
+    </div>
+  </div>
+
+  <!-- Menu Bar -->
+  <div class="menu-bar">
+    <span class="menu-item" data-stub="File">File</span>
+    <span class="menu-item" data-stub="Edit">Edit</span>
+    <span class="menu-item" data-stub="View">View</span>
+    <span class="menu-item" data-stub="Favorites">Favorites</span>
+    <span class="menu-item" data-stub="Tools">Tools</span>
+    <span class="menu-item" data-stub="Help">Help</span>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-buttons">
+      <a href="javascript:history.back()" class="tool-btn">
+        <span class="tool-icon">◀</span>
+        <span>Back</span>
+      </a>
+      <a href="javascript:history.forward()" class="tool-btn">
+        <span class="tool-icon">▶</span>
+        <span>Forward</span>
+      </a>
+      <button class="tool-btn" onclick="location.reload()">
+        <span class="tool-icon">↺</span>
+        <span>Refresh</span>
+      </button>
+      <a href="/home" class="tool-btn">
+        <span class="tool-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <div class="toolbar-sep"></div>
+      <button class="tool-btn" data-stub="Favorites">
+        <span class="tool-icon">⭐</span>
+        <span>Favorites</span>
+      </button>
     </div>
 
-    <!-- Home Button -->
-    <a href="/home" class="home-button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-      </svg>
-      <span>Home</span>
-    </a>
+    <!-- Address Bar -->
+    <div class="address-bar">
+      <span class="address-label">Address</span>
+      <div class="address-input-wrapper">
+        <span class="address-icon">🌐</span>
+        <input
+          id="retro-url"
+          class="address-input"
+          type="text"
+          value={`http://zekesyblog.com${currentPath}`}
+        />
+      </div>
+      <button class="go-btn" id="go-btn">Go</button>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="tab-strip">
+    {tabs.map((tab) => {
+      const active = isActive(tab.href);
+      return (
+        <a href={tab.href} class={`retro-tab ${active ? 'active' : ''}`}>
+          <span class="tab-icon">{tab.icon}</span>
+          <span>{tab.name}</span>
+        </a>
+      );
+    })}
   </div>
 </nav>
 
-<div class="navbar-spacer" style={`background: ${tabActiveColor};`}></div>
+<div class="navbar-spacer"></div>
 
 <style>
-  .chrome-navbar {
+  .retro-navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    height: 40px;
-    background: var(--navbar-bg);
+    font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+    font-size: 13px;
+    user-select: none;
   }
 
-  .chrome-tabstrip {
-    position: relative;
+  /* ── Title Bar ── */
+  .title-bar {
+    background: linear-gradient(to bottom, #0a246a 0%, #3a6ea5 4%, #0a246a 100%);
+    color: white;
     display: flex;
-    align-items: flex-end;
-    height: 100%;
-    padding: 0 8px 0 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    height: 28px;
   }
 
-  .tabs-container {
+  .title-bar-left {
     display: flex;
-    align-items: flex-end;
-    flex: 1;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    height: 100%;
-    gap: 4px;
+    align-items: center;
+    gap: 10px;
   }
 
-  .tabs-container::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* ─── Tab ─── */
-  .chrome-tab {
-    position: relative;
-    min-width: 160px;
-    max-width: 220px;
-    height: 34px;
-    flex-shrink: 0;
+  .title-bar-buttons {
     display: flex;
-    align-items: stretch;
+    gap: 5px;
+  }
+
+  .tb-btn {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.3);
     cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    z-index: 1;
+  }
+  .tb-close { background: #e74c3c; }
+  .tb-min   { background: #f1c40f; }
+  .tb-max   { background: #2ecc71; }
+
+  .title-bar-text {
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    letter-spacing: 0.3px;
   }
 
-  .chrome-tab:hover { z-index: 2; }
-  .chrome-tab.active { z-index: 3; height: 36px; }
-
-  /* ─── Curves ─── */
-  .tab-curve-left,
-  .tab-curve-right {
-    width: 12px;
-    height: 12px;
-    flex-shrink: 0;
-    align-self: flex-end;
+  .title-bar-date {
+    font-size: 12px;
+    opacity: 0.85;
   }
 
-  .tab-curve-left path,
-  .tab-curve-right path {
-    fill: var(--tab-color);
-    transition: fill 0.15s;
+  /* ── Menu Bar ── */
+  .menu-bar {
+    background: linear-gradient(to bottom, #f5f4f0, #dedad2);
+    border-bottom: 1px solid #999;
+    display: flex;
+    align-items: center;
+    padding: 2px 6px;
+    height: 26px;
+    gap: 2px;
   }
 
-  .chrome-tab:hover .tab-curve-left path,
-  .chrome-tab:hover .tab-curve-right path {
-    fill: var(--tab-hover-color);
+  .menu-item {
+    padding: 3px 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    color: #000;
+    font-size: 13px;
+  }
+  .menu-item:hover {
+    background: linear-gradient(to bottom, #fff, #e8e4dc);
+    border-color: #999 #666 #666 #999;
   }
 
-  .chrome-tab.active .tab-curve-left path,
-  .chrome-tab.active .tab-curve-right path {
-    fill: var(--tab-active-color);
-  }
-
-  /* ─── Tab Inner ─── */
-  .tab-inner {
-    flex: 1;
+  /* ── Toolbar ── */
+  .toolbar {
+    background: linear-gradient(to bottom, #f5f4f0 0%, #dedad2 50%, #ccc9c0 100%);
+    border-bottom: 2px solid #888;
+    padding: 4px 8px;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 0 10px;
-    background: var(--tab-color);
-    transition: background 0.15s;
-    align-self: flex-end;
-    height: calc(100% - 2px);
+    height: 46px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
   }
 
-  .chrome-tab:hover .tab-inner {
-    background: var(--tab-hover-color);
+  .toolbar-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1px;
   }
 
-  .chrome-tab.active .tab-inner {
-    background: var(--tab-active-color);
-    height: 100%;
+  .tool-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    min-width: 48px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    font-size: 11px;
+    font-family: 'Tahoma', Arial, sans-serif;
+    gap: 2px;
+    transition: none;
   }
 
-  /* ─── Favicon ─── */
-  .favicon-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--favicon-color);
-    flex-shrink: 0;
-    transition: background 0.15s;
+  .tool-btn:hover {
+    background: linear-gradient(to bottom, #fff 0%, #e8e0d0 100%);
+    border-color: #999 #666 #666 #999;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.9);
   }
 
-  .chrome-tab.active .favicon-dot {
-    background: var(--favicon-active-color);
+  .tool-btn:active {
+    background: linear-gradient(to bottom, #ccc 0%, #e0dcd4 100%);
+    border-color: #666 #999 #999 #666;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
   }
 
-  /* ─── Title ─── */
-  .tab-title {
+  .tool-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .toolbar-sep {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(to bottom, transparent, #aaa 20%, #888 50%, #aaa 80%, transparent);
+    margin: 0 3px;
+  }
+
+  /* ── Address Bar ── */
+  .address-bar {
     flex: 1;
-    font-size: 12px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: var(--tab-title-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 28px;
+  }
+
+  .address-label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color 0.15s;
+    padding-right: 6px;
+    border-right: 1px solid #aaa;
   }
 
-  .chrome-tab:hover .tab-title {
-    color: var(--tab-title-hover-color);
-  }
-
-  .chrome-tab.active .tab-title {
-    color: var(--tab-title-active-color);
-  }
-
-  /* ─── Bottom border (active tab punches through) ─── */
-  .chrome-tabstrip::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--navbar-border);
-    z-index: 0;
-  }
-
-  /* ─── Home Button ─── */
-  .home-button {
-    flex-shrink: 0;
+  .address-input-wrapper {
+    flex: 1;
+    background: #fff;
+    border: 2px inset #999;
+    border-color: #666 #ccc #ccc #666;
+    padding: 2px 8px;
     display: flex;
     align-items: center;
     gap: 6px;
+    height: 100%;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.15);
+  }
+
+  .address-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .address-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #000080;
+    font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+    background: transparent;
+    width: 100%;
+  }
+
+  .go-btn {
+    background: linear-gradient(to bottom, #f5f4f0, #dedad2);
+    border: 1px solid #999;
+    border-color: #fff #888 #888 #fff;
+    padding: 3px 12px;
+    font-size: 13px;
+    font-family: 'Tahoma', Arial, sans-serif;
+    cursor: pointer;
     height: 28px;
-    padding: 0 12px;
-    margin-left: 12px;
-    margin-bottom: 4px;
-    background: #4285f4;
-    color: #ffffff;
-    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8);
+  }
+  .go-btn:hover {
+    background: linear-gradient(to bottom, #fff, #e4e0d8);
+  }
+  .go-btn:active {
+    border-color: #888 #fff #fff #888;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.15);
+  }
+
+  /* ── Tab Strip ── */
+  .tab-strip {
+    background: linear-gradient(to bottom, #e8e4dc, #d4d0c8);
+    border-bottom: 2px solid #666;
+    display: flex;
+    align-items: flex-end;
+    padding: 5px 8px 0;
+    gap: 3px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-strip::-webkit-scrollbar { display: none; }
+
+  .retro-tab {
+    display: flex;
+    min-width: 130px;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px 6px 12px;
+    background: linear-gradient(to bottom, #d4d0c8, #bfbbaf);
+    border: 1px solid #888;
+    border-bottom: none;
+    border-color: #ccc #888 transparent #ccc;
     font-size: 12px;
-    font-weight: 500;
+    font-family: 'Tahoma', Arial, sans-serif;
+    color: #333;
     text-decoration: none;
-    transition: background 0.15s;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.6);
+    border-radius: 3px 3px 0 0;
+    position: relative;
+    top: 1px;
+    transition: background 0.1s;
   }
 
-  .home-button:hover { background: #3367d6; }
-
-  .home-button svg {
-    width: 14px;
-    height: 14px;
+  .retro-tab:hover {
+    background: linear-gradient(to bottom, #e8e4dc, #d0ccc4);
+    color: #000;
   }
 
-  /* ─── Spacer ─── */
+  .retro-tab.active {
+    background: linear-gradient(to bottom, #ffffff, #f5f4f0);
+    border-color: #888 #888 transparent #888;
+    color: #000;
+    font-weight: bold;
+    z-index: 2;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,1), 2px 0 4px rgba(0,0,0,0.1);
+  }
+
+  .tab-icon {
+    font-size: 14px;
+  }
+
+  /* ── Spacer ── */
   .navbar-spacer {
-    height: 40px;
+    height: 152px;
   }
 </style>
+
+<script>
+  // ── Inject toast styles into <head> so they aren't scoped by Astro ──
+  const toastStyles = document.createElement('style');
+  toastStyles.textContent = `
+    #retro-toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 99999;
+      background: #f0ece4;
+      border: 2px solid #888;
+      border-color: #fff #666 #666 #fff;
+      width: 320px;
+      font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+      font-size: 13px;
+      box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+    }
+    #retro-toast .toast-title-bar {
+      background: linear-gradient(to bottom, #0a246a, #3a6ea5);
+      color: white;
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 13px;
+      font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+    }
+    #retro-toast .toast-close {
+      cursor: pointer;
+      font-size: 11px;
+      background: #c0392b;
+      padding: 0 5px;
+      border: 1px solid rgba(0,0,0,0.3);
+      line-height: 16px;
+      color: white;
+    }
+    #retro-toast .toast-body {
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #000;
+      line-height: 1.5;
+      font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+    }
+    #retro-toast .toast-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    #retro-toast .toast-footer {
+      padding: 8px;
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid #ccc;
+    }
+    #retro-toast .toast-footer button {
+      background: linear-gradient(to bottom, #f5f4f0, #dedad2);
+      border: 1px solid #888;
+      border-color: #fff #888 #888 #fff;
+      padding: 4px 24px;
+      font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8);
+    }
+    #retro-toast .toast-footer button:hover {
+      background: linear-gradient(to bottom, #fff, #e4e0d8);
+    }
+    #retro-toast .toast-footer button:active {
+      border-color: #888 #fff #fff #888;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.15);
+    }
+  `;
+  document.head.appendChild(toastStyles);
+
+  // ── Live clock ──
+  function updateDate() {
+    const el = document.getElementById('retro-date');
+    if (!el) return;
+    el.textContent = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  }
+  updateDate();
+  setInterval(updateDate, 1000);
+
+  // ── Address bar navigation ──
+  function navigateToUrl() {
+    const input = document.getElementById('retro-url') as HTMLInputElement;
+    let url = input.value.trim();
+    url = url.replace(/^https?:\/\/zekesyblog\.com/, '');
+    if (url) window.location.pathname = url;
+  }
+
+  document.getElementById('retro-url')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') navigateToUrl();
+  });
+  document.getElementById('go-btn')?.addEventListener('click', navigateToUrl);
+
+  // ── Stub messages ──
+  const stubs: Record<string, string> = {
+    File:      "This button doesn't do anything, sorry! 😅",
+    Edit:      "Nope, nothing here either. My bad! 🤷",
+    View:      "You clicked View! Nothing happened though. Oops! 👀",
+    Favorites: "Your favorites list is empty... just like my social life. 😔",
+    Tools:     "Tools? What tools? I have no tools. 🔧❌",
+    Help:      "You need help? Same honestly. 🆘",
+  };
+
+  function showToast(message: string) {
+    const existing = document.getElementById('retro-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'retro-toast';
+    toast.innerHTML = `
+      <div class="toast-title-bar">
+        <span>Internet Explorer</span>
+        <span class="toast-close" id="toast-close-btn">✕</span>
+      </div>
+      <div class="toast-body">
+        <span class="toast-icon">⚠️</span>
+        <span>${message}</span>
+      </div>
+      <div class="toast-footer">
+        <button id="toast-ok-btn">OK</button>
+      </div>
+    `;
+
+    document.body.appendChild(toast);
+
+    document.getElementById('toast-close-btn')?.addEventListener('click', () => toast.remove());
+    document.getElementById('toast-ok-btn')?.addEventListener('click', () => toast.remove());
+
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  // ── Wire up stub buttons ──
+  document.querySelectorAll('[data-stub]').forEach((el) => {
+    const key = (el as HTMLElement).dataset.stub ?? '';
+    if (stubs[key]) {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast(stubs[key]);
+      });
+    }
+  });
+</script>

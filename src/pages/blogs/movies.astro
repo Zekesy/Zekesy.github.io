@@ -3,26 +3,26 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
 import { getCollection } from 'astro:content';
 
 const allBlogs = await getCollection('blog');
-console.log(allBlogs);
 const movies = allBlogs
   .filter(entry => entry.id.startsWith('movies/'))
   .map(entry => ({
-    title: entry.data.title,
+  title: entry.data.title,
+  pubDate: entry.data.pubDate.toLocaleDateString("sv-SE"),
     link: `/blogs/movies/${entry.id.replace('movies/', '')}`,
     }));
 
 ---
 
 <BlogLayout title="Movies" bg="#dbeafe">
-  <div class="max-w-7xl mx-auto px-4">
-    <h1 class="text-5xl font-bold text-black mb-8 text-left">Movies</h1>
-    
+  <h1 class="text-5xl font-bold text-black mb-8 text-left">Movies</h1>
+  <div class="w-[80%] mx-auto">
     <!-- Movie Grid -->
     <div class="movie-grid mb-12">
       {movies.map((movie, index) => (
         <a href={movie.link} class="movie-item">
           <canvas id={`canvas-${index}`} class="movie-canvas"></canvas>
           <h3 class="movie-title">{movie.title}</h3>
+          <h4 class="movie-date">{movie.pubDate}</h4>
         </a>
       ))}
     </div>
@@ -34,6 +34,7 @@ const movies = allBlogs
       grid-template-columns: repeat(5, 1fr);
       gap: 2rem;
       margin-bottom: 1rem;
+      width: 100%;
     }
 
     @media (max-width: 1024px) {
@@ -62,7 +63,7 @@ const movies = allBlogs
     }
 
     .movie-item:hover .movie-title {
-      color: #ffffff;
+      color: #333;
     }
 
     .movie-canvas {
@@ -116,7 +117,7 @@ const movies = allBlogs
           let uprightAngle = -Math.PI / 2;
           function animateMovie() {
             const dt = 1 / FPS;
-            movieAngle += Math.PI * dt * 0.7;
+            movieAngle += Math.PI * dt * 0.4;
             
             renderer.clear({r: 0, g: 0, b: 0, a: 0});
             
