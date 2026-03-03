@@ -1,0 +1,286 @@
+---
+import { render } from "astro:content";
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const {
+  title,
+  description,
+  hashtags = [],
+  pubDate,
+  content_path
+} = entry.data;
+
+const formattedDate = pubDate.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+
+// Blog styling config
+const config = {
+  icon: '📰',
+  color: '#ff8a00',
+  label: 'Blog'
+};
+
+// Use content_path for blog routing
+const blogLink = `/blogs/${content_path}`;
+---
+<pre>{entry.slug}</pre>
+<article class="blog-card" style={`--accent-color: ${config.color}`} data-note-id={entry.id}>
+    <div class="article-header">
+        <div class="article-badge">
+            <span class="badge-icon">{config.icon}</span>
+            <span class="badge-label">{config.label}</span>
+        </div>
+        
+        <div class="article-quick-actions">
+            <button class="action-btn bookmark-btn" aria-label="Save for later" type="button">
+                <svg class="bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="article-content">
+        <h3 class="article-title">{title}</h3>
+        
+        {description && (
+            <p class="article-description">{description}</p>
+        )}
+
+        <!-- Optional: Remove this if you don't want full blog preview -->
+        <div class="article-body">
+            <Content />
+        </div>
+
+        {hashtags.length > 0 && (
+            <div class="hashtags">
+                {hashtags.map((tag: string) => (
+                    <a 
+                        href="#" 
+                        class="hashtag hashtag-filter"
+                        data-hashtag={tag}
+                    >
+                        #{tag}
+                    </a>
+                ))}
+            </div>
+        )}
+
+        <div class="article-footer">
+            <time class="article-date">{formattedDate}</time>
+            
+            <div class="article-actions">
+                <a href={blogLink} class="read-more-btn">
+                    Read full post
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</article>
+
+<script is:inline>
+(function() {
+    function initCard() {
+        const cards = document.querySelectorAll('.blog-card:not([data-initialized])');
+        
+        cards.forEach(card => {
+            card.setAttribute('data-initialized', 'true');
+            const noteId = card.dataset.noteId;
+            
+            if (!noteId) return;
+            
+            const bookmarkBtn = card.querySelector('.bookmark-btn');
+            const bookmarkIcon = card.querySelector('.bookmark-icon');
+            
+            if (!bookmarkBtn || !bookmarkIcon) return;
+            
+            try {
+                const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
+                
+                if (bookmarks[noteId]) {
+                    bookmarkBtn.classList.add('bookmarked');
+                    bookmarkIcon.style.fill = '#f9a825';
+                    bookmarkIcon.style.stroke = '#f9a825';
+                } else {
+                    bookmarkBtn.classList.remove('bookmarked');
+                    bookmarkIcon.style.fill = 'none';
+                }
+            } catch {}
+            
+            bookmarkBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                try {
+                    const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
+                    const wasBookmarked = bookmarks[noteId] === true;
+                    
+                    if (wasBookmarked) {
+                        delete bookmarks[noteId];
+                        bookmarkBtn.classList.remove('bookmarked');
+                        bookmarkIcon.style.fill = 'none';
+                    } else {
+                        bookmarks[noteId] = true;
+                        bookmarkBtn.classList.add('bookmarked');
+                        bookmarkIcon.style.fill = '#f9a825';
+                        bookmarkIcon.style.stroke = '#f9a825';
+                    }
+                    
+                    localStorage.setItem('note-bookmarks', JSON.stringify(bookmarks));
+                    window.dispatchEvent(new CustomEvent('notesFilterChange'));
+                } catch {}
+            });
+        });
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCard);
+    } else {
+        initCard();
+    }
+    
+    document.addEventListener('astro:page-load', initCard);
+    setTimeout(initCard, 100);
+})();
+</script>
+
+<style>
+.blog-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.blog-card:hover::before {
+    transform: scaleX(1);
+}
+
+.blog-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.article-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.article-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: color-mix(in srgb, var(--accent-color) 15%, white);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.badge-icon {
+    font-size: 1rem;
+}
+
+.article-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.article-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.article-description {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.article-body {
+    color: #374151;
+    line-height: 1.6;
+}
+
+.hashtags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+}
+
+.hashtag {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.article-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid #f3f4f6;
+    margin-top: 8px;
+    gap: 12px;
+}
+
+.article-date {
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.read-more-btn:hover {
+    transform: translateX(4px);
+}
+</style>

@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import TweetNote from "../components/notes/TweetNote.astro";
 import ArticleNote from "../components/notes/ArticleNote.astro";
+import BlogNote from "../components/notes/BlogNote.astro";
 import { render } from "astro:content";
 
 const { entry } = Astro.props;
@@ -12,11 +13,13 @@ const { Content } = await render(entry);
     {(() => {
       switch (entry.data.type) {
         case "tweet":
-          return <TweetNote entry={entry} />
+        return <TweetNote entry={entry}/>
         case "article":
           return <ArticleNote entry={entry} />
         case "note": 
           return <ArticleNote entry={entry} />
+        case "blog":
+          return <BlogNote entry={entry} />
         default:
             return (
                 <div class="note-card error-card">

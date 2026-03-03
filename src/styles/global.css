@@ -1,6 +1,7 @@
 @import "tailwindcss";
-@plugin "daisyui";
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@plugin "daisyui";
+
 
 * {
   font-family: 'JetBrains Mono', monospace;
@@ -13,6 +14,22 @@
     align-items: center;
 }
 
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
 
 /* Create a custom animation */
 @keyframes move-out {

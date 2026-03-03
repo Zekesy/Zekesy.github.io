@@ -29,7 +29,7 @@ const { Content } = await render(entry);
     <p class="text-sm text-gray-500 mb-2">
       {entry.data.pubDate.toLocaleDateString()}
     </p>
-    <article class="prose">
+    <article class="prose prose-lg max-w-none mt-8 [&>p]:mb-6">
       <Content />
     </article>
     <h2 class="text-xl font-bold mt-4 mb-8">Rating: {entry.data.rating} / 10</h2>
@@ -47,17 +47,5 @@ const { Content } = await render(entry);
   .back-btn:hover {
     color: #000;
   }
-  .prose {
-    line-height: 1.75;
-    color: #333;
-  }
-  .prose h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-  }
-  .prose p {
-    margin-bottom: 1rem;
-  }
+
 </style>
