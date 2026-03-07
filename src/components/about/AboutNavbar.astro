@@ -1,0 +1,32 @@
+
+---
+import "../../styles/global.css";
+import { Download } from 'lucide-astro';
+
+---
+
+<div class="mt-4 px-4">
+  <nav class="navbar bg-base-100 max-w-6xl shadow-sm sticky mx-auto top-8 rounded-2xl z-50 backdrop-blur border px-4 border-base-300">
+    <div class="navbar-start">
+      <a href="/home" class="btn btn-ghost text-xl">Zekesy</a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li><a href="/projects/projects">About me </a></li>
+        <li><a href="/projects/projects">Contact me</a></li>
+        <li><a href="/articles">Projects</a></li>
+        <li><a href="/blogs/personalProjects">Personal projects</a></li>
+      </ul>
+    </div>
+  <div class="navbar-end">
+    <a href="/resume.pdf" download class="btn relative group w-24">
+      <!-- Text -->
+      <span class="transition-opacity duration-200 group-hover:opacity-0">
+        Resume
+      </span>
+      <!-- Icon -->
+      <Download class="w-5 h-5 absolute opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+    </a>
+  </div>
+  </nav>
+</div>
