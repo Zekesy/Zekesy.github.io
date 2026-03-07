@@ -1,5 +1,4 @@
 ---
-import CherryBlossoms from '../components/backgrounds/CherryBlossoms.astro';
 import NavBar from '../components/NavBar.astro'
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
@@ -15,8 +14,6 @@ const notes: CollectionEntry<'notes'>[] =
     (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
   );
 
-console.log("notes", notes);
-//astro content entries cannot be turned into JSON so must be changed directly 
 const serializedNotes = notes.map(note => ({
   id: note.id,
   slug: note.slug,
@@ -32,28 +29,55 @@ const serializedNotes = notes.map(note => ({
 ---
 
 <Layout>
-  <div class="home-page min-h-screen">
-    <NavBar />
-    <Hero />
-    <PageCards />
-    <main class="main-grid">
-      <aside class="left-col"></aside>
-      <section class="center-col">
-        <SearchBar />
-        <NotesFeed notes={notes}/>
-      </section>
-      <aside class="right-col"></aside>
-    </main>
+  <!-- Contact FAB — fixed viewport top-right -->
+  <div id="contact-fab">
+    <button id="contact-trigger" class="contact-trigger-btn" aria-expanded="false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      Contact
+      <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+    <div id="contact-dropdown" class="contact-dropdown" hidden>
+      <a href="mailto:your@email.com" class="cd-item">
+        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+        <div><p class="cd-label">Email</p><p class="cd-val">your@email.com</p></div>
+      </a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="cd-item">
+        <span class="cd-icon" style="font-weight:700;font-size:12px">in</span>
+        <div><p class="cd-label">LinkedIn</p><p class="cd-val">yourprofile</p></div>
+      </a>
+      <a href="https://github.com/yourusername" target="_blank" class="cd-item">
+        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></span>
+        <div><p class="cd-label">GitHub</p><p class="cd-val">yourusername</p></div>
+      </a>
+    </div>
   </div>
+
+  <div class="home-page">
+    <div class="page-col">
+      <NavBar />
+      <Hero />
+      <PageCards class="mb-6"/>
+
+      <main class="feed-layout ">
+        <aside class="feed-sidebar">
+          <SearchBar />
+        </aside>
+        <section class="feed-col">
+          <NotesFeed notes={notes}/>
+        </section>
+      </main>
+    </div>
+  </div flex gap-6 max-w-6xl mx-auto>
 </Layout>
-
-
 
 <script type="application/json" id="notes-data" data-notes={JSON.stringify(serializedNotes)}></script>
 
 <script>
-// DEBUG VERSION - Replace your home page script with this temporarily
-
 interface NoteData {
   id: string;
   slug: string;
@@ -66,7 +90,6 @@ interface NoteData {
     description?: string;
   };
 }
-
 interface FilterState {
   query: string;
   hashtag: string | null;
@@ -74,14 +97,7 @@ interface FilterState {
   sort: 'asc' | 'desc';
   interaction: 'all' | 'liked' | 'bookmarked';
 }
-
-let state: FilterState = {
-  query: "",
-  hashtag: null,
-  type: "all",
-  sort: "desc",
-  interaction: "all"
-};
+let state: FilterState = { query: "", hashtag: null, type: "all", sort: "desc", interaction: "all" };
 
 const notesDataEl = document.getElementById("notes-data");
 const allNotes: NoteData[] = JSON.parse(notesDataEl?.dataset.notes || "[]");
@@ -95,417 +111,220 @@ const activeHashtagDiv = document.getElementById("active-hashtag") as HTMLDivEle
 const hashtagValue = document.getElementById("hashtag-value") as HTMLSpanElement;
 const removeHashtagBtn = document.getElementById("remove-hashtag") as HTMLButtonElement;
 const resultsCount = document.getElementById("results-count") as HTMLSpanElement;
-
-// Filter tabs
 const filterTabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
 const allCountEl = document.getElementById('all-count');
 const likedCountEl = document.getElementById('liked-count');
 const bookmarkedCountEl = document.getElementById('bookmarked-count');
 
-// DEBUG: Check what IDs we have
-console.log('All notes:', allNotes);
-console.log('All note IDs:', allNotes.map(n => n.id));
-
-// Check rendered cards
-setTimeout(() => {
-  const cards = document.querySelectorAll('[data-note-id]');
-  console.log('Rendered cards:', cards.length);
-  console.log('Card IDs:', Array.from(cards).map(c => (c as HTMLElement).dataset.noteId));
-}, 1000);
-
 function matchesSearchQuery(note: NoteData, query: string): boolean {
-  const lowerQuery = query.toLowerCase();
-  
-  if (note.data.title.toLowerCase().includes(lowerQuery)) return true;
-  if (note.data.hashtags.some(tag => tag.toLowerCase().includes(lowerQuery))) return true;
-  if (note.data.description?.toLowerCase().includes(lowerQuery)) return true;
-  
-  const date = new Date(note.data.pubDate);
-  const year = date.getFullYear().toString();
-  const month = date.toLocaleDateString("en-US", { month: "short" });
-  const monthLong = date.toLocaleDateString("en-US", { month: "long" });
-  const fullDate = date.toLocaleDateString("en-US");
-  
-  if (year.includes(lowerQuery)) return true;
-  if (month.toLowerCase().includes(lowerQuery)) return true;
-  if (monthLong.toLowerCase().includes(lowerQuery)) return true;
-  if (fullDate.toLowerCase().includes(lowerQuery)) return true;
-  
-  return false;
+  const q = query.toLowerCase();
+  if (note.data.title.toLowerCase().includes(q)) return true;
+  if (note.data.hashtags.some(t => t.toLowerCase().includes(q))) return true;
+  if (note.data.description?.toLowerCase().includes(q)) return true;
+  const d = new Date(note.data.pubDate);
+  return [d.getFullYear().toString(), d.toLocaleDateString("en-US",{month:"short"}), d.toLocaleDateString("en-US",{month:"long"}), d.toLocaleDateString("en-US")].some(s => s.toLowerCase().includes(q));
 }
-
-function matchesInteractionFilter(noteId: string): boolean {
+function matchesInteractionFilter(id: string): boolean {
   if (state.interaction === 'all') return true;
-  
   const likes = JSON.parse(localStorage.getItem('note-likes') || '{}');
   const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
-  
-  if (state.interaction === 'liked') {
-    return likes[noteId] === true;
-  }
-  
-  if (state.interaction === 'bookmarked') {
-    return bookmarks[noteId] === true;
-  }
-  
-  return true;
+  return state.interaction === 'liked' ? likes[id] === true : bookmarks[id] === true;
 }
-
 function applyFilters() {
-  console.group('🔍 Applying Filters');
-  console.log('Current state:', state);
-  
   let filtered = [...allNotes];
-  console.log('Starting with:', filtered.length, 'notes');
-
-  // Search query
-  if (state.query) {
-    filtered = filtered.filter(note => matchesSearchQuery(note, state.query));
-    console.log('After search filter:', filtered.length, 'notes');
-  }
-
-  // Hashtag filter
-  if (state.hashtag) {
-    console.log('Filtering by hashtag:', state.hashtag);
-    filtered = filtered.filter(n => {
-      const hasHashtag = n.data.hashtags?.includes(state.hashtag!);
-      console.log(`Note ${n.id} has hashtag #${state.hashtag}:`, hasHashtag, 'Hashtags:', n.data.hashtags);
-      return hasHashtag;
-    });
-    console.log('After hashtag filter:', filtered.length, 'notes');
-  }
-
-  // Type filter
-  if (state.type !== "all") {
-    filtered = filtered.filter(n => n.data.type === state.type);
-    console.log('After type filter:', filtered.length, 'notes');
-  }
-
-  // Interaction filter
-  if (state.interaction !== 'all') {
-    filtered = filtered.filter(n => matchesInteractionFilter(n.id));
-    console.log('After interaction filter:', filtered.length, 'notes');
-  }
-
-  // Date sort
+  if (state.query) filtered = filtered.filter(n => matchesSearchQuery(n, state.query));
+  if (state.hashtag) filtered = filtered.filter(n => n.data.hashtags?.includes(state.hashtag!));
+  if (state.type !== "all") filtered = filtered.filter(n => n.data.type === state.type);
+  if (state.interaction !== 'all') filtered = filtered.filter(n => matchesInteractionFilter(n.id));
   filtered.sort((a, b) => {
-    const dateA = new Date(a.data.pubDate).getTime();
-    const dateB = new Date(b.data.pubDate).getTime();
-    return state.sort === "asc" ? dateA - dateB : dateB - dateA;
+    const da = new Date(a.data.pubDate).getTime(), db = new Date(b.data.pubDate).getTime();
+    return state.sort === "asc" ? da - db : db - da;
   });
-
-  console.log('Final filtered IDs:', filtered.map(n => n.id));
-  console.groupEnd();
-  
   renderNotes(filtered);
   updateResultsCount(filtered.length);
 }
-
 function renderNotes(notes: NoteData[]) {
-  console.group('🎨 Rendering Notes');
-  
-  if (!container) {
-    console.error('Container not found!');
-    console.groupEnd();
-    return;
-  }
-
+  if (!container) return;
   const allCards = Array.from(container.querySelectorAll('[data-note-id]'));
-  const matchingIds = new Set(notes.map(n => n.id));
-  
-  console.log('Cards to show:', Array.from(matchingIds));
-  console.log('Total cards in DOM:', allCards.length);
-  
-  // Hide/show cards
-  let visibleCount = 0;
-  allCards.forEach((card) => {
-    const htmlCard = card as HTMLElement;
-    htmlCard.style.order = '0';
-    const noteId = htmlCard.dataset.noteId;
-    
-    if (matchingIds.has(noteId || '')) {
-      htmlCard.style.display = 'block';
-      visibleCount++;
-      console.log(`✅ Showing card: ${noteId}`);
-    } else {
-      htmlCard.style.display = 'none';
-      console.log(`❌ Hiding card: ${noteId}`);
-    }
-  });
-  
-  console.log('Visible cards:', visibleCount);
-
-  // Reorder visible cards
-  notes.forEach((note, index) => {
-    const card = container.querySelector(`[data-note-id="${note.id}"]`) as HTMLElement;
-    if (card) {
-      card.style.order = index.toString();
-    } else {
-      console.warn(`Card not found for note ID: ${note.id}`);
-    }
-  });
-
-  // Remove old empty states
+  const ids = new Set(notes.map(n => n.id));
+  allCards.forEach(c => { const el = c as HTMLElement; el.style.order='0'; el.style.display = ids.has(el.dataset.noteId||'') ? 'block' : 'none'; });
+  notes.forEach((n,i) => { const c = container.querySelector(`[data-note-id="${n.id}"]`) as HTMLElement; if(c) c.style.order=String(i); });
   document.getElementById('no-results')?.remove();
   document.getElementById('empty-interaction-state')?.remove();
-
-  // Show appropriate empty state
-  if (notes.length === 0) {
-    console.log('No notes to display, showing empty state');
-    const emptyState = document.createElement('div');
-    
+  if (!notes.length) {
+    const el = document.createElement('div');
+    el.style.cssText = 'text-align:center;padding:48px 0';
     if (state.interaction !== 'all') {
-      emptyState.id = 'empty-interaction-state';
-      emptyState.className = 'text-center py-12';
-      
-      const emoji = state.interaction === 'liked' ? '❤️' : '🔖';
-      const message = state.interaction === 'liked' 
-        ? 'No liked notes yet' 
-        : 'No saved notes yet';
-      const subtitle = state.interaction === 'liked'
-        ? 'Click the heart icon on notes you enjoy'
-        : 'Click the bookmark icon to save notes for later';
-      
-      emptyState.innerHTML = `
-        <div class="text-6xl mb-4">${emoji}</div>
-        <p class="text-xl font-semibold text-gray-700">${message}</p>
-        <p class="text-sm text-gray-500 mt-2">${subtitle}</p>
-      `;
+      el.id = 'empty-interaction-state';
+      const emoji = state.interaction==='liked'?'❤️':'🔖';
+      const msg = state.interaction==='liked'?'No liked notes yet':'No saved notes yet';
+      const sub = state.interaction==='liked'?'Click the heart icon on notes you enjoy':'Click the bookmark icon to save notes for later';
+      el.innerHTML = `<div style="font-size:40px;margin-bottom:10px">${emoji}</div><p style="font-size:15px;font-weight:600;color:#111827;margin:0 0 4px">${msg}</p><p style="font-size:13px;color:#6b7280;margin:0">${sub}</p>`;
     } else {
-      emptyState.id = 'no-results';
-      emptyState.className = 'text-center py-8 text-base-content/60';
-      emptyState.innerHTML = `
-        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.3-4.3"></path>
-        </svg>
-        <p class="text-lg">No notes found</p>
-        <p class="text-sm mt-2">Try adjusting your filters</p>
-      `;
+      el.id = 'no-results';
+      el.innerHTML = `<svg style="width:36px;height:36px;margin:0 auto 10px;display:block;color:#d1d5db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><p style="font-size:14px;color:#6b7280;margin:0">No notes found</p><p style="font-size:12px;color:#9ca3af;margin:4px 0 0">Try adjusting your filters</p>`;
     }
-    
-    container.appendChild(emptyState);
-  }
-  
-  console.groupEnd();
-}
-
-function updateResultsCount(count: number) {
-  if (resultsCount) {
-    resultsCount.textContent = count.toString();
+    container.appendChild(el);
   }
 }
-
+function updateResultsCount(c: number) { if (resultsCount) resultsCount.textContent = String(c); }
 function updateInteractionCounts() {
-  const likes = JSON.parse(localStorage.getItem('note-likes') || '{}');
-  const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
-  
-  if (allCountEl) allCountEl.textContent = allNotes.length.toString();
-  if (likedCountEl) likedCountEl.textContent = Object.keys(likes).length.toString();
-  if (bookmarkedCountEl) bookmarkedCountEl.textContent = Object.keys(bookmarks).length.toString();
+  const likes = JSON.parse(localStorage.getItem('note-likes')||'{}');
+  const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks')||'{}');
+  if (allCountEl) allCountEl.textContent = String(allNotes.length);
+  if (likedCountEl) likedCountEl.textContent = String(Object.keys(likes).length);
+  if (bookmarkedCountEl) bookmarkedCountEl.textContent = String(Object.keys(bookmarks).length);
 }
-
 function updateHashtagDisplay() {
-  if (state.hashtag) {
-    activeHashtagDiv?.classList.remove('hidden');
-    if (hashtagValue) hashtagValue.textContent = `#${state.hashtag}`;
-  } else {
-    activeHashtagDiv?.classList.add('hidden');
-  }
+  if (state.hashtag) { activeHashtagDiv?.classList.remove('hidden'); if(hashtagValue) hashtagValue.textContent=`#${state.hashtag}`; }
+  else activeHashtagDiv?.classList.add('hidden');
 }
-
 function clearAllFilters() {
-  console.log('🧹 Clearing all filters');
-  state = {
-    query: "",
-    hashtag: null,
-    type: "all",
-    sort: "desc",
-    interaction: "all"
-  };
-  
-  if (searchInput) searchInput.value = "";
-  if (typeFilter) typeFilter.value = "all";
-  if (sortButton) sortButton.dataset.sort = "desc";
-  if (sortText) sortText.textContent = "Newest First";
-  
-  // Reset interaction filter tabs
-  filterTabs.forEach(tab => {
-    tab.classList.remove('active');
-    if (tab.dataset.filter === 'all') {
-      tab.classList.add('active');
-    }
-  });
-  
-  // Remove hashtag highlighting
-  document.querySelectorAll('.hashtag-filter').forEach(el => {
-    el.classList.remove('font-bold', 'underline', 'text-secondary');
-  });
-  
-  updateHashtagDisplay();
-  applyFilters();
+  state = { query:"", hashtag:null, type:"all", sort:"desc", interaction:"all" };
+  if(searchInput) searchInput.value="";
+  if(typeFilter) typeFilter.value="all";
+  if(sortButton) sortButton.dataset.sort="desc";
+  if(sortText) sortText.textContent="Newest First";
+  filterTabs.forEach(t => { t.classList.remove('active'); if(t.dataset.filter==='all') t.classList.add('active'); });
+  document.querySelectorAll('.hashtag-filter').forEach(e => e.classList.remove('font-bold','underline','text-secondary'));
+  updateHashtagDisplay(); applyFilters();
 }
 
-// Event Listeners
+if(searchInput) searchInput.addEventListener('input', e => { state.query=(e.target as HTMLInputElement).value; applyFilters(); });
+if(typeFilter) typeFilter.addEventListener('change', e => { state.type=(e.target as HTMLSelectElement).value; applyFilters(); });
+if(sortButton) sortButton.addEventListener('click', () => { state.sort=state.sort==='desc'?'asc':'desc'; sortButton.dataset.sort=state.sort; if(sortText) sortText.textContent=state.sort==='desc'?'Newest First':'Oldest First'; applyFilters(); });
+if(clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearAllFilters);
+if(removeHashtagBtn) removeHashtagBtn.addEventListener('click', () => { state.hashtag=null; document.querySelectorAll('.hashtag-filter').forEach(e=>e.classList.remove('font-bold','underline','text-secondary')); updateHashtagDisplay(); applyFilters(); });
+filterTabs.forEach(tab => tab.addEventListener('click', () => { filterTabs.forEach(t=>t.classList.remove('active')); tab.classList.add('active'); state.interaction=(tab.dataset.filter as any)||'all'; applyFilters(); }));
 
-// Search input
-if (searchInput) {
-  searchInput.addEventListener('input', (e) => {
-    state.query = (e.target as HTMLInputElement).value;
-    console.log('Search query changed:', state.query);
-    applyFilters();
-  });
-}
-
-// Type filter
-if (typeFilter) {
-  typeFilter.addEventListener('change', (e) => {
-    state.type = (e.target as HTMLSelectElement).value;
-    console.log('Type filter changed:', state.type);
-    applyFilters();
-  });
-}
-
-// Sort button
-if (sortButton) {
-  sortButton.addEventListener('click', () => {
-    state.sort = state.sort === 'desc' ? 'asc' : 'desc';
-    sortButton.dataset.sort = state.sort;
-    if (sortText) sortText.textContent = state.sort === 'desc' ? 'Newest First' : 'Oldest First';
-    console.log('Sort changed:', state.sort);
-    applyFilters();
-  });
-}
-
-// Clear filters
-if (clearFiltersBtn) {
-  clearFiltersBtn.addEventListener('click', clearAllFilters);
-}
-
-// Remove hashtag filter
-if (removeHashtagBtn) {
-  removeHashtagBtn.addEventListener('click', () => {
-    console.log('Removing hashtag filter');
-    state.hashtag = null;
-    document.querySelectorAll('.hashtag-filter').forEach(el => {
-      el.classList.remove('font-bold', 'underline', 'text-secondary');
-    });
-    updateHashtagDisplay();
-    applyFilters();
-  });
-}
-
-// Interaction filter tabs
-filterTabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    filterTabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    state.interaction = (tab.dataset.filter as 'all' | 'liked' | 'bookmarked') || 'all';
-    console.log('Interaction filter changed:', state.interaction);
-    
-    applyFilters();
-  });
-});
-
-// Hashtag click handler
 document.addEventListener('click', (e) => {
   const target = e.target as HTMLElement;
   if (target.classList.contains('hashtag-filter')) {
     e.preventDefault();
     const hashtag = target.dataset.hashtag;
-    console.log('Hashtag clicked:', hashtag);
-    
-    if (state.hashtag === hashtag) {
-      console.log('Clearing hashtag filter');
-      state.hashtag = null;
-      document.querySelectorAll('.hashtag-filter').forEach(el => {
-        el.classList.remove('font-bold', 'underline', 'text-secondary');
-      });
-    } else {
-      console.log('Setting hashtag filter to:', hashtag);
-      state.hashtag = hashtag || null;
-      
-      document.querySelectorAll('.hashtag-filter').forEach(el => {
-        el.classList.remove('font-bold', 'underline', 'text-secondary');
-      });
-      
-      if (hashtag) {
-        document.querySelectorAll(`[data-hashtag="${hashtag}"]`).forEach(el => {
-          el.classList.add('font-bold', 'underline', 'text-secondary');
-        });
-      }
-    }
-    
-    updateHashtagDisplay();
-    applyFilters();
+    if (state.hashtag === hashtag) { state.hashtag=null; document.querySelectorAll('.hashtag-filter').forEach(el=>el.classList.remove('font-bold','underline','text-secondary')); }
+    else { state.hashtag=hashtag||null; document.querySelectorAll('.hashtag-filter').forEach(el=>el.classList.remove('font-bold','underline','text-secondary')); if(hashtag) document.querySelectorAll(`[data-hashtag="${hashtag}"]`).forEach(el=>el.classList.add('font-bold','underline','text-secondary')); }
+    updateHashtagDisplay(); applyFilters();
   }
+  const fab = document.getElementById('contact-fab');
+  const dd = document.getElementById('contact-dropdown');
+  if (fab && dd && !fab.contains(target) && !dd.hidden) { dd.hidden=true; document.getElementById('contact-trigger')?.classList.remove('open'); document.getElementById('contact-trigger')?.setAttribute('aria-expanded','false'); }
 });
 
-// Listen for like/bookmark changes
-window.addEventListener('notesFilterChange', () => {
-  console.log('Notes filter change event received');
-  updateInteractionCounts();
-  applyFilters();
+window.addEventListener('notesFilterChange', () => { updateInteractionCounts(); applyFilters(); });
+document.addEventListener('keydown', e => {
+  if ((e.metaKey||e.ctrlKey) && e.key==='k') { e.preventDefault(); searchInput?.focus(); }
+  if (e.key==='Escape' && searchInput===document.activeElement) { if(searchInput) searchInput.value=''; state.query=''; applyFilters(); }
 });
 
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-    searchInput?.focus();
-  }
-  
-  if (e.key === 'Escape' && searchInput === document.activeElement) {
-    if (searchInput) searchInput.value = '';
-    state.query = '';
-    applyFilters();
-  }
+const trigger = document.getElementById('contact-trigger');
+const dropdown = document.getElementById('contact-dropdown');
+trigger?.addEventListener('click', e => {
+  e.stopPropagation();
+  const isHidden = dropdown?.hidden;
+  if(dropdown) dropdown.hidden=!isHidden;
+  trigger.setAttribute('aria-expanded', String(isHidden));
+  trigger.classList.toggle('open', isHidden??false);
 });
+dropdown?.addEventListener('click', e => e.stopPropagation());
 
-// Initialize
-console.log('🚀 Initializing filters');
 updateResultsCount(allNotes.length);
 updateInteractionCounts();
 updateHashtagDisplay();
-applyFilters(); // Add this to ensure filters apply on load
+applyFilters();
 </script>
 
 <style>
+  /* ── shared design tokens ──────────────────────
+     Copy these exact values into about.astro too
+     --color-text:       #111827
+     --color-secondary:  #374151
+     --color-muted:      #6b7280
+     --color-faint:      #9ca3af
+     --color-divider:    #e5e7eb
+     --color-surface:    #f9fafb
+     --color-green:      #059669
+  ─────────────────────────────────────────────── */
+
+  /* Contact FAB */
+  #contact-fab { position: fixed; top: 14px; right: 20px; z-index: 200; }
+
+  .contact-trigger-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px; background: #111827; color: white;
+    border: none; border-radius: 999px; font-family: inherit;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    transition: background 0.2s, transform 0.15s; letter-spacing: 0.01em;
+  }
+  .contact-trigger-btn:hover { background: #1f2937; transform: translateY(-1px); }
+  .chevron { transition: transform 0.2s; }
+  .contact-trigger-btn.open .chevron { transform: rotate(180deg); }
+
+  .contact-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    width: 240px; background: white; border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12); padding: 8px;
+    border: 1px solid #e5e7eb;
+  }
+  .cd-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: 8px;
+    text-decoration: none; color: #111827; transition: background 0.15s;
+  }
+  .cd-item:hover { background: #f9fafb; }
+  .cd-icon {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: #f3f4f6; color: #374151;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cd-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; margin: 0 0 1px; }
+  .cd-val   { font-size: 12px; color: #111827; margin: 0; font-weight: 500; }
+
+  /* Page shell */
   .home-page {
     width: 100%;
     min-height: 100vh;
-  }
-  nav {
-    width: 100%;
-  }
-
-  .main-grid{
-    display:grid;
-    grid-template-columns: 1fr minmax(500px,700px) 1fr;
-    gap: 24px;
-    padding: 24px;
-    background:white;
-  }
-
-  .center-col{
-    width: 100%; 
     background: white;
+    display: flex;
+    justify-content: center;
   }
 
-  .left-col,
-  .right-col {
-    min-height: 100px; 
+  .page-col {
+    width: 80%;           /* 80% of viewport */
+    max-width: 1400px;    /* hard cap on huge screens */
+    min-width: 320px;     /* hard floor on tiny screens */
+    background: white;
+    min-height: 100vh;
   }
 
-  @media (max-width: 900px) {
-    .main-grid {
-      grid-template-columns: 1fr;
-    }
+  /* Two-column feed */
+  .feed-layout {
+    display: grid;
+    grid-template-columns: 2fr 3fr;  /* fixed sidebar, feed fills rest */
+    gap: 56px;                          /* explicit gap — prevents any overlap */
+    align-items: start;
+    padding: 32px 0 80px;
 
-    .left-col,
-    .right-col {
-      display: none;
-    }
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .feed-sidebar {
+    position: sticky;
+    top: 24px;
+    border-right: 1px solid #e5e7eb;
+    padding-right: 0;    /* gap handles spacing */
+  }
+
+  .feed-col {
+    min-width: 0;        /* CRITICAL — allows grid child to shrink below content size */
+    overflow: hidden;    /* belt-and-suspenders */
+  }
+
+  @media (max-width: 800px) {
+    .page-col { width: 94%; }
+    .feed-layout { grid-template-columns: 1fr; gap: 0; padding: 20px 0 48px; }
+    .feed-sidebar { position: static; padding: 0 0 20px; border-right: none; border-bottom: 1px solid #e5e7eb; margin-bottom: 24px; }
+    #contact-fab { top: 10px; right: 12px; }
   }
 </style>

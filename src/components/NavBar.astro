@@ -2,32 +2,34 @@
 import "../styles/global.css";
 ---
 
-<nav class="navbar bg-base-100 w-full shadow-sm sticky top-0 z-50 backdrop-blur border-b border-base-300">
-  <div class="navbar-start">
-    <a class="btn btn-ghost text-xl">Zekesy</a>
-  </div>
-  <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
-      <li><a href="/about/about">About me </a></li>
-      <li><a href="/projects/projects">Projects </a></li>
-        <li><a href="/articles">Articles</a></li>
-        <li>
-            <details>
-            <summary>Blogs</summary>
-            <ul class="p-2 bg-base-100 w-40 z-1">
-                <li><a href="/blogs/about">About</a></li>
-                <li><a href="/blogs/movies">Movies</a></li>
-                <li><a href="/blogs/tvshows">TV shows</a></li>
-                <li><a href="/blogs/music">Music</a></li>
-                <li><a href="/blogs/books">Books</a></li>
-                <li><a href="/blogs/projects">Personal Projects</a></li>
-            </ul>
-            </details>
-        </li>
-      <li><a href="/src/pages/resume">Resume</a></li>
-    </ul>
-  </div>
-  <div class="navbar-end">
-    <a class="btn">Button</a>
-  </div>
-</nav>
+<div class="mt-4 px-4 width-[70%]">
+  <nav class="navbar bg-base-100 max-w-6xl shadow-sm mx-auto sticky rounded-2xl z-50 backdrop-blur border px-4 border-base-300">
+    <div class="navbar-start">
+      <a class="btn btn-ghost text-xl">Zekesy</a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li><a href="/about/about">About me </a></li>
+        <li><a href="/projects/projects">Projects </a></li>
+          <li><a href="/articles">Articles</a></li>
+          <li>
+              <details>
+              <summary>Blogs</summary>
+              <ul class="p-2 bg-base-100 w-40 z-1">
+                  <li><a href="/blogs/about">About</a></li>
+                  <li><a href="/blogs/movies">Movies</a></li>
+                  <li><a href="/blogs/tvshows">TV shows</a></li>
+                  <li><a href="/blogs/music">Music</a></li>
+                  <li><a href="/blogs/books">Books</a></li>
+                  <li><a href="/blogs/projects">Personal Projects</a></li>
+              </ul>
+              </details>
+          </li>
+        <li><a href="/src/pages/resume">Resume</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <a class="btn">Button</a>
+    </div>
+  </nav>
+</div>

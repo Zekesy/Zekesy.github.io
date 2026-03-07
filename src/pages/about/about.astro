@@ -5,1038 +5,726 @@ import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout>
-  <AboutNavbar />
+  <!-- Contact FAB -->
+  <div id="contact-fab">
+    <button id="contact-trigger" class="contact-trigger-btn" aria-expanded="false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      Contact
+      <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+    <div id="contact-dropdown" class="contact-dropdown" hidden>
+      <a href="mailto:zekesy1208@email.com" class="cd-item">
+        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+        <div><p class="cd-label">Email</p><p class="cd-val">zekesy1208@email.com</p></div>
+      </a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="cd-item">
+        <span class="cd-icon" style="font-weight:700;font-size:12px">in</span>
+        <div><p class="cd-label">LinkedIn</p><p class="cd-val">yourprofile</p></div>
+      </a>
+      <a href="https://github.com/Zekesy" target="_blank" class="cd-item">
+        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></span>
+        <div><p class="cd-label">GitHub</p><p class="cd-val">Zekesy</p></div>
+      </a>
+      <div class="cd-divider"></div>
+      <a href="#contact-me" class="cd-scroll-link" id="scroll-to-contact">View full contact section ↓</a>
+    </div>
+  </div>
 
-  <main id="about-page">
+  <div class="about-page">
+    <div class="page-col">
+      <AboutNavbar />
 
-    <!-- ═══════════════════════════════════════════
-         ABOUT ME
-    ════════════════════════════════════════════ -->
-    <section id="about-me">
-      <div class="section-inner about-grid">
-        <div class="about-photo-col">
-          <div class="photo-frame">
-            <img src="/images/profile.jpg" alt="Profile Photo" />
-          </div>
-          <div class="qualifications-badges">
-            <span class="badge">TOEIC 990</span>
-            <span class="badge">JLPT N2</span>
-          </div>
-        </div>
+      <main id="about-main">
 
-        <div class="about-info-col">
-          <p class="section-label">About Me</p>
-          <h1 class="name-heading">Your Full Name</h1>
+        <!-- ─── ABOUT ME ─────────────────────────── -->
+        <section id="about-me">
+          <div class="about-grid">
+            <div class="about-photo-col">
+              <div class="photo-frame">
+                <img src="/images/profile.jpg" alt="Profile Photo" />
+              </div>
+              <div class="qual-badges">
+                <span class="qual-badge">TOEIC 990</span>
+                <span class="qual-badge">JLPT N2</span>
+                <span class="qual-badge">MEXT Scholar</span>
+              </div>
+            </div>
 
-          <div class="info-grid">
-            <div class="info-item">
-              <span class="info-key">Age</span>
-              <span class="info-val">XX</span>
-            </div>
-            <div class="info-item">
-              <span class="info-key">Nationality</span>
-              <span class="info-val">Your Nationality</span>
-            </div>
-            <div class="info-item">
-              <span class="info-key">Residence</span>
-              <span class="info-val">Japan</span>
-            </div>
-            <div class="info-item">
-              <span class="info-key">Status</span>
-              <span class="info-val employed">Employed · Researcher</span>
-            </div>
-            <div class="info-item full-width">
-              <span class="info-key">Qualifications</span>
-              <span class="info-val">
-                B.Eng &amp; M.Eng, Computer Science and Engineering<br/>
-                <span class="uni">University of Aizu, Japan</span>
-              </span>
-            </div>
-            <div class="info-item">
-              <span class="info-key">TOEIC</span>
-              <span class="info-val score">990 / 990</span>
-            </div>
-            <div class="info-item">
-              <span class="info-key">JLPT</span>
-              <span class="info-val score">N2</span>
-            </div>
-          </div>
+            <div class="about-info-col">
+              <p class="section-label">About Me</p>
+              <h1 class="name-heading">Your Full Name</h1>
 
-          <p class="bio">
-            I'm a computer science and engineering researcher specializing in computer vision,
-            neural radiance fields (NeRF), sim-to-real robotic transfer, and semantic
-            communication networks. My work bridges deep learning theory with
-            real-world robotic deployment, using tools like NVIDIA Isaac Sim and Isaac Lab
-            to close the gap between simulation and physical systems.
-          </p>
-        </div>
-      </div>
-    </section>
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-key">Age</span>
+                  <span class="info-val">{new Date().getFullYear() - 2001 - (new Date() < new Date(new Date().getFullYear(), 11, 8) ? 1 : 0)}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-key">Nationality</span>
+                  <span class="info-val">Filipino</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-key">Residence</span>
+                  <span class="info-val">Japan</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-key">Status</span>
+                  <span class="info-val highlight-green">Employed · Systems Engineer at Eyes Japan</span>
+                </div>
+                <div class="info-item full-width">
+                  <span class="info-key">Qualifications</span>
+                  <span class="info-val">
+                    B.Eng &amp; M.Eng, Computer Science and Engineering<br/>
+                    <span class="uni">University of Aizu, Japan</span>
+                  </span>
+                </div>
+              </div>
 
-    <!-- ═══════════════════════════════════════════
-         RESEARCH INTERESTS
-    ════════════════════════════════════════════ -->
-    <section id="research-interests">
-      <div class="section-inner">
-        <p class="section-label">What I Work On</p>
-        <h2 class="section-heading">Research Interests</h2>
-        <div class="interests-grid">
-          <div class="interest-card">
-            <div class="interest-icon">◈</div>
-            <h3>Neural Radiance Fields</h3>
-            <p>3D scene reconstruction and novel view synthesis using implicit neural representations. Exploring real-time NeRF variants and their applications in robotic perception.</p>
-          </div>
-          <div class="interest-card">
-            <div class="interest-icon">◎</div>
-            <h3>Sim-to-Real Robotics</h3>
-            <p>Bridging the reality gap using domain randomization, physics-based simulation in NVIDIA Isaac Sim / Isaac Lab, and robust policy transfer to physical robotic systems.</p>
-          </div>
-          <div class="interest-card">
-            <div class="interest-icon">◉</div>
-            <h3>Computer Vision Semantics</h3>
-            <p>Semantic scene understanding, segmentation, and 3D object detection for autonomous systems operating in unstructured environments.</p>
-          </div>
-          <div class="interest-card">
-            <div class="interest-icon">◐</div>
-            <h3>Semantic Communication</h3>
-            <p>Task-oriented communication systems that transmit meaning rather than raw bits, leveraging deep learning for joint source-channel coding in constrained networks.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         EDUCATION
-    ════════════════════════════════════════════ -->
-    <section id="education">
-      <div class="section-inner">
-        <p class="section-label">Academic Background</p>
-        <h2 class="section-heading">Education</h2>
-        <div class="edu-list">
-          <div class="edu-item">
-            <div class="edu-meta">
-              <span class="edu-year">2022 – 2024</span>
-              <span class="edu-degree">Master of Engineering</span>
-            </div>
-            <div class="edu-body">
-              <h3>Computer Science and Engineering</h3>
-              <p class="edu-uni">University of Aizu, Aizuwakamatsu, Japan</p>
-              <p class="edu-thesis">
-                <span class="thesis-label">Thesis:</span>
-                "Your Master's Thesis Title Here" — brief one-sentence description of the contribution.
+              <p class="bio">
+                I'm a computer science and engineering researcher specializing in computer vision,
+                neural radiance fields (NeRF), sim-to-real robotic transfer, and semantic
+                communication networks.
               </p>
-            </div>
-          </div>
-          <div class="edu-item">
-            <div class="edu-meta">
-              <span class="edu-year">2018 – 2022</span>
-              <span class="edu-degree">Bachelor of Engineering</span>
-            </div>
-            <div class="edu-body">
-              <h3>Computer Science and Engineering</h3>
-              <p class="edu-uni">University of Aizu, Aizuwakamatsu, Japan</p>
-              <p class="edu-thesis">
-                <span class="thesis-label">Thesis:</span>
-                "Your Undergraduate Thesis Title Here" — brief one-sentence description of the contribution.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════
-         EXPERIENCE TIMELINE
-    ════════════════════════════════════════════ -->
-    <section id="experience">
-      <div class="section-inner">
-        <p class="section-label">Career</p>
-        <h2 class="section-heading">Experience</h2>
-        <div class="timeline">
-          <div class="timeline-line"></div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <span class="tl-date">2024 – Present</span>
-              <h3 class="tl-role">Research Engineer / Position Title</h3>
-              <p class="tl-org">Organization Name · City, Japan</p>
-              <p class="tl-desc">
-                Describe your responsibilities and achievements. Focus on technical contributions:
-                tools used, systems built, papers contributed to, or teams led.
-              </p>
-              <div class="tl-tags">
-                <span>Isaac Sim</span><span>NeRF</span><span>Python</span><span>ROS2</span>
+              <div class="skills-inline">
+                <span class="skills-label">Technical Skills</span>
+                <div class="skills-badges">
+                  <span class="skill-badge lang">Python</span>
+                  <span class="skill-badge lang">C++</span>
+                  <span class="skill-badge lang">TypeScript</span>
+                  <span class="skill-badge lang">Java</span>
+                  <span class="skill-badge lang">JavaScript</span>
+                  <span class="skill-badge lang">NextJS</span>
+                  <span class="skill-badge framework">PyTorch</span>
+                  <span class="skill-badge framework">OpenCV</span>
+                  <span class="skill-badge framework">ROS2</span>
+                  <span class="skill-badge tool">Isaac Sim</span>
+                  <span class="skill-badge tool">Isaac Lab</span>
+                  <span class="skill-badge tool">Docker</span>
+                  <span class="skill-badge tool">Git</span>
+                  <span class="skill-badge tool">Supabase</span>
+                </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <span class="tl-date">2022 – 2024</span>
-              <h3 class="tl-role">Graduate Research Assistant</h3>
-              <p class="tl-org">University of Aizu · Aizuwakamatsu, Japan</p>
-              <p class="tl-desc">
-                Conducted research on [your topic]. Developed [system/method]. Published [X] papers
-                and presented work at [conferences]. Supervised undergraduate student projects.
-              </p>
-              <div class="tl-tags">
-                <span>Computer Vision</span><span>Deep Learning</span><span>PyTorch</span>
-              </div>
-            </div>
-          </div>
+        <!-- ─── TIMELINE ──────────────────────────── -->
+        <section id="timeline">
+          <p class="section-label">Background</p>
+          <h2 class="section-heading">Experience &amp; Education</h2>
 
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <span class="tl-date">2020 – 2022</span>
-              <h3 class="tl-role">Undergraduate Research Student</h3>
-              <p class="tl-org">University of Aizu · Aizuwakamatsu, Japan</p>
-              <p class="tl-desc">
-                Joined [Lab Name] lab and worked on undergraduate thesis project exploring
-                [topic]. Gained hands-on experience with [tools/systems].
-              </p>
-              <div class="tl-tags">
-                <span>C++</span><span>OpenCV</span><span>Linux</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         PUBLICATIONS
-    ════════════════════════════════════════════ -->
-    <section id="publications">
-      <div class="section-inner">
-        <p class="section-label">Research Output</p>
-        <h2 class="section-heading">Publications</h2>
-        <div class="pub-list">
-
-          <div class="pub-item">
-            <span class="pub-year">2024</span>
-            <div class="pub-body">
-              <p class="pub-title">Your Paper Title: A Study of Something Important</p>
-              <p class="pub-authors"><strong>Your Name</strong>, Co-Author Name, Co-Author Name</p>
-              <p class="pub-venue">Conference / Journal Name, City, Year</p>
-              <div class="pub-links">
-                <a href="#" class="pub-link">Paper ↗</a>
-                <a href="#" class="pub-link">arXiv ↗</a>
-                <a href="#" class="pub-link">Code ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="pub-item">
-            <span class="pub-year">2023</span>
-            <div class="pub-body">
-              <p class="pub-title">Another Paper Title: More Research Contributions</p>
-              <p class="pub-authors"><strong>Your Name</strong>, Co-Author Name</p>
-              <p class="pub-venue">Conference / Journal Name, City, Year</p>
-              <div class="pub-links">
-                <a href="#" class="pub-link">Paper ↗</a>
-                <a href="#" class="pub-link">arXiv ↗</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         SKILLS
-    ════════════════════════════════════════════ -->
-    <section id="skills">
-      <div class="section-inner">
-        <p class="section-label">Technical Proficiency</p>
-        <h2 class="section-heading">Skills</h2>
-        <div class="skills-grid">
-          <div class="skill-group">
-            <h3>Languages</h3>
-            <div class="skill-tags">
-              <span>Python</span><span>C++</span><span>CUDA</span>
-              <span>Bash</span><span>JavaScript</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <h3>Frameworks &amp; Libraries</h3>
-            <div class="skill-tags">
-              <span>PyTorch</span><span>TensorFlow</span><span>OpenCV</span>
-              <span>ROS / ROS2</span><span>Open3D</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <h3>Simulation &amp; Tools</h3>
-            <div class="skill-tags">
-              <span>NVIDIA Isaac Sim</span><span>Isaac Lab</span>
-              <span>Blender</span><span>Docker</span><span>Git</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <h3>Languages (Human)</h3>
-            <div class="skill-tags">
-              <span>English — Native/Fluent (TOEIC 990)</span>
-              <span>Japanese — Intermediate (JLPT N2)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         PROJECTS
-    ════════════════════════════════════════════ -->
-    <section id="projects">
-      <div class="section-inner">
-        <p class="section-label">Selected Work</p>
-        <h2 class="section-heading">Projects</h2>
-        <div class="projects-grid">
-
-          <div class="project-card">
-            <div class="project-header">
-              <h3>Project Title One</h3>
-              <div class="project-links">
-                <a href="#" title="GitHub" class="icon-link">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                </a>
-              </div>
-            </div>
-            <p class="project-desc">
-              Description of the project — what problem it solves, the approach taken,
-              and what makes it interesting. Keep it concise and technical.
-            </p>
-            <div class="project-stack">
-              <span>PyTorch</span><span>NeRF</span><span>Python</span>
-            </div>
-            <div class="project-footer">
-              <a href="#" class="project-article-link">Read Article ↗</a>
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <h3>Project Title Two</h3>
-              <div class="project-links">
-                <a href="#" title="GitHub" class="icon-link">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                </a>
-              </div>
-            </div>
-            <p class="project-desc">
-              Description of the project — what problem it solves, the approach taken,
-              and what makes it interesting. Keep it concise and technical.
-            </p>
-            <div class="project-stack">
-              <span>Isaac Sim</span><span>ROS2</span><span>C++</span>
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <h3>Project Title Three</h3>
-              <div class="project-links">
-                <a href="#" title="GitHub" class="icon-link">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                </a>
-              </div>
-            </div>
-            <p class="project-desc">
-              Description of the project — what problem it solves, the approach taken,
-              and what makes it interesting. Keep it concise and technical.
-            </p>
-            <div class="project-stack">
-              <span>Semantic Comms</span><span>PyTorch</span><span>OFDM</span>
-            </div>
-            <div class="project-footer">
-              <a href="#" class="project-article-link">Read Article ↗</a>
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <h3>Project Title Four</h3>
-              <div class="project-links">
-                <a href="#" title="GitHub" class="icon-link">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                </a>
-              </div>
-            </div>
-            <p class="project-desc">
-              Description of the project — what problem it solves, the approach taken,
-              and what makes it interesting. Keep it concise and technical.
-            </p>
-            <div class="project-stack">
-              <span>OpenCV</span><span>SLAM</span><span>C++</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         CONTACT
-    ════════════════════════════════════════════ -->
-    <section id="contact-me">
-      <div class="section-inner contact-inner">
-        <p class="section-label">Get In Touch</p>
-        <h2 class="section-heading">Contact</h2>
-        <div class="contact-grid">
-          <a href="mailto:your@email.com" class="contact-card">
-            <span class="contact-icon">✉</span>
-            <div>
-              <p class="contact-type">Email</p>
-              <p class="contact-value">your@email.com</p>
-            </div>
-          </a>
-          <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-card">
-            <span class="contact-icon">in</span>
-            <div>
-              <p class="contact-type">LinkedIn</p>
-              <p class="contact-value">linkedin.com/in/yourprofile</p>
-            </div>
-          </a>
-          <a href="https://github.com/yourusername" target="_blank" class="contact-card">
-            <span class="contact-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <!-- Legend -->
+          <div class="tl-legend">
+            <span class="col-pill academic">
+              <span class="pill-dot academic-dot"></span>Education
             </span>
-            <div>
-              <p class="contact-type">GitHub</p>
-              <p class="contact-value">github.com/yourusername</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
+            <span class="col-pill work">
+              <span class="pill-dot work-dot"></span>Work
+            </span>
+          </div>
 
-  </main>
+          <!-- Single left-spine timeline — all cards on right -->
+          <ul class="vtimeline">
+
+            <li class="tl-item academic">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2020/10 – 2024/10</span>
+                <h3 class="tl-role">Bachelor of Computer Science and Engineering</h3>
+                <p class="tl-org">University of Aizu, Japan</p>
+                <p class="tl-desc">Thesis: <em>"An Exploration of MLP and Grid Trade-off in Hybrid NeRF Models"</em></p>
+                <div class="tl-tags"><span>NeRF</span><span>Computer Vision</span></div>
+              </div>
+            </li>
+            <li class="tl-item academic">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2021/12 – 2022/01</span>
+                <h3 class="tl-role">Sapporo Innovation lab</h3>
+                <p class="tl-org">University of Aizu, Japan</p>
+                <p class="tl-desc">Thesis: <em>"An Exploration of MLP and Grid Trade-off in Hybrid NeRF Models"</em></p>
+                <div class="tl-tags"><span>NeRF</span><span>Computer Vision</span></div>
+              </div>
+            </li>
+
+            <li class="tl-item work">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2022/09/12 - 2022/09/p-26</span>
+                <h3 class="tl-role">Technistock Beta tester</h3>
+                <p class="tl-org">Technistock </p>
+                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
+                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
+              </div>
+            </li>
+            <li class="tl-item work">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2023/08 - 2025/10</span>
+                <h3 class="tl-role">Part-time Software Developer at Eyes Japan</h3>
+                <p class="tl-org">Eyes Japan</p>
+                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
+                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
+              </div>
+            </li>            
+            <li class="tl-item academic">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2024/07</span>
+                <h3 class="tl-role">Japan Language Profeciency Test (JLPT) N3</h3>
+                <p class="tl-org">Honors Program, University of Aizu</p>
+                <p class="tl-desc">Joined research lab, contributed to thesis project, gained hands-on research experience in computer vision.</p>
+                <div class="tl-tags"><span>Research</span><span>Python</span></div>
+              </div>
+            </li>
+
+            <li class="tl-item academic">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2024/11/28 – 2024/11/30</span>
+                <h3 class="tl-role">Internet of Things and Intelligence Systems (IoTaIS)Conference</h3>
+                <p class="tl-org">Honors Program, University of Aizu</p>
+                <p class="tl-desc">Joined research lab, contributed to thesis project, gained hands-on research experience in computer vision.</p>
+                <div class="tl-tags"><span>Research</span><span>Python</span></div>
+              </div>
+            </li>
+            <li class="tl-item work">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2024/12– 2025/02</span>
+                <h3 class="tl-role">AI Researcher at DeepAI</h3>
+                <p class="tl-org">Honors Program, University of Aizu, Japan</p>
+                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
+                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
+              </div>
+            </li>
+            <li class="tl-item academic">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2025/07</span>
+                <h3 class="tl-role">Japan Language Profeciency Test (JLPT) N2</h3>
+                <p class="tl-org">Honors Program, University of Aizu</p>
+                <p class="tl-desc">Joined research lab, contributed to thesis project, gained hands-on research experience in computer vision.</p>
+                <div class="tl-tags"><span>Research</span><span>Python</span></div>
+              </div>
+            </li>
+            <li class="tl-item academic">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2024/10 – 2025/09</span>
+                <h3 class="tl-role">Master's Degree</h3>
+                <p class="tl-org">Honors Program, University of Aizu, Japan</p>
+                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
+                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
+              </div>
+            </li>
+            <li class="tl-item work last">
+              <div class="tl-spine">
+                <div class="spine-line top"></div>
+                <div class="tl-dot"></div>
+                <div class="spine-line bottom hidden"></div>
+              </div>
+              <div class="tl-card">
+                <span class="tl-date">2025/09 – Present</span>
+                <h3 class="tl-role">Systems Engineer</h3>
+                <p class="tl-org">Eyes Japan · Aizuwakamatsu</p>
+                <p class="tl-desc">Full-time systems engineering role. Working on applied computer vision and software systems.</p>
+                <div class="tl-tags"><span>Systems Engineering</span><span>Python</span><span>CV</span></div>
+              </div>
+            </li>
+
+          </ul>
+        </section>
+
+        <!-- ─── PUBLICATIONS ──────────────────────── -->
+        <section id="publications">
+          <p class="section-label">Research Output</p>
+          <h2 class="section-heading">Publications</h2>
+          <div class="pub-list">
+            <div class="pub-item">
+              <span class="pub-year">2024</span>
+              <div class="pub-body">
+                <p class="pub-title">Your Paper Title: A Study of Something Important</p>
+                <p class="pub-authors"><strong>Your Name</strong>, Co-Author, Co-Author</p>
+                <p class="pub-venue">Conference / Journal Name, City, Year</p>
+                <div class="pub-links">
+                  <a href="#" class="pub-link">Paper ↗</a>
+                  <a href="#" class="pub-link">arXiv ↗</a>
+                  <a href="#" class="pub-link">Code ↗</a>
+                </div>
+              </div>
+            </div>
+            <div class="pub-item">
+              <span class="pub-year">2023</span>
+              <div class="pub-body">
+                <p class="pub-title">Another Paper Title: More Research Contributions</p>
+                <p class="pub-authors"><strong>Your Name</strong>, Co-Author</p>
+                <p class="pub-venue">Conference / Journal Name, City, Year</p>
+                <div class="pub-links">
+                  <a href="#" class="pub-link">Paper ↗</a>
+                  <a href="#" class="pub-link">arXiv ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── PROJECTS ──────────────────────────── -->
+        <section id="projects">
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-heading">Projects</h2>
+          <div class="projects-grid">
+
+            <div class="project-card">
+              <div class="project-header">
+                <h3>Project Title One</h3>
+                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+              </div>
+              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
+              <div class="project-stack"><span>PyTorch</span><span>NeRF</span><span>Python</span><span>CUDA</span></div>
+              <a href="#" class="project-link">Read Article ↗</a>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <h3>Project Title Two</h3>
+                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+              </div>
+              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
+              <div class="project-stack"><span>Isaac Sim</span><span>ROS2</span><span>C++</span><span>Python</span></div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <h3>Project Title Three</h3>
+                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+              </div>
+              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
+              <div class="project-stack"><span>Semantic Comms</span><span>PyTorch</span><span>OFDM</span></div>
+              <a href="#" class="project-link">Read Article ↗</a>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <h3>Project Title Four</h3>
+                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+              </div>
+              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
+              <div class="project-stack"><span>OpenCV</span><span>SLAM</span><span>C++</span></div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ─── CONTACT ───────────────────────────── -->
+        <section id="contact-me">
+          <p class="section-label">Get In Touch</p>
+          <h2 class="section-heading">Contact Me</h2>
+          <p class="contact-intro">Whether you have a research opportunity, collaboration idea, or just want to say hi — my inbox is open.</p>
+          <div class="contact-list">
+            <a href="mailto:zekesy1208@email.com" class="contact-row">
+              <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <div class="contact-row-body"><p class="contact-row-label">Email</p><p class="contact-row-val">zekesy1208@email.com</p></div>
+              <span class="contact-row-arrow">↗</span>
+            </a>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-row">
+              <div class="contact-row-icon" style="font-weight:700;font-size:13px">in</div>
+              <div class="contact-row-body"><p class="contact-row-label">LinkedIn</p><p class="contact-row-val">linkedin.com/in/yourprofile</p></div>
+              <span class="contact-row-arrow">↗</span>
+            </a>
+            <a href="https://github.com/Zekesy" target="_blank" class="contact-row">
+              <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></div>
+              <div class="contact-row-body"><p class="contact-row-label">GitHub</p><p class="contact-row-val">github.com/Zekesy</p></div>
+              <span class="contact-row-arrow">↗</span>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
 </Layout>
 
+<script>
+  const trigger = document.getElementById('contact-trigger');
+  const dropdown = document.getElementById('contact-dropdown');
+  const scrollLink = document.getElementById('scroll-to-contact');
+
+  trigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = dropdown?.hidden;
+    if (dropdown) dropdown.hidden = !isHidden;
+    trigger.setAttribute('aria-expanded', String(isHidden));
+    trigger.classList.toggle('open', isHidden ?? false);
+  });
+
+  document.addEventListener('click', (e) => {
+    const fab = document.getElementById('contact-fab');
+    if (dropdown && !dropdown.hidden && !fab?.contains(e.target as Node)) {
+      dropdown.hidden = true;
+      trigger?.classList.remove('open');
+      trigger?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  dropdown?.addEventListener('click', e => e.stopPropagation());
+  scrollLink?.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (dropdown) dropdown.hidden = true;
+    trigger?.classList.remove('open');
+    document.getElementById('contact-me')?.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
 <style>
-  /* ── Base ──────────────────────────────── */
-  :root {
-    --bg:        #0a0a0f;
-    --bg2:       #0f0f18;
-    --border:    rgba(255,255,255,0.07);
-    --accent:    #6ee7b7;        /* teal-green */
-    --accent2:   #818cf8;        /* indigo */
-    --text:      #e2e8f0;
-    --muted:     #64748b;
-    --card:      rgba(255,255,255,0.03);
-    --radius:    12px;
-    --font-head: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+  /* ═══════════════════════════════════
+     CONTACT FAB
+  ═══════════════════════════════════ */
+  #contact-fab { position: fixed; top: 14px; right: 20px; z-index: 200; }
+
+  .contact-trigger-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px; background: #111827; color: white;
+    border: none; border-radius: 999px; font-family: inherit;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    transition: background 0.2s, transform 0.15s; letter-spacing: 0.01em;
   }
+  .contact-trigger-btn:hover { background: #1f2937; transform: translateY(-1px); }
+  .chevron { transition: transform 0.2s; }
+  .contact-trigger-btn.open .chevron { transform: rotate(180deg); }
 
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+  .contact-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    width: 240px; background: white; border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12); padding: 8px;
+    border: 1px solid #e5e7eb;
+  }
+  .cd-item {
+    display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+    border-radius: 8px; text-decoration: none; color: #111827; transition: background 0.15s;
+  }
+  .cd-item:hover { background: #f9fafb; }
+  .cd-icon {
+    width: 28px; height: 28px; border-radius: 6px; background: #f3f4f6; color: #374151;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cd-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; margin: 0 0 1px; }
+  .cd-val   { font-size: 12px; color: #111827; margin: 0; font-weight: 500; }
+  .cd-divider { height: 1px; background: #e5e7eb; margin: 6px 0; }
+  .cd-scroll-link {
+    display: block; text-align: center; padding: 8px; font-size: 12px;
+    color: #374151; text-decoration: none; border-radius: 8px; font-weight: 500; transition: background 0.15s;
+  }
+  .cd-scroll-link:hover { background: #f9fafb; }
 
-  #about-page {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
+  /* ═══════════════════════════════════
+     PAGE SHELL — 90% content, centered
+  ═══════════════════════════════════ */
+  .about-page {
+    width: 100%; min-height: 100vh; background: white;
+    display: flex; justify-content: center;
+  }
+  .page-col {
+    width: 90%;
+    max-width: 1400px;
+    min-width: 320px;
+    background: white;
     min-height: 100vh;
   }
 
-  section {
-    padding: 96px 0;
-    border-bottom: 1px solid var(--border);
-  }
+  /* ═══════════════════════════════════
+     MAIN
+  ═══════════════════════════════════ */
+  #about-main { padding: 40px 0 80px; }
 
-  .section-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
+  section { padding: 56px 0; border-bottom: 1px solid #e5e7eb; }
+  section:first-child { padding-top: 0; }
+  section:last-child  { border-bottom: none; padding-bottom: 0; }
 
   .section-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 12px;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9ca3af; display: block; margin-bottom: 6px;
   }
-
   .section-heading {
-    font-family: var(--font-head);
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 800;
-    color: #fff;
-    margin: 0 0 48px;
-    letter-spacing: -0.02em;
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 700; color: #111827; margin: 0 0 28px; line-height: 1.3;
   }
 
-  /* ── About ─────────────────────────────── */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 56px;
-    align-items: start;
-  }
+  /* ═══════════════════════════════════
+     ABOUT GRID
+  ═══════════════════════════════════ */
+  .about-grid { display: grid; grid-template-columns: 160px 1fr; gap: 40px; align-items: start; }
+  .about-photo-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
   .photo-frame {
-    width: 200px;
-    height: 240px;
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: var(--card);
-    position: relative;
+    width: 140px; height: 174px; border-radius: 10px; overflow: hidden;
+    border: 1px solid #e5e7eb; background: #f9fafb;
   }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .photo-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .qualifications-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 14px;
-  }
-
-  .badge {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    letter-spacing: 0.05em;
+  .qual-badges { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+  .qual-badge {
+    font-size: 11px; padding: 3px 10px; border-radius: 999px;
+    border: 1px solid #e5e7eb; color: #374151; background: #f9fafb;
   }
 
   .name-heading {
-    font-family: var(--font-head);
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 800;
-    color: #fff;
-    margin: 0 0 6px;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
+    font-size: clamp(26px, 3vw, 36px);
+    font-weight: 700; color: #111827; margin: 0 0 6px; line-height: 1.2;
   }
 
-  .info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px 32px;
-    margin: 28px 0 28px;
-  }
-
-  .info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; margin: 16px 0 20px; }
+  .info-item { display: flex; flex-direction: column; gap: 2px; }
   .info-item.full-width { grid-column: 1 / -1; }
 
-  .info-key {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
+  .info-key  { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
+  .info-val  { font-size: 15px; color: #111827; font-weight: 500; }
+  .info-val.highlight-green { color: #059669; }
+  .uni { font-size: 13px; color: #6b7280; font-style: italic; }
+
+  .bio { font-size: 15px; line-height: 1.75; color: #374151; margin: 0 0 20px; }
+
+  .skills-inline { display: flex; flex-direction: column; gap: 10px; }
+  .skills-label  { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
+  .skills-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .skill-badge { font-size: 12px; padding: 3px 11px; border-radius: 999px; font-weight: 500; }
+  .skill-badge.lang      { background: #f9fafb; color: #374151; border: 1px solid #e5e7eb; }
+  .skill-badge.framework { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+  .skill-badge.tool      { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+
+  /* ═══════════════════════════════════
+     VERTICAL TIMELINE — left spine, all cards right
+  ═══════════════════════════════════ */
+  .tl-legend {
+    display: flex; gap: 12px; align-items: center; margin-bottom: 32px;
   }
 
-  .info-val {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
+  .col-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; padding: 5px 14px;
+    border-radius: 999px;
+  }
+  .col-pill.academic { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+  .col-pill.work     { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+  .pill-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .pill-dot.academic-dot { background: #7c3aed; }
+  .pill-dot.work-dot     { background: #059669; }
+
+  /* Timeline list */
+  .vtimeline {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column;
   }
 
-  .info-val.employed { color: var(--accent); }
-  .info-val.score    { color: var(--accent2); font-family: var(--font-mono); }
-
-  .uni {
-    font-size: 12px;
-    color: var(--muted);
-    font-style: italic;
-  }
-
-  .bio {
-    font-size: 14px;
-    line-height: 1.75;
-    color: #94a3b8;
-    max-width: 520px;
-    margin: 0;
-  }
-
-  /* ── Research Interests ─────────────────── */
-  #research-interests { background: var(--bg2); }
-
-  .interests-grid {
+  /* Each row: narrow spine column + card column */
+  .tl-item {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 32px 1fr;
+    gap: 0 20px;
+    align-items: stretch;
   }
 
-  .interest-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .interest-card:hover {
-    border-color: rgba(110, 231, 183, 0.3);
-    transform: translateY(-2px);
-  }
-
-  .interest-icon {
-    font-size: 22px;
-    color: var(--accent);
-    margin-bottom: 14px;
-  }
-
-  .interest-card h3 {
-    font-family: var(--font-head);
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 10px;
-  }
-
-  .interest-card p {
-    font-size: 13px;
-    line-height: 1.7;
-    color: #94a3b8;
-    margin: 0;
-  }
-
-  /* ── Education ──────────────────────────── */
-  .edu-list {
+  /* ── Spine ── */
+  .tl-spine {
     display: flex;
     flex-direction: column;
-    gap: 0;
-  }
-
-  .edu-item {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 32px;
-    padding: 32px 0;
-    border-top: 1px solid var(--border);
-  }
-
-  .edu-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-top: 4px;
-  }
-
-  .edu-year {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-
-  .edu-degree {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  .edu-body h3 {
-    font-family: var(--font-head);
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 4px;
-  }
-
-  .edu-uni {
-    font-size: 13px;
-    color: var(--accent2);
-    margin: 0 0 12px;
-  }
-
-  .edu-thesis {
-    font-size: 13px;
-    color: #94a3b8;
-    line-height: 1.65;
-    margin: 0;
-    padding: 12px 16px;
-    border-left: 2px solid var(--accent);
-    background: rgba(110, 231, 183, 0.04);
-    border-radius: 0 6px 6px 0;
-  }
-
-  .thesis-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    margin-right: 6px;
-  }
-
-  /* ── Timeline ───────────────────────────── */
-  #experience { background: var(--bg2); }
-
-  .timeline {
+    align-items: center;
     position: relative;
-    padding-left: 32px;
+    flex-shrink: 0;
   }
 
-  .timeline-line {
-    position: absolute;
-    left: 0;
-    top: 8px;
-    bottom: 8px;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
-    opacity: 0.4;
+  .spine-line {
+    width: 2px;
+    flex: 1;
+    min-height: 16px;
   }
 
-  .timeline-item {
-    position: relative;
-    padding: 0 0 48px 40px;
-  }
+  /* Academic items: purple spine line */
+  .tl-item.academic .spine-line { background: #ddd6fe; }
+  /* Work items: green spine line */
+  .tl-item.work     .spine-line { background: #bbf7d0; }
 
-  .timeline-item:last-child { padding-bottom: 0; }
+  .spine-line.hidden { background: transparent; }
 
-  .timeline-dot {
-    position: absolute;
-    left: -4px;
-    top: 6px;
-    width: 9px;
-    height: 9px;
+  /* Dot */
+  .tl-dot {
+    width: 13px; height: 13px;
     border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(110, 231, 183, 0.2);
+    border: 2.5px solid white;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1.5px currentColor;
+    z-index: 1;
   }
+
+  .tl-item.academic .tl-dot { background: #7c3aed; color: #7c3aed; }
+  .tl-item.work     .tl-dot { background: #059669; color: #059669; }
+
+  /* ── Card ── */
+  .tl-card {
+    padding: 16px 0 20px;
+    /* Colored left border to reinforce the type */
+    padding-left: 16px;
+    border-left: 3px solid transparent;
+    margin: 4px 0;
+    transition: border-color 0.2s;
+  }
+
+  .tl-item.academic .tl-card { border-left-color: #ddd6fe; }
+  .tl-item.work     .tl-card { border-left-color: #bbf7d0; }
+
+  .tl-item.academic:hover .tl-card { border-left-color: #7c3aed; }
+  .tl-item.work:hover     .tl-card { border-left-color: #059669; }
 
   .tl-date {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-    display: block;
-    margin-bottom: 6px;
+    font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
+    display: block; margin-bottom: 5px; font-weight: 600;
   }
 
-  .tl-role {
-    font-family: var(--font-head);
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 4px;
-  }
+  .tl-item.academic .tl-date { color: #7c3aed; }
+  .tl-item.work     .tl-date { color: #059669; }
 
-  .tl-org {
-    font-size: 13px;
-    color: var(--accent2);
-    margin: 0 0 12px;
-  }
+  .tl-role { font-size: 15px; font-weight: 700; color: #111827; margin: 0 0 3px; }
+  .tl-org  { font-size: 13px; color: #6b7280; margin: 0 0 7px; }
+  .tl-desc { font-size: 13px; line-height: 1.65; color: #374151; margin: 0 0 10px; }
 
-  .tl-desc {
-    font-size: 13px;
-    line-height: 1.7;
-    color: #94a3b8;
-    margin: 0 0 14px;
-    max-width: 600px;
-  }
-
-  .tl-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .tl-tags span {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 3px 9px;
-    border-radius: 999px;
-    background: rgba(129, 140, 248, 0.1);
-    border: 1px solid rgba(129, 140, 248, 0.25);
-    color: var(--accent2);
-    letter-spacing: 0.04em;
+    font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    background: #f9fafb; color: #374151; border: 1px solid #e5e7eb;
   }
 
-  /* ── Publications ───────────────────────── */
-  .pub-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
+  /* ═══════════════════════════════════
+     PUBLICATIONS
+  ═══════════════════════════════════ */
+  .pub-list { display: flex; flex-direction: column; }
   .pub-item {
-    display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 24px;
-    padding: 28px 0;
-    border-top: 1px solid var(--border);
-    align-items: start;
+    display: grid; grid-template-columns: 48px 1fr; gap: 20px;
+    padding: 22px 0; border-top: 1px solid #e5e7eb; align-items: start;
   }
-
-  .pub-year {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-    padding-top: 4px;
-  }
-
-  .pub-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
-    margin: 0 0 6px;
-    line-height: 1.5;
-    font-family: var(--font-head);
-  }
-
-  .pub-authors {
-    font-size: 12px;
-    color: #94a3b8;
-    margin: 0 0 4px;
-  }
-
-  .pub-authors strong { color: var(--accent); }
-
-  .pub-venue {
-    font-size: 12px;
-    color: var(--muted);
-    font-style: italic;
-    margin: 0 0 12px;
-  }
-
-  .pub-links {
-    display: flex;
-    gap: 12px;
-  }
-
+  .pub-year  { font-size: 12px; color: #6b7280; padding-top: 3px; font-weight: 600; }
+  .pub-title { font-size: 16px; font-weight: 600; color: #111827; margin: 0 0 5px; line-height: 1.5; }
+  .pub-authors { font-size: 14px; color: #6b7280; margin: 0 0 3px; }
+  .pub-authors strong { color: #111827; }
+  .pub-venue { font-size: 13px; color: #9ca3af; font-style: italic; margin: 0 0 10px; }
+  .pub-links { display: flex; gap: 12px; }
   .pub-link {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent2);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(129, 140, 248, 0.3);
-    padding-bottom: 1px;
+    font-size: 12px; color: #374151; text-decoration: none;
+    border-bottom: 1px solid #d1d5db; padding-bottom: 1px;
     transition: color 0.15s, border-color 0.15s;
   }
+  .pub-link:hover { color: #111827; border-color: #6b7280; }
 
-  .pub-link:hover {
-    color: #fff;
-    border-color: #fff;
-  }
-
-  /* ── Skills ─────────────────────────────── */
-  #skills { background: var(--bg2); }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-  }
-
-  .skill-group h3 {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    margin: 0 0 12px;
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .skill-tags span {
-    font-size: 12px;
-    padding: 5px 12px;
-    border-radius: var(--radius);
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--text);
-    transition: border-color 0.15s, color 0.15s;
-  }
-
-  .skill-tags span:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  /* ── Projects ───────────────────────────── */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
+  /* ═══════════════════════════════════
+     PROJECTS
+  ═══════════════════════════════════ */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
   .project-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    transition: border-color 0.2s, transform 0.2s;
+    padding: 24px 0; border-bottom: 1px solid #e5e7eb;
+    display: flex; flex-direction: column; gap: 10px;
   }
+  .project-card:nth-child(odd)  { padding-right: 36px; border-right: 1px solid #e5e7eb; }
+  .project-card:nth-child(even) { padding-left: 36px; }
+  .project-card:nth-last-child(-n+2) { border-bottom: none; }
 
-  .project-card:hover {
-    border-color: rgba(110, 231, 183, 0.25);
-    transform: translateY(-2px);
-  }
+  .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .project-header h3 { font-size: 15px; font-weight: 700; color: #111827; margin: 0; line-height: 1.3; }
+  .icon-link { color: #d1d5db; transition: color 0.15s; display: flex; align-items: center; flex-shrink: 0; }
+  .icon-link:hover { color: #374151; }
 
-  .project-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .project-header h3 {
-    font-family: var(--font-head);
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
-    line-height: 1.3;
-  }
-
-  .project-links {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-
-  .icon-link {
-    color: var(--muted);
-    transition: color 0.15s;
-    display: flex;
-    align-items: center;
-  }
-
-  .icon-link:hover { color: var(--accent); }
-
-  .project-desc {
-    font-size: 13px;
-    line-height: 1.7;
-    color: #94a3b8;
-    margin: 0;
-    flex: 1;
-  }
-
-  .project-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
+  .project-desc { font-size: 14px; line-height: 1.7; color: #6b7280; margin: 0; flex: 1; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
   .project-stack span {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: rgba(110, 231, 183, 0.07);
-    border: 1px solid rgba(110, 231, 183, 0.2);
-    color: var(--accent);
-    letter-spacing: 0.04em;
+    font-size: 11px; padding: 2px 9px; border-radius: 999px;
+    background: #f9fafb; color: #374151; border: 1px solid #e5e7eb;
   }
-
-  .project-footer { margin-top: auto; }
-
-  .project-article-link {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent2);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(129, 140, 248, 0.3);
-    padding-bottom: 1px;
+  .project-link {
+    font-size: 12px; color: #374151; text-decoration: none;
+    border-bottom: 1px solid #d1d5db; padding-bottom: 1px; width: fit-content; margin-top: auto;
     transition: color 0.15s, border-color 0.15s;
   }
+  .project-link:hover { color: #111827; border-color: #6b7280; }
 
-  .project-article-link:hover {
-    color: #fff;
-    border-color: #fff;
+  /* ═══════════════════════════════════
+     CONTACT
+  ═══════════════════════════════════ */
+  .contact-intro { font-size: 15px; color: #6b7280; margin: -16px 0 24px; line-height: 1.65; }
+  .contact-list { display: flex; flex-direction: column; }
+  .contact-row {
+    display: flex; align-items: center; gap: 16px; padding: 18px 0;
+    border-bottom: 1px solid #e5e7eb; text-decoration: none; color: #111827;
+    transition: background 0.15s;
   }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row:hover .contact-row-val { color: #059669; }
 
-  /* ── Contact ────────────────────────────── */
-  #contact-me { background: var(--bg2); }
-
-  .contact-inner { text-align: center; }
-
-  .contact-inner .section-label { justify-content: center; display: block; }
-  .contact-inner .section-heading { text-align: center; }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+  .contact-row-icon {
+    width: 36px; height: 36px; border-radius: 8px; background: #f3f4f6; color: #374151;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
+  .contact-row-body { flex: 1; }
+  .contact-row-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin: 0 0 2px; }
+  .contact-row-val   { font-size: 15px; font-weight: 500; color: #374151; margin: 0; transition: color 0.15s; }
+  .contact-row-arrow { font-size: 16px; color: #d1d5db; }
 
-  .contact-card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 24px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    text-decoration: none;
-    color: var(--text);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .contact-card:hover {
-    border-color: rgba(110, 231, 183, 0.3);
-    transform: translateY(-2px);
-  }
-
-  .contact-icon {
-    font-size: 22px;
-    color: var(--accent);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-weight: 700;
-    font-family: var(--font-head);
-  }
-
-  .contact-type {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin: 0 0 4px;
-  }
-
-  .contact-value {
-    font-size: 13px;
-    color: var(--text);
-    margin: 0;
-  }
-
-  /* ── Responsive ─────────────────────────── */
-  @media (max-width: 768px) {
-    .about-grid        { grid-template-columns: 1fr; gap: 32px; }
-    .interests-grid    { grid-template-columns: 1fr; }
-    .projects-grid     { grid-template-columns: 1fr; }
-    .skills-grid       { grid-template-columns: 1fr; }
-    .contact-grid      { grid-template-columns: 1fr; }
-    .edu-item          { grid-template-columns: 1fr; gap: 8px; }
-    .pub-item          { grid-template-columns: 1fr; }
-    .pub-year          { display: none; }
-    .info-grid         { grid-template-columns: 1fr; }
+  /* ═══════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════ */
+  @media (max-width: 800px) {
+    .page-col { width: 94%; }
+    #about-main { padding: 28px 0 60px; }
+    #contact-fab { top: 10px; right: 12px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card:nth-child(odd)  { padding-right: 0; border-right: none; border-bottom: 1px solid #e5e7eb; }
+    .project-card:nth-child(even) { padding-left: 0; }
+    .project-card:last-child { border-bottom: none; }
+    section { padding: 36px 0; }
   }
 </style>
