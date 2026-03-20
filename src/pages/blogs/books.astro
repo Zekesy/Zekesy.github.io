@@ -13,9 +13,8 @@ const books = allBlogs
 
 ---
 <BlogLayout title="Books" bg="#dbeafe">
- <div class="max-w-7xl mx-auto px-4">
     <h1 class="text-5xl font-bold text-black mb-8 text-left">Books</h1>
-    
+    <div class="w-[80%] mx-auto">
     <!-- book Grid -->
     <div class="book-grid mb-12">
       {books.map((book, index) => (
@@ -104,7 +103,7 @@ const books = allBlogs
 
         console.log('Loaded clapperboard:', clapperMesh); // Debug
 
-        const FPS = 30;
+        const FPS = 15;
         const bookCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         bookCanvases.forEach((canvas, index) => {
@@ -115,7 +114,7 @@ const books = allBlogs
           let uprightAngle = -Math.PI / 2;
           function animatebook() {
             const dt = 1 / FPS;
-            bookAngle += Math.PI * dt * 0.7;
+            bookAngle += Math.PI * dt * 0.2;
             
             renderer.clear({r: 0, g: 0, b: 0, a: 0});
             

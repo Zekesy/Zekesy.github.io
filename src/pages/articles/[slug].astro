@@ -1,0 +1,186 @@
+---
+// src/pages/articles/[slug].astro
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+---
+
+<ArticleLayout title={entry.data.title}>
+  <a href="/articles/articles" class="back-btn">← Articles</a>
+
+  <p class="article-date">{formatDate(entry.data.pubDate)}</p>
+  {entry.data.updateDate && (
+    <p class="article-updated">Updated {formatDate(entry.data.updateDate)}</p>
+  )}
+
+  <h1 class="article-title">{entry.data.title}</h1>
+
+  <hr class="divider" />
+
+  <article class="article-body">
+    <Content />
+  </article>
+</ArticleLayout>
+
+<style>
+  .back-btn {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: #2e3440; }
+
+  .article-date {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9ca3af;
+    margin: 0 0 4px;
+  }
+  .article-updated {
+    font-size: 12px;
+    color: #d1d5db;
+    font-style: italic;
+    margin: 0 0 8px;
+  }
+  .article-title {
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 700;
+    color: #2e3440;
+    margin: 8px 0 24px;
+    line-height: 1.25;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 0 0 36px;
+  }
+
+  /* ─── body typography ─── */
+  .article-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #2e3440;
+  }
+
+  .article-body :global(p)  { margin: 0 0 1.4em; }
+
+  .article-body :global(h2) {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2e3440;
+    margin: 2.5em 0 0.75em;
+  }
+  .article-body :global(h3) {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2e3440;
+    margin: 2em 0 0.5em;
+  }
+
+  .article-body :global(strong) { color: #2e3440; }
+  .article-body :global(em)     { color: #4c566a; }
+
+  .article-body :global(a) {
+    color: #2e3440;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s;
+  }
+  .article-body :global(a:hover) { color: #059669; }
+
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    margin: 0 0 1.4em;
+    padding-left: 1.5em;
+  }
+  .article-body :global(li) { margin-bottom: 0.4em; }
+
+  .article-body :global(blockquote) {
+    margin: 1.5em 0;
+    padding: 12px 18px;
+    border-left: 3px solid #e5e7eb;
+    color: #6b7280;
+    font-style: italic;
+  }
+  .article-body :global(blockquote p) { margin: 0; }
+
+  .article-body :global(pre) {
+    background: #2e3440;
+    color: #eceff4;
+    padding: 18px 22px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0 0 1.4em;
+  }
+  .article-body :global(code) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: #f3f4f6;
+    color: #2e3440;
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+  .article-body :global(pre code) {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+
+  .article-body :global(hr) {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 2.5em 0;
+  }
+
+  .article-body :global(img) {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 8px 0 1.4em;
+    display: block;
+  }
+
+  .article-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 1.4em;
+    font-size: 14px;
+  }
+  .article-body :global(th) {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  .article-body :global(td) {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .article-body :global(tr:last-child td) { border-bottom: none; }
+</style>

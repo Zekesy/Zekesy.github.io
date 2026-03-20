@@ -5,6 +5,7 @@ updateDate: 2026-01-18
 description: "2025 Oct 8 - 10"
 type: article
 hashtags: ["CyberSecurity","Event"]
+content_path: "/articles/hardeningproject"
 ---
 
 The Hardening project is a 3-day cybersecurity event hosted annually in Japan.

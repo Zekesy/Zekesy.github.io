@@ -15,9 +15,8 @@ const tvshows = allBlogs
 ---
 
 <BlogLayout title="TV Shows" bg="#dbeafe">
-<div class="max-w-7xl mx-auto px-4">
-    <h1 class="text-5xl font-bold text-black mb-8 text-left">TV Shows</h1>
-    
+    <h1 class="text-5xl font-bold text-black mb-8 text-left">Coming Soon!</h1>
+    <div class="w-[80%] mx-auto">
     <!-- show Grid -->
     <div class="show-grid mb-12">
       {tvshows.map((show, index) => (
@@ -28,8 +27,7 @@ const tvshows = allBlogs
         </a>
       ))}
     </div>
-  </div>
-
+    </div>
   <style>
     .show-grid {
       display: grid;
@@ -84,7 +82,7 @@ const tvshows = allBlogs
     }
   </style>
 
-  <script type="module">
+  <!-- <script type="module">
     import { Renderer3D } from "/src/scripts/rendering.js";
     import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
 
@@ -106,7 +104,7 @@ const tvshows = allBlogs
 
         console.log('Loaded clapperboard:', clapperMesh); // Debug
 
-        const FPS = 30;
+        const FPS = 15;
         const showCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         showCanvases.forEach((canvas, index) => {
@@ -137,7 +135,7 @@ const tvshows = allBlogs
         console.error('Error loading clapperboard model:', error);
       }
     }); 
-  </script>
+  </script> -->
 
 
 </BlogLayout>

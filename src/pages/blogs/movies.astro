@@ -86,7 +86,6 @@ const movies = allBlogs
   <script type="module">
     import { Renderer3D } from "/src/scripts/rendering.js";
     import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
-    import { createClapperboard, createStripedClapperboard} from "/src/scripts/shapes.js";
   
     window.addEventListener("DOMContentLoaded", async () => {
       try {
@@ -106,7 +105,7 @@ const movies = allBlogs
 
         console.log('Loaded clapperboard:', clapperMesh); // Debug
 
-        const FPS = 30;
+        const FPS = 15;
         const movieCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         movieCanvases.forEach((canvas, index) => {

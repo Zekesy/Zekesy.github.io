@@ -9,7 +9,8 @@ const {
   description,
   hashtags = [],
   pubDate,
-  type
+  type,
+  ref_link,
 } = entry.data;
 
 const formattedDate = pubDate.toLocaleDateString("en-US", {
@@ -17,7 +18,7 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
   day: "numeric",
   year: "numeric",
 });
-
+const readMoreUrl = entry.data.content_path ?? `/${type}s/${entry.id}`;
 // Type-specific styling
 const typeConfig = {
   article: { icon: '📄', color: '#f093fb', label: 'Article' },
@@ -73,7 +74,7 @@ const config = typeConfig[type] || typeConfig.note;
             <time class="article-date">{formattedDate}</time>
             
             <div class="article-actions">
-                <a href={`/${type}s/${entry.slug}`} class="read-more-btn">
+              <a href={readMoreUrl} class="read-more-btn">
                     Read more
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14"/>

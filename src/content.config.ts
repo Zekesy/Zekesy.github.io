@@ -29,7 +29,10 @@ const articles = defineCollection({
     schema: z.object({
         title: z.string(),
         pubDate: z.coerce.date(),
-        updateDate: z.coerce.date().optional(),
+        updatedDate: z.coerce.date().optional(),
+        show: z.boolean().optional(),
+        description: z.string().optional(),
+        tags: z.array(z.string()).optional(),
         related: z.array(
             z.union([
                 reference('blog'),
@@ -60,6 +63,17 @@ const notes = defineCollection({
     })
 });
 
-export const collections = { blog, articles, notes };
+const projects = defineCollection({
+   loader: glob({ pattern: "**/*.md", base: "./src/content/projects"}),
+   schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    github_link: z.string().optional(),
+    ref_link: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+  })
+});
+
+export const collections = { blog, articles, notes, projects};
 
 

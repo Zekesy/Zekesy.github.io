@@ -2,11 +2,147 @@
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import { getCollection } from 'astro:content';
 
-
-
+const allProjects = await getCollection('projects');
+const projects = allProjects.map(entry => ({
+  title: entry.data.title,
+  description: entry.data.description,
+  github_link: entry.data.github_link,
+  ref_link: entry.data.ref_link,
+  tags: entry.data.tags ?? [],
+}));
 ---
 
-<BlogLayout title="Personal Projects" bg="#dbeafe">
+<BlogLayout title="Projects" bg="#f0fdf4">
+  <h1 class="text-5xl font-bold text-black mb-8 text-left">Projects</h1>
+  <div class="w-[80%] mx-auto">
+    <div class="project-grid mb-12">
+      {projects.map((project, index) => (
+        <a
+          href={project.github_link ?? project.ref_link ?? '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="project-item"
+          title={project.description}
+        >
+          <canvas id={`canvas-${index}`} class="project-canvas"></canvas>
+          <h3 class="project-title">{project.title}</h3>
+          {project.tags.length > 0 && (
+            <div class="project-tags">
+              {project.tags.slice(0, 3).map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
 
+  <style>
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
 
+    @media (max-width: 1024px) {
+      .project-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .project-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .project-item:hover { transform: scale(1.1); }
+
+    .project-canvas {
+      width: 100%;
+      aspect-ratio: 1;
+      background: transparent;
+    }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      margin: 0.25rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .project-item:hover .project-title { color: #111; }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #555;
+      background: #e5e7eb;
+      border-radius: 4px;
+      padding: 1px 6px;
+    }
+  </style>
+
+  <script type="module">
+    import { Renderer3D } from "/src/scripts/rendering.js";
+    import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const response = await fetch('/src/assets/models/folder.obj');
+        if (!response.ok) throw new Error(`Failed to load OBJ: ${response.status}`);
+        const parsedMesh = parseOBJ(await response.text());
+        const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
+        const folderMesh = triangulate(normalizedMesh);
+
+        folderMesh.faceColors = null;
+        folderMesh.colors = null;
+        folderMesh.color = { r: 217, g: 166, b: 51 };
+
+        const FPS = 15;
+        const projectCanvases = document.querySelectorAll('[id^="canvas-"]');
+
+        projectCanvases.forEach((canvas, index) => {
+          const renderer = new Renderer3D(canvas.id);
+
+          let angle = index * 0.3;
+          const uprightAngle = 0;
+
+          function animate() {
+            angle += Math.PI * (1 / FPS) * 0.2;
+            renderer.clear({ r: 0, g: 0, b: 0, a: 0 });
+            renderer.render(folderMesh, {
+              rotation: { x: uprightAngle, y: angle, z: 0 },
+              translation: { x: 0, y: 0, z: 6 },
+              scale: 1,
+            });
+            requestAnimationFrame(animate);
+          }
+
+          animate();
+        });
+
+      } catch (error) {
+        console.error('Error loading folder model:', error);
+      }
+    });
+  </script>
 </BlogLayout>

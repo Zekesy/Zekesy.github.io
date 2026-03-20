@@ -1,0 +1,192 @@
+---
+import "../../styles/global.css";
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/NavBar.astro';
+import { getCollection } from 'astro:content';
+import ArrowRight from "@lucide/astro/icons/arrow-right";
+
+const articles = await getCollection('articles');
+
+const sorted = articles
+  .filter(a => a.data.show)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+---
+
+<Layout>
+  <Navbar />
+  <div class="articles-page">
+    <div class="page-col">
+      <main id="articles-main">
+
+        <section id="articles-hero">
+          <p class="section-label">Writing</p>
+          <h1 class="page-heading">Articles</h1>
+          <p class="page-intro">Notes on my experiences and things I've built or learned.</p>
+        </section>
+
+        <section id="articles-list">
+          {sorted.length === 0 ? (
+            <p class="empty-state">No articles yet — check back soon.</p>
+          ) : (
+            <div class="articles-grid">
+              {sorted.map((article) => (
+                <div class="article-card">
+
+                  <div class="article-meta">
+                    <time class="article-date">{formatDate(article.data.pubDate)}</time>
+                    {article.data.updatedDate && (
+                      <span class="article-updated">Updated {formatDate(article.data.updatedDate)}</span>
+                    )}
+                  </div>
+
+                  <h2 class="article-title">{article.data.title}</h2>
+
+                  {article.data.description && (
+                    <p class="article-description">{article.data.description}</p>
+                  )}
+
+                  <div class="article-footer">
+                    {article.data.tags && article.data.tags.length > 0 && (
+                      <div class="article-tags">
+                        {article.data.tags.map((tag: string, i: number) => (
+                          <span class={`skill-badge ${
+                            i % 3 === 0 ? 'badge-lang' :
+                            i % 3 === 1 ? 'badge-framework' :
+                            'badge-tool'
+                          }`}>{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                    <a href={`/articles/${article.id}`} class="article-btn">
+                      Read Article <ArrowRight size={13} />
+                    </a>
+                  </div>
+
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+      </main>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .articles-page {
+    width: 100%; min-height: 100vh; background: white;
+    display: flex; justify-content: center;
+  }
+  .page-col {
+    width: 90%; max-width: 1400px; min-width: 320px;
+    background: white; min-height: 100vh;
+  }
+
+  #articles-main { padding: 28px 0 80px; }
+
+  /* ── sections ── */
+  section { padding: 28px 0; border-bottom: 1px solid #e5e7eb; }
+  section:first-child { padding-top: 0; padding-bottom: 20px; }
+  section:last-child  { border-bottom: none; padding-bottom: 0; }
+
+  /* ── hero ── */
+  .section-label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9ca3af; display: block; margin-bottom: 4px;
+  }
+  .page-heading {
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 700; color: #111827; margin: 0 0 8px; line-height: 1.2;
+  }
+  .page-intro {
+    font-size: 14px; line-height: 1.65; color: #6b7280;
+    max-width: 560px; margin: 0;
+  }
+
+  /* ── grid ── */
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .article-card {
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .article-card:nth-child(odd)  { padding-right: 40px; border-right: 1px solid #e5e7eb; }
+  .article-card:nth-child(even) { padding-left: 40px; }
+  .article-card:nth-last-child(-n+2) { border-bottom: none; }
+  .article-card:last-child { border-bottom: none; }
+
+  /* ── meta ── */
+  .article-meta {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .article-date {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: #9ca3af; font-weight: 600; font-style: normal;
+  }
+  .article-updated {
+    font-size: 11px; color: #d1d5db; font-style: italic;
+  }
+
+  /* ── title ── */
+  .article-title {
+    font-size: clamp(15px, 1.6vw, 18px);
+    font-weight: 700; color: #111827; margin: 0; line-height: 1.35;
+  }
+
+  /* ── description ── */
+  .article-description {
+    font-size: 13px; line-height: 1.65; color: #6b7280; margin: 0;
+  }
+
+  /* ── footer ── */
+  .article-footer {
+    margin-top: 4px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  /* ── tags — same 3-color palette as about page skills ── */
+  .article-tags {
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+  .skill-badge {
+    font-size: 11px; padding: 3px 10px; border-radius: 999px; font-weight: 500;
+  }
+  .badge-lang      { background: #f9fafb; color: #374151; border: 1px solid #e5e7eb; }
+  .badge-framework { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+  .badge-tool      { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+
+  /* ── read link ── */
+  .article-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: #111827;
+    text-decoration: none; border-bottom: 1px solid #d1d5db;
+    padding-bottom: 1px; width: fit-content;
+    transition: color 0.15s, border-color 0.15s, gap 0.15s;
+  }
+  .article-btn:hover { color: #059669; border-color: #059669; gap: 8px; }
+
+  .empty-state {
+    font-size: 15px; color: #9ca3af; font-style: italic; padding: 40px 0;
+  }
+
+  /* ── responsive ── */
+  @media (max-width: 800px) {
+    .page-col { width: 94%; }
+    #articles-main { padding: 20px 0 60px; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-card:nth-child(odd)  { padding-right: 0; border-right: none; border-bottom: 1px solid #e5e7eb; }
+    .article-card:nth-child(even) { padding-left: 0; }
+    .article-card:last-child { border-bottom: none; }
+    section { padding: 24px 0; }
+  }
+</style>

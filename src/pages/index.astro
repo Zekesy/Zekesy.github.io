@@ -1,89 +1,330 @@
 ---
+import NavBar from '../components/NavBar.astro'
 import Layout from '../layouts/Layout.astro';
-import { ArrowRight } from '@lucide/astro';
-import background from '../assets/background.svg';
-import '../styles/global.css';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import "../styles/global.css";
+import NotesFeed from '../components/notes/NotesFeed.astro';
+import Hero from '../components/home/Hero.astro';
+import SearchBar from '../components/SearchBar.astro';
+import PageCards from '../components/home/PageCards.astro';
+
+const notes: CollectionEntry<'notes'>[] =
+  (await getCollection('notes')).sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  );
+
+const serializedNotes = notes.map(note => ({
+  id: note.id,
+  slug: note.slug,
+  data: {
+    title: note.data.title,
+    pubDate: note.data.pubDate.toISOString(),
+    hashtags: note.data.hashtags || [],
+    type: note.data.type,
+    avatar: note.data.avatar,
+    description: note.data.description
+  }
+}));
 ---
 
 <Layout>
-  <div class="page">
-    <div id="container">
-      <img id="background" src={background.src} alt="" fetchpriority="high" />
-        <main>
-          <section id="hero">
-            <h1>Hi I am Zeke Sy ...</h1>
-            <section id="links">
-              <a href="/home" class="button">
-                  <span>More</span>
-                  <ArrowRight />
-              </a>
-            </section>
-          </section>
-        </main>
+  <!-- Contact FAB — fixed viewport top-right -->
+  <div id="contact-fab">
+    <button id="contact-trigger" class="contact-trigger-btn" aria-expanded="false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      Contact
+      <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+    <div id="contact-dropdown" class="contact-dropdown" hidden>
+      <a href="mailto:sy.zeke@nowhere.co.jp" class="cd-item">
+        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+        <div><p class="cd-label">Email</p><p class="cd-val">zekesy1208@gmail.com</p></div>
+      </a>
+      <a href="https://linkedin.com/in/zeke-sy-95a76b232" target="_blank" class="cd-item">
+        <span class="cd-icon" style="font-weight:700;font-size:12px">in</span>
+        <div><p class="cd-label">LinkedIn</p><p class="cd-val">linkedin.com/in/zekesy</p></div>
+      </a>
+      <a href="https://github.com/Zekesy" target="_blank" class="cd-item">
+        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></span>
+        <div><p class="cd-label">GitHub</p><p class="cd-val">github.com/Zekesy</p></div>
+      </a>
     </div>
   </div>
+
+  <div class="home-page">
+    <div class="page-col">
+      <NavBar />
+      <Hero />
+      <PageCards class="mb-6"/>
+
+      <main class="feed-layout ">
+        <aside class="feed-sidebar">
+          <SearchBar />
+        </aside>
+        <section class="feed-col">
+          <NotesFeed notes={notes}/>
+        </section>
+      </main>
+    </div>
+  </div flex gap-6 max-w-6xl mx-auto>
 </Layout>
 
+<script type="application/json" id="notes-data" data-notes={JSON.stringify(serializedNotes)}></script>
+
+<script>
+interface NoteData {
+  id: string;
+  slug: string;
+  data: {
+    title: string;
+    pubDate: string;
+    hashtags: string[];
+    type: 'tweet' | 'article' | 'note';
+    avatar?: string;
+    description?: string;
+  };
+}
+interface FilterState {
+  query: string;
+  hashtag: string | null;
+  type: string;
+  sort: 'asc' | 'desc';
+  interaction: 'all' | 'liked' | 'bookmarked';
+}
+let state: FilterState = { query: "", hashtag: null, type: "all", sort: "desc", interaction: "all" };
+
+const notesDataEl = document.getElementById("notes-data");
+const allNotes: NoteData[] = JSON.parse(notesDataEl?.dataset.notes || "[]");
+const container = document.getElementById("notes-container");
+const searchInput = document.getElementById("search-input") as HTMLInputElement;
+const typeFilter = document.getElementById("type-filter") as HTMLSelectElement;
+const sortButton = document.getElementById("sort-button") as HTMLButtonElement;
+const sortText = document.getElementById("sort-text") as HTMLSpanElement;
+const clearFiltersBtn = document.getElementById("clear-filters") as HTMLButtonElement;
+const activeHashtagDiv = document.getElementById("active-hashtag") as HTMLDivElement;
+const hashtagValue = document.getElementById("hashtag-value") as HTMLSpanElement;
+const removeHashtagBtn = document.getElementById("remove-hashtag") as HTMLButtonElement;
+const resultsCount = document.getElementById("results-count") as HTMLSpanElement;
+const filterTabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+const allCountEl = document.getElementById('all-count');
+const likedCountEl = document.getElementById('liked-count');
+const bookmarkedCountEl = document.getElementById('bookmarked-count');
+
+function matchesSearchQuery(note: NoteData, query: string): boolean {
+  const q = query.toLowerCase();
+  if (note.data.title.toLowerCase().includes(q)) return true;
+  if (note.data.hashtags.some(t => t.toLowerCase().includes(q))) return true;
+  if (note.data.description?.toLowerCase().includes(q)) return true;
+  const d = new Date(note.data.pubDate);
+  return [d.getFullYear().toString(), d.toLocaleDateString("en-US",{month:"short"}), d.toLocaleDateString("en-US",{month:"long"}), d.toLocaleDateString("en-US")].some(s => s.toLowerCase().includes(q));
+}
+function matchesInteractionFilter(id: string): boolean {
+  if (state.interaction === 'all') return true;
+  const likes = JSON.parse(localStorage.getItem('note-likes') || '{}');
+  const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks') || '{}');
+  return state.interaction === 'liked' ? likes[id] === true : bookmarks[id] === true;
+}
+function applyFilters() {
+  let filtered = [...allNotes];
+  if (state.query) filtered = filtered.filter(n => matchesSearchQuery(n, state.query));
+  if (state.hashtag) filtered = filtered.filter(n => n.data.hashtags?.includes(state.hashtag!));
+  if (state.type !== "all") filtered = filtered.filter(n => n.data.type === state.type);
+  if (state.interaction !== 'all') filtered = filtered.filter(n => matchesInteractionFilter(n.id));
+  filtered.sort((a, b) => {
+    const da = new Date(a.data.pubDate).getTime(), db = new Date(b.data.pubDate).getTime();
+    return state.sort === "asc" ? da - db : db - da;
+  });
+  renderNotes(filtered);
+  updateResultsCount(filtered.length);
+}
+function renderNotes(notes: NoteData[]) {
+  if (!container) return;
+  const allCards = Array.from(container.querySelectorAll('[data-note-id]'));
+  const ids = new Set(notes.map(n => n.id));
+  allCards.forEach(c => { const el = c as HTMLElement; el.style.order='0'; el.style.display = ids.has(el.dataset.noteId||'') ? 'block' : 'none'; });
+  notes.forEach((n,i) => { const c = container.querySelector(`[data-note-id="${n.id}"]`) as HTMLElement; if(c) c.style.order=String(i); });
+  document.getElementById('no-results')?.remove();
+  document.getElementById('empty-interaction-state')?.remove();
+  if (!notes.length) {
+    const el = document.createElement('div');
+    el.style.cssText = 'text-align:center;padding:48px 0';
+    if (state.interaction !== 'all') {
+      el.id = 'empty-interaction-state';
+      const emoji = state.interaction==='liked'?'❤️':'🔖';
+      const msg = state.interaction==='liked'?'No liked notes yet':'No saved notes yet';
+      const sub = state.interaction==='liked'?'Click the heart icon on notes you enjoy':'Click the bookmark icon to save notes for later';
+      el.innerHTML = `<div style="font-size:40px;margin-bottom:10px">${emoji}</div><p style="font-size:15px;font-weight:600;color:#111827;margin:0 0 4px">${msg}</p><p style="font-size:13px;color:#6b7280;margin:0">${sub}</p>`;
+    } else {
+      el.id = 'no-results';
+      el.innerHTML = `<svg style="width:36px;height:36px;margin:0 auto 10px;display:block;color:#d1d5db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><p style="font-size:14px;color:#6b7280;margin:0">No notes found</p><p style="font-size:12px;color:#9ca3af;margin:4px 0 0">Try adjusting your filters</p>`;
+    }
+    container.appendChild(el);
+  }
+}
+function updateResultsCount(c: number) { if (resultsCount) resultsCount.textContent = String(c); }
+function updateInteractionCounts() {
+  const likes = JSON.parse(localStorage.getItem('note-likes')||'{}');
+  const bookmarks = JSON.parse(localStorage.getItem('note-bookmarks')||'{}');
+  if (allCountEl) allCountEl.textContent = String(allNotes.length);
+  if (likedCountEl) likedCountEl.textContent = String(Object.keys(likes).length);
+  if (bookmarkedCountEl) bookmarkedCountEl.textContent = String(Object.keys(bookmarks).length);
+}
+function updateHashtagDisplay() {
+  if (state.hashtag) { activeHashtagDiv?.classList.remove('hidden'); if(hashtagValue) hashtagValue.textContent=`#${state.hashtag}`; }
+  else activeHashtagDiv?.classList.add('hidden');
+}
+function clearAllFilters() {
+  state = { query:"", hashtag:null, type:"all", sort:"desc", interaction:"all" };
+  if(searchInput) searchInput.value="";
+  if(typeFilter) typeFilter.value="all";
+  if(sortButton) sortButton.dataset.sort="desc";
+  if(sortText) sortText.textContent="Newest First";
+  filterTabs.forEach(t => { t.classList.remove('active'); if(t.dataset.filter==='all') t.classList.add('active'); });
+  document.querySelectorAll('.hashtag-filter').forEach(e => e.classList.remove('font-bold','underline','text-secondary'));
+  updateHashtagDisplay(); applyFilters();
+}
+
+if(searchInput) searchInput.addEventListener('input', e => { state.query=(e.target as HTMLInputElement).value; applyFilters(); });
+if(typeFilter) typeFilter.addEventListener('change', e => { state.type=(e.target as HTMLSelectElement).value; applyFilters(); });
+if(sortButton) sortButton.addEventListener('click', () => { state.sort=state.sort==='desc'?'asc':'desc'; sortButton.dataset.sort=state.sort; if(sortText) sortText.textContent=state.sort==='desc'?'Newest First':'Oldest First'; applyFilters(); });
+if(clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearAllFilters);
+if(removeHashtagBtn) removeHashtagBtn.addEventListener('click', () => { state.hashtag=null; document.querySelectorAll('.hashtag-filter').forEach(e=>e.classList.remove('font-bold','underline','text-secondary')); updateHashtagDisplay(); applyFilters(); });
+filterTabs.forEach(tab => tab.addEventListener('click', () => { filterTabs.forEach(t=>t.classList.remove('active')); tab.classList.add('active'); state.interaction=(tab.dataset.filter as any)||'all'; applyFilters(); }));
+
+document.addEventListener('click', (e) => {
+  const target = e.target as HTMLElement;
+  if (target.classList.contains('hashtag-filter')) {
+    e.preventDefault();
+    const hashtag = target.dataset.hashtag;
+    if (state.hashtag === hashtag) { state.hashtag=null; document.querySelectorAll('.hashtag-filter').forEach(el=>el.classList.remove('font-bold','underline','text-secondary')); }
+    else { state.hashtag=hashtag||null; document.querySelectorAll('.hashtag-filter').forEach(el=>el.classList.remove('font-bold','underline','text-secondary')); if(hashtag) document.querySelectorAll(`[data-hashtag="${hashtag}"]`).forEach(el=>el.classList.add('font-bold','underline','text-secondary')); }
+    updateHashtagDisplay(); applyFilters();
+  }
+  const fab = document.getElementById('contact-fab');
+  const dd = document.getElementById('contact-dropdown');
+  if (fab && dd && !fab.contains(target) && !dd.hidden) { dd.hidden=true; document.getElementById('contact-trigger')?.classList.remove('open'); document.getElementById('contact-trigger')?.setAttribute('aria-expanded','false'); }
+});
+
+window.addEventListener('notesFilterChange', () => { updateInteractionCounts(); applyFilters(); });
+document.addEventListener('keydown', e => {
+  if ((e.metaKey||e.ctrlKey) && e.key==='k') { e.preventDefault(); searchInput?.focus(); }
+  if (e.key==='Escape' && searchInput===document.activeElement) { if(searchInput) searchInput.value=''; state.query=''; applyFilters(); }
+});
+
+const trigger = document.getElementById('contact-trigger');
+const dropdown = document.getElementById('contact-dropdown');
+trigger?.addEventListener('click', e => {
+  e.stopPropagation();
+  const isHidden = dropdown?.hidden;
+  if(dropdown) dropdown.hidden=!isHidden;
+  trigger.setAttribute('aria-expanded', String(isHidden));
+  trigger.classList.toggle('open', isHidden??false);
+});
+dropdown?.addEventListener('click', e => e.stopPropagation());
+
+updateResultsCount(allNotes.length);
+updateInteractionCounts();
+updateHashtagDisplay();
+applyFilters();
+</script>
+
 <style>
-    #background {
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        filter: blur(100px);
-    }
+  /* ── shared design tokens ──────────────────────
+     Copy these exact values into about.astro too
+     --color-text:       #111827
+     --color-secondary:  #374151
+     --color-muted:      #6b7280
+     --color-faint:      #9ca3af
+     --color-divider:    #e5e7eb
+     --color-surface:    #f9fafb
+     --color-green:      #059669
+  ─────────────────────────────────────────────── */
 
-    #container {
-        font-family: Inter, Robot, 'Helvetica Neue', 'Arial Nova', 
-        'Nimbus Sans', Arial, sans-serif;
-        height: 100%; 
-        position: relative;
-    }
+  /* Contact FAB */
+  #contact-fab { position: fixed; top: 14px; right: 20px; z-index: 200; }
 
-    main {
-        height: 100%;
-        display: flex;
-        justify-content: center; 
-    }
+  .contact-trigger-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px; background: #111827; color: white;
+    border: none; border-radius: 999px; font-family: inherit;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    transition: background 0.2s, transform 0.15s; letter-spacing: 0.01em;
+  }
+  .contact-trigger-btn:hover { background: #1f2937; transform: translateY(-1px); }
+  .chevron { transition: transform 0.2s; }
+  .contact-trigger-btn.open .chevron { transform: rotate(180deg); }
 
-    #hero {
-      display: flex; 
-      align-items: start; 
-      flex-direction: column;
-      justify-content: center;
-      padding: 16px;
-    }
-    h1 {
-        font-size: 50px; 
-        /* em is scale proportionate to direct parent element */
-        margin-top: 1em 
-    }
+  .contact-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    width: 240px; background: white; border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12); padding: 8px;
+    border: 1px solid #e5e7eb;
+  }
+  .cd-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: 8px;
+    text-decoration: none; color: #111827; transition: background 0.15s;
+  }
+  .cd-item:hover { background: #f9fafb; }
+  .cd-icon {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: #f3f4f6; color: #374151;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cd-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; margin: 0 0 1px; }
+  .cd-val   { font-size: 12px; color: #111827; margin: 0; font-weight: 500; }
 
-    #links a {
-      display: flex;
-      align-items:center;
-      padding: 10px 12px;
-      color: #111827;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+  /* Page shell */
+  .home-page {
+    width: 100%;
+    min-height: 100vh;
+    background: white;
+    display: flex;
+    justify-content: center;
+  }
 
-    #links a.button{
-      color:white;
-      background: linear-gradient(83.21deg, #3245ff 0%, #bc52ee 100%);
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.24);
-      cursor: pointer; 
-      border-radius: 10px;
-      font-size: 25px; 
+  .page-col {
+    width: 80%;           /* 80% of viewport */
+    max-width: 1400px;    /* hard cap on huge screens */
+    min-width: 320px;     /* hard floor on tiny screens */
+    background: white;
+    min-height: 100vh;
+  }
 
-    }
+  /* Two-column feed */
+  .feed-layout {
+    display: grid;
+    grid-template-columns: 2fr 3fr;  /* fixed sidebar, feed fills rest */
+    gap: 56px;                          /* explicit gap — prevents any overlap */
+    align-items: start;
+    padding: 32px 0 80px;
 
-    #links a.button:hover{
-      color: rgb(230,230,230);
-      box-shadow:none;
-    }
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .feed-sidebar {
+    position: sticky;
+    top: 24px;
+    border-right: 1px solid #e5e7eb;
+    padding-right: 0;    /* gap handles spacing */
+  }
+
+  .feed-col {
+    min-width: 0;        /* CRITICAL — allows grid child to shrink below content size */
+    overflow: hidden;    /* belt-and-suspenders */
+  }
+
+  @media (max-width: 800px) {
+    .page-col { width: 94%; }
+    .feed-layout { grid-template-columns: 1fr; gap: 0; padding: 20px 0 48px; }
+    .feed-sidebar { position: static; padding: 0 0 20px; border-right: none; border-bottom: 1px solid #e5e7eb; margin-bottom: 24px; }
+    #contact-fab { top: 10px; right: 12px; }
+  }
 </style>

@@ -14,9 +14,8 @@ const games = allBlogs
 ---
 
 <BlogLayout title="Games" bg="#dbeafe">
-<div class="max-w-7xl mx-auto px-4">
     <h1 class="text-5xl font-bold text-black mb-8 text-left">Games</h1>
-    
+    <div class="w-[80%] mx-auto">
     <!-- game Grid -->
     <div class="game-grid mb-12">
       {games.map((game, index) => (
@@ -105,7 +104,7 @@ const games = allBlogs
 
         console.log('Loaded clapperboard:', clapperMesh); // Debug
 
-        const FPS = 30;
+        const FPS = 15;
         const gameCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         gameCanvases.forEach((canvas, index) => {
@@ -116,7 +115,7 @@ const games = allBlogs
           let uprightAngle = -Math.PI / 2;
           function animategame() {
             const dt = 1 / FPS;
-            gameAngle += Math.PI * dt * 0.7;
+            gameAngle += Math.PI * dt * 0.2;
             
             renderer.clear({r: 0, g: 0, b: 0, a: 0});
             

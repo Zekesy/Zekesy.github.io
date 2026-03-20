@@ -12,8 +12,8 @@ const animes = allBlogs
 ---
 
 <BlogLayout title="Anime" bg="#dbeafe">
- <div class="max-w-7xl mx-auto px-4">
     <h1 class="text-5xl font-bold text-black mb-8 text-left">Anime</h1>
+  <div class="w-[80%] mx-auto">
     
     <!-- anime Grid -->
     <div class="anime-grid mb-12">
@@ -103,7 +103,7 @@ const animes = allBlogs
 
         console.log('Loaded clapperboard:', clapperMesh); // Debug
 
-        const FPS = 30;
+        const FPS = 15;
         const animeCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         animeCanvases.forEach((canvas, index) => {

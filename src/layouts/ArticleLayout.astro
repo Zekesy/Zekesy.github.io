@@ -1,0 +1,39 @@
+---
+// src/layouts/ArticleLayout.astro
+import "../styles/global.css";
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="container">
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: white;
+  }
+
+  body {
+    padding: 2rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    color: #2e3440;
+  }
+
+  .container {
+    width: 85%;
+    margin: 0 auto;
+  }
+</style>

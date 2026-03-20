@@ -13,9 +13,8 @@ const music = allBlogs
 ---
 
 <BlogLayout title="Music" bg="#dbeafe">
-<div class="max-w-7xl mx-auto px-4">
     <h1 class="text-5xl font-bold text-black mb-8 text-left">Music</h1>
-    
+    <div class="w-[80%] mx-auto">
     <!-- song Grid -->
     <div class="song-grid mb-12">
       {music.map((song, index) => (
@@ -26,8 +25,7 @@ const music = allBlogs
         </a>
       ))}
     </div>
-  </div>
-
+    </div>
   <style>
     .song-grid {
       display: grid;
@@ -104,7 +102,7 @@ const music = allBlogs
 
         console.log('Loaded clapperboard:', clapperMesh); // Debug
 
-        const FPS = 30;
+        const FPS = 15;
         const songCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         songCanvases.forEach((canvas, index) => {

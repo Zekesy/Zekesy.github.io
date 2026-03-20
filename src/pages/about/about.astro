@@ -1,33 +1,35 @@
 ---
 import "../../styles/global.css";
-import AboutNavbar from "../../components/about/AboutNavbar.astro";
+import NavBar from "../../components/NavBar.astro";
 import Layout from '../../layouts/Layout.astro';
+
+import Mail        from "@lucide/astro/icons/mail";
+import Linkedin    from "@lucide/astro/icons/linkedin";
+import Github      from "@lucide/astro/icons/github";
+import ChevronDown from "@lucide/astro/icons/chevron-down";
+import FileText    from "@lucide/astro/icons/file-text";
+import ExternalLink from "@lucide/astro/icons/external-link";
 ---
 
 <Layout>
   <!-- Contact FAB -->
   <div id="contact-fab">
     <button id="contact-trigger" class="contact-trigger-btn" aria-expanded="false">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-        <polyline points="22,6 12,13 2,6"/>
-      </svg>
+      <Mail size={14} />
       Contact
-      <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M6 9l6 6 6-6"/>
-      </svg>
+      <ChevronDown size={12} class="chevron" />
     </button>
     <div id="contact-dropdown" class="contact-dropdown" hidden>
       <a href="mailto:zekesy1208@email.com" class="cd-item">
-        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+        <span class="cd-icon"><Mail size={14} /></span>
         <div><p class="cd-label">Email</p><p class="cd-val">zekesy1208@email.com</p></div>
       </a>
-      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="cd-item">
-        <span class="cd-icon" style="font-weight:700;font-size:12px">in</span>
-        <div><p class="cd-label">LinkedIn</p><p class="cd-val">yourprofile</p></div>
+      <a href="https://linkedin.com/in/zeke-sy-95a76b232" target="_blank" class="cd-item">
+        <span class="cd-icon"><Linkedin size={14} /></span>
+        <div><p class="cd-label">LinkedIn</p><p class="cd-val">linkedin.com/in/zekesy</p></div>
       </a>
       <a href="https://github.com/Zekesy" target="_blank" class="cd-item">
-        <span class="cd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></span>
+        <span class="cd-icon"><Github size={14} /></span>
         <div><p class="cd-label">GitHub</p><p class="cd-val">Zekesy</p></div>
       </a>
       <div class="cd-divider"></div>
@@ -37,7 +39,7 @@ import Layout from '../../layouts/Layout.astro';
 
   <div class="about-page">
     <div class="page-col">
-      <AboutNavbar />
+      <NavBar />
 
       <main id="about-main">
 
@@ -46,7 +48,7 @@ import Layout from '../../layouts/Layout.astro';
           <div class="about-grid">
             <div class="about-photo-col">
               <div class="photo-frame">
-                <img src="/images/profile.jpg" alt="Profile Photo" />
+                <img src="/images/profile.jpg" alt="Profile Photo" loading="eager" fetchpriority="high" />
               </div>
               <div class="qual-badges">
                 <span class="qual-badge">TOEIC 990</span>
@@ -57,7 +59,7 @@ import Layout from '../../layouts/Layout.astro';
 
             <div class="about-info-col">
               <p class="section-label">About Me</p>
-              <h1 class="name-heading">Your Full Name</h1>
+              <h1 class="name-heading">Zeke Raphael Lim Sy</h1>
 
               <div class="info-grid">
                 <div class="info-item">
@@ -86,9 +88,11 @@ import Layout from '../../layouts/Layout.astro';
               </div>
 
               <p class="bio">
-                I'm a computer science and engineering researcher specializing in computer vision,
-                neural radiance fields (NeRF), sim-to-real robotic transfer, and semantic
-                communication networks.
+                Systems engineer at Eyes Japan specializing in computer vision, full-stack
+                development, and applied AI. M.Eng graduate of the University of Aizu Honors
+                Program with published research in neural radiance fields and semantic
+                communication. I bridge the gap between research and production — from RL policy
+                training in simulation to deploying software used by real patients.
               </p>
 
               <div class="skills-inline">
@@ -99,10 +103,11 @@ import Layout from '../../layouts/Layout.astro';
                   <span class="skill-badge lang">TypeScript</span>
                   <span class="skill-badge lang">Java</span>
                   <span class="skill-badge lang">JavaScript</span>
-                  <span class="skill-badge lang">NextJS</span>
+                  <span class="skill-badge lang">Kotlin</span>
                   <span class="skill-badge framework">PyTorch</span>
                   <span class="skill-badge framework">OpenCV</span>
                   <span class="skill-badge framework">ROS2</span>
+                  <span class="skill-badge framework">Next.js</span>
                   <span class="skill-badge tool">Isaac Sim</span>
                   <span class="skill-badge tool">Isaac Lab</span>
                   <span class="skill-badge tool">Docker</span>
@@ -119,17 +124,11 @@ import Layout from '../../layouts/Layout.astro';
           <p class="section-label">Background</p>
           <h2 class="section-heading">Experience &amp; Education</h2>
 
-          <!-- Legend -->
           <div class="tl-legend">
-            <span class="col-pill academic">
-              <span class="pill-dot academic-dot"></span>Education
-            </span>
-            <span class="col-pill work">
-              <span class="pill-dot work-dot"></span>Work
-            </span>
+            <span class="col-pill academic"><span class="pill-dot academic-dot"></span>Education</span>
+            <span class="col-pill work"><span class="pill-dot work-dot"></span>Work</span>
           </div>
 
-          <!-- Single left-spine timeline — all cards on right -->
           <ul class="vtimeline">
 
             <li class="tl-item academic">
@@ -139,13 +138,14 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2020/10 – 2024/10</span>
+                <span class="tl-date">Oct 2020 – Oct 2024</span>
                 <h3 class="tl-role">Bachelor of Computer Science and Engineering</h3>
                 <p class="tl-org">University of Aizu, Japan</p>
                 <p class="tl-desc">Thesis: <em>"An Exploration of MLP and Grid Trade-off in Hybrid NeRF Models"</em></p>
-                <div class="tl-tags"><span>NeRF</span><span>Computer Vision</span></div>
+                <div class="tl-tags"><span>NeRF</span><span>Computer Vision</span><span>Python</span></div>
               </div>
             </li>
+
             <li class="tl-item academic">
               <div class="tl-spine">
                 <div class="spine-line top"></div>
@@ -153,11 +153,11 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2021/12 – 2022/01</span>
-                <h3 class="tl-role">Sapporo Innovation lab</h3>
+                <span class="tl-date">Dec 2021 – Jan 2022</span>
+                <h3 class="tl-role">Sapporo Innovation Lab</h3>
                 <p class="tl-org">University of Aizu, Japan</p>
-                <p class="tl-desc">Thesis: <em>"An Exploration of MLP and Grid Trade-off in Hybrid NeRF Models"</em></p>
-                <div class="tl-tags"><span>NeRF</span><span>Computer Vision</span></div>
+                <p class="tl-desc">Team competition in application design to aid nurses working in elderly homes. Our team achieved the Accenture award.</p>
+                <div class="tl-tags"><span>Innovation</span><span>Software Applications</span></div>
               </div>
             </li>
 
@@ -168,13 +168,14 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2022/09/12 - 2022/09/p-26</span>
-                <h3 class="tl-role">Technistock Beta tester</h3>
-                <p class="tl-org">Technistock </p>
-                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
-                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
+                <span class="tl-date">Sep 2022</span>
+                <h3 class="tl-role">Beta Tester</h3>
+                <p class="tl-org">Technistock</p>
+                <p class="tl-desc">Tested and provided structured feedback on early-stage product features, reporting bugs and usability issues. Created automatic reusable test cases and flows in Katalon.</p>
+                <div class="tl-tags"><span>QA</span><span>Testing</span><span>Katalon</span></div>
               </div>
             </li>
+
             <li class="tl-item work">
               <div class="tl-spine">
                 <div class="spine-line top"></div>
@@ -182,25 +183,11 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2023/08 - 2025/10</span>
-                <h3 class="tl-role">Part-time Software Developer at Eyes Japan</h3>
-                <p class="tl-org">Eyes Japan</p>
-                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
-                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
-              </div>
-            </li>            
-            <li class="tl-item academic">
-              <div class="tl-spine">
-                <div class="spine-line top"></div>
-                <div class="tl-dot"></div>
-                <div class="spine-line bottom"></div>
-              </div>
-              <div class="tl-card">
-                <span class="tl-date">2024/07</span>
-                <h3 class="tl-role">Japan Language Profeciency Test (JLPT) N3</h3>
-                <p class="tl-org">Honors Program, University of Aizu</p>
-                <p class="tl-desc">Joined research lab, contributed to thesis project, gained hands-on research experience in computer vision.</p>
-                <div class="tl-tags"><span>Research</span><span>Python</span></div>
+                <span class="tl-date">Aug 2023 – Sep 2025</span>
+                <h3 class="tl-role">Part-time Software Developer</h3>
+                <p class="tl-org">Eyes Japan · Aizuwakamatsu</p>
+                <p class="tl-desc">Developed the Mobile Audiometry application and the Parkinson's disease monitoring application. Also contributed to the GlucoReview blood glucose monitoring platform and internal tooling.</p>
+                <div class="tl-tags"><span>Mobile Development</span><span>Digital Signal Processing</span><span>Kotlin</span><span>Unity</span><span>Next.js</span></div>
               </div>
             </li>
 
@@ -211,13 +198,14 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2024/11/28 – 2024/11/30</span>
-                <h3 class="tl-role">Internet of Things and Intelligence Systems (IoTaIS)Conference</h3>
-                <p class="tl-org">Honors Program, University of Aizu</p>
-                <p class="tl-desc">Joined research lab, contributed to thesis project, gained hands-on research experience in computer vision.</p>
-                <div class="tl-tags"><span>Research</span><span>Python</span></div>
+                <span class="tl-date">Nov 2024</span>
+                <h3 class="tl-role">IEEE IoTaIS 2024 — Conference Presenter</h3>
+                <p class="tl-org">Internet of Things and Intelligence Systems Conference</p>
+                <p class="tl-desc">Presented research on energy efficiency in NeRF models at the IEEE IoTaIS 2024 international conference.</p>
+                <div class="tl-tags"><span>IEEE</span><span>NeRF</span><span>Energy Efficiency</span><span>Publication</span></div>
               </div>
             </li>
+
             <li class="tl-item work">
               <div class="tl-spine">
                 <div class="spine-line top"></div>
@@ -225,13 +213,14 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2024/12– 2025/02</span>
-                <h3 class="tl-role">AI Researcher at DeepAI</h3>
-                <p class="tl-org">Honors Program, University of Aizu, Japan</p>
-                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
-                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
+                <span class="tl-date">Dec 2024 – Feb 2025</span>
+                <h3 class="tl-role">AI Researcher Internship</h3>
+                <p class="tl-org">DeepAI</p>
+                <p class="tl-desc">Conducted applied AI research in diffusion models and GANs for text-to-image and image-to-image generation. Evaluated and benchmarked generative models across quality, efficiency, and scalability metrics.</p>
+                <div class="tl-tags"><span>AI Research</span><span>Diffusion Models</span><span>GAN</span><span>Image Generation</span></div>
               </div>
             </li>
+
             <li class="tl-item academic">
               <div class="tl-spine">
                 <div class="spine-line top"></div>
@@ -239,13 +228,15 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2025/07</span>
-                <h3 class="tl-role">Japan Language Profeciency Test (JLPT) N2</h3>
-                <p class="tl-org">Honors Program, University of Aizu</p>
-                <p class="tl-desc">Joined research lab, contributed to thesis project, gained hands-on research experience in computer vision.</p>
-                <div class="tl-tags"><span>Research</span><span>Python</span></div>
+                <span class="tl-date">Oct 2024 – Sep 2025</span>
+                <h3 class="tl-role">Master's Degree — Computer Science and Engineering</h3>
+                <p class="tl-org">Honors Program, University of Aizu, Japan</p>
+                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
+                <p class="tl-desc">Received the Honors Program scholarship and completed the degree within one year.</p>
+                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
               </div>
             </li>
+
             <li class="tl-item academic">
               <div class="tl-spine">
                 <div class="spine-line top"></div>
@@ -253,13 +244,14 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2024/10 – 2025/09</span>
-                <h3 class="tl-role">Master's Degree</h3>
-                <p class="tl-org">Honors Program, University of Aizu, Japan</p>
-                <p class="tl-desc">Thesis: <em>"Multi-View Staircase Attention for Robust Semantic Alignment Evaluation"</em></p>
-                <div class="tl-tags"><span>Semantic Communication</span><span>CLIP</span><span>IQA</span><span>Multi-modal</span></div>
+                <span class="tl-date">Jul 2025</span>
+                <h3 class="tl-role">JLPT N2 — Japanese Language Proficiency</h3>
+                <p class="tl-org">Japan Educational Exchanges and Services</p>
+                <p class="tl-desc">Passed JLPT N2, demonstrating upper-intermediate Japanese proficiency across reading, listening, grammar, and vocabulary.</p>
+                <div class="tl-tags"><span>Japanese</span><span>JLPT</span></div>
               </div>
             </li>
+
             <li class="tl-item work last">
               <div class="tl-spine">
                 <div class="spine-line top"></div>
@@ -267,11 +259,11 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="spine-line bottom hidden"></div>
               </div>
               <div class="tl-card">
-                <span class="tl-date">2025/09 – Present</span>
+                <span class="tl-date">Sep 2025 – Present</span>
                 <h3 class="tl-role">Systems Engineer</h3>
                 <p class="tl-org">Eyes Japan · Aizuwakamatsu</p>
-                <p class="tl-desc">Full-time systems engineering role. Working on applied computer vision and software systems.</p>
-                <div class="tl-tags"><span>Systems Engineering</span><span>Python</span><span>CV</span></div>
+                <p class="tl-desc">Full-time systems engineering role leading the sim-to-real robotics pipeline and antibody web dashboard, while contributing to computer vision and full-stack software systems.</p>
+                <div class="tl-tags"><span>Systems Engineering</span><span>Robotics</span><span>Computer Vision</span><span>Web Development</span><span>AI</span></div>
               </div>
             </li>
 
@@ -286,75 +278,97 @@ import Layout from '../../layouts/Layout.astro';
             <div class="pub-item">
               <span class="pub-year">2024</span>
               <div class="pub-body">
-                <p class="pub-title">Your Paper Title: A Study of Something Important</p>
-                <p class="pub-authors"><strong>Your Name</strong>, Co-Author, Co-Author</p>
-                <p class="pub-venue">Conference / Journal Name, City, Year</p>
+                <p class="pub-title">Towards Green NeRF: an Exploration of Energy Influence Factors in NeRF Models</p>
+                <p class="pub-authors"><strong>Primary author: Zeke Sy</strong></p>
+                <p class="pub-venue">IEEE International Conference on Internet of Things and Intelligence Systems (IoTaIS), 2024</p>
                 <div class="pub-links">
-                  <a href="#" class="pub-link">Paper ↗</a>
-                  <a href="#" class="pub-link">arXiv ↗</a>
-                  <a href="#" class="pub-link">Code ↗</a>
-                </div>
-              </div>
-            </div>
-            <div class="pub-item">
-              <span class="pub-year">2023</span>
-              <div class="pub-body">
-                <p class="pub-title">Another Paper Title: More Research Contributions</p>
-                <p class="pub-authors"><strong>Your Name</strong>, Co-Author</p>
-                <p class="pub-venue">Conference / Journal Name, City, Year</p>
-                <div class="pub-links">
-                  <a href="#" class="pub-link">Paper ↗</a>
-                  <a href="#" class="pub-link">arXiv ↗</a>
+                  <a href="#" class="pub-link">
+                    <FileText size={12} /> Paper ↗
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
         <!-- ─── PROJECTS ──────────────────────────── -->
         <section id="projects">
           <p class="section-label">Selected Work</p>
           <h2 class="section-heading">Projects</h2>
           <div class="projects-grid">
-
+        
             <div class="project-card">
               <div class="project-header">
-                <h3>Project Title One</h3>
-                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+                <h3>Robotics Sim-to-Real Transfer</h3>
+                <div class="project-badges">
+                  <span class="project-badge badge-nda">NDA</span>
+                  <span class="project-badge badge-ongoing">Ongoing</span>
+                </div>
               </div>
-              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
-              <div class="project-stack"><span>PyTorch</span><span>NeRF</span><span>Python</span><span>CUDA</span></div>
-              <a href="#" class="project-link">Read Article ↗</a>
+              <p class="project-desc">End-to-end sim-to-real transfer pipelines for robotic arms and quadcopters, from RL policy training in Isaac Sim through SITL and HITL validation to physical hardware deployment.</p>
+              <p class="project-contrib"><span class="contrib-label">My role</span> Led the sim-to-real team. Designed and managed the full pipeline, implemented ROS2-based control systems, real-time object tracking with onboard cameras, and hand-eye calibration. Drove key optimizations — control loop decoupling and ROS2 QoS tuning — that resolved critical lag and oscillation issues on physical hardware. Delivered working demos under tight deadlines.</p>
+              <p class="project-learnt"><span class="learnt-label">Learnt</span> RL training in Isaac Lab, domain randomization, sim-to-real gap mitigation, visual servoing, hand-eye calibration, ROS2 QoS tuning, SITL and HITL testing workflows.</p>
+              <div class="project-stack"><span>Isaac Sim</span><span>Isaac Lab</span><span>ROS2</span><span>Python</span><span>PyTorch</span><span>OpenCV</span></div>
+              <a href="/articles/roboticssim2realtransfer" class="project-link"><FileText size={11} /> Read Article ↗</a>
             </div>
-
+        
             <div class="project-card">
               <div class="project-header">
-                <h3>Project Title Two</h3>
-                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+                <h3>Antibody Monitoring Dashboard</h3>
+                <div class="project-badges">
+                  <span class="project-badge badge-nda">NDA</span>
+                  <span class="project-badge badge-ongoing">Ongoing</span>
+                </div>
               </div>
-              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
-              <div class="project-stack"><span>Isaac Sim</span><span>ROS2</span><span>C++</span><span>Python</span></div>
+              <p class="project-desc">Clinician-facing web dashboard for antibody test result tracking, data visualization, and longitudinal trend analysis, supporting clinical decision-making with structured data views.</p>
+              <p class="project-contrib"><span class="contrib-label">My role</span> Leading full-stack development as team lead. Designed the system architecture, built API routes connecting to the database, implemented tables and charts for clinician analysis, and made key security and data access decisions across the stack.</p>
+              <p class="project-learnt"><span class="learnt-label">Learnt</span> FastAPI backend design, MongoDB data modelling, full-stack team leadership, clinical data visualization, and cross-functional architecture decisions.</p>
+              <div class="project-stack"><span>Next.js</span><span>FastAPI</span><span>MongoDB</span><span>Supabase</span><span>TypeScript</span></div>
             </div>
-
+        
             <div class="project-card">
               <div class="project-header">
-                <h3>Project Title Three</h3>
-                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+                <h3>School Administrative System</h3>
+                <div class="project-badges">
+                  <span class="project-badge badge-nda">NDA</span>
+                  <span class="project-badge badge-ongoing">Ongoing</span>
+                </div>
               </div>
-              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
-              <div class="project-stack"><span>Semantic Comms</span><span>PyTorch</span><span>OFDM</span></div>
-              <a href="#" class="project-link">Read Article ↗</a>
+              <p class="project-desc">Production school management system used by parents and staff for administrative tasks, scheduling, and communication. Ongoing maintenance and feature development on a live system.</p>
+              <p class="project-contrib"><span class="contrib-label">My role</span> Maintaining and improving the production system — handling bug fixes, shipping feature updates, and ensuring system stability. Working within an existing Ruby codebase and containerized deployment environment.</p>
+              <p class="project-learnt"><span class="learnt-label">Learnt</span> Production system maintenance, Ruby web development, Docker deployment workflows, and working within large existing codebases.</p>
+              <div class="project-stack"><span>Ruby</span><span>Docker</span><span>Slack</span><span>PostgreSQL</span></div>
             </div>
-
+        
             <div class="project-card">
               <div class="project-header">
-                <h3>Project Title Four</h3>
-                <a href="#" class="icon-link" title="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+                <h3>GlucoReview — Blood Glucose Monitoring</h3>
+                <div class="project-badges">
+                  <span class="project-badge badge-nda">NDA</span>
+                  <span class="project-badge badge-completed">Completed</span>
+                </div>
               </div>
-              <p class="project-desc">Description of the project — what problem it solves and what makes it interesting.</p>
-              <div class="project-stack"><span>OpenCV</span><span>SLAM</span><span>C++</span></div>
+              <p class="project-desc">Full-stack healthcare platform for weekly blood glucose monitoring. Patients schedule a home test kit and return it to labs. Clinicians access a separate dashboard to upload results and track trends per patient.</p>
+              <p class="project-contrib"><span class="contrib-label">My role</span> Owned full-stack development — Next.js frontend, Supabase backend, role-based access control separating patient and clinician views, and HIPAA-aligned data handling practices.</p>
+              <p class="project-learnt"><span class="learnt-label">Learnt</span> Next.js App Router, healthcare security compliance, Supabase row-level security and edge functions, multi-role access architecture.</p>
+              <div class="project-stack"><span>Next.js</span><span>TypeScript</span><span>Supabase</span><span>PostgreSQL</span><span>Tailwind</span></div>
+              <a href="#" class="project-link"><FileText size={11} /> Read Article ↗</a>
             </div>
-
+        
+            <div class="project-card">
+              <div class="project-header">
+                <h3>Mobile Audiometry Application</h3>
+                <div class="project-badges">
+                  <span class="project-badge badge-nda">NDA</span>
+                  <span class="project-badge badge-completed">Completed</span>
+                </div>
+              </div>
+              <p class="project-desc">Clinical-grade smartphone hearing assessment performing pure-tone audiometry using only a phone and standard earphones, removing the need for a sound booth during initial screenings.</p>
+              <p class="project-contrib"><span class="contrib-label">My role</span> Built custom audio tone generation with white noise masking for the non-test ear, developed all patient-facing test screens, and implemented CSV audiogram export for clinical review.</p>
+              <p class="project-learnt"><span class="learnt-label">Learnt</span> Digital-to-analog audio conversion, signal processing for noise masking, Unity AudioSource APIs, and clinical data export workflows.</p>
+              <div class="project-stack"><span>Unity</span><span>C#</span><span>iOS</span><span>AudioSource</span></div>
+              <a href="#" class="project-link"><FileText size={11} /> Read Article ↗</a>
+            </div>
+        
           </div>
         </section>
 
@@ -365,19 +379,24 @@ import Layout from '../../layouts/Layout.astro';
           <p class="contact-intro">Whether you have a research opportunity, collaboration idea, or just want to say hi — my inbox is open.</p>
           <div class="contact-list">
             <a href="mailto:zekesy1208@email.com" class="contact-row">
-              <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <div class="contact-row-icon"><Mail size={16} /></div>
               <div class="contact-row-body"><p class="contact-row-label">Email</p><p class="contact-row-val">zekesy1208@email.com</p></div>
-              <span class="contact-row-arrow">↗</span>
+              <ExternalLink size={14} class="contact-row-arrow" />
             </a>
-            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-row">
-              <div class="contact-row-icon" style="font-weight:700;font-size:13px">in</div>
-              <div class="contact-row-body"><p class="contact-row-label">LinkedIn</p><p class="contact-row-val">linkedin.com/in/yourprofile</p></div>
-              <span class="contact-row-arrow">↗</span>
+            <a href="mailto:sy.zeke@nowhere.co.jp" class="contact-row">
+              <div class="contact-row-icon"><Mail size={16} /></div>
+              <div class="contact-row-body"><p class="contact-row-label">Work Email</p><p class="contact-row-val">sy.zeke@nowhere.co.jp</p></div>
+              <ExternalLink size={14} class="contact-row-arrow" />
+            </a>
+            <a href="https://linkedin.com/in/zeke-sy-95a76b232" target="_blank" class="contact-row">
+              <div class="contact-row-icon"><Linkedin size={16} /></div>
+              <div class="contact-row-body"><p class="contact-row-label">LinkedIn</p><p class="contact-row-val">linkedin.com/in/zekesy</p></div>
+              <ExternalLink size={14} class="contact-row-arrow" />
             </a>
             <a href="https://github.com/Zekesy" target="_blank" class="contact-row">
-              <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></div>
+              <div class="contact-row-icon"><Github size={16} /></div>
               <div class="contact-row-body"><p class="contact-row-label">GitHub</p><p class="contact-row-val">github.com/Zekesy</p></div>
-              <span class="contact-row-arrow">↗</span>
+              <ExternalLink size={14} class="contact-row-arrow" />
             </a>
           </div>
         </section>
@@ -433,8 +452,8 @@ import Layout from '../../layouts/Layout.astro';
     transition: background 0.2s, transform 0.15s; letter-spacing: 0.01em;
   }
   .contact-trigger-btn:hover { background: #1f2937; transform: translateY(-1px); }
-  .chevron { transition: transform 0.2s; }
-  .contact-trigger-btn.open .chevron { transform: rotate(180deg); }
+  .contact-trigger-btn :global(.chevron) { transition: transform 0.2s; }
+  .contact-trigger-btn.open :global(.chevron) { transform: rotate(180deg); }
 
   .contact-dropdown {
     position: absolute; top: calc(100% + 8px); right: 0;
@@ -461,23 +480,17 @@ import Layout from '../../layouts/Layout.astro';
   .cd-scroll-link:hover { background: #f9fafb; }
 
   /* ═══════════════════════════════════
-     PAGE SHELL — 90% content, centered
+     PAGE SHELL
   ═══════════════════════════════════ */
   .about-page {
     width: 100%; min-height: 100vh; background: white;
     display: flex; justify-content: center;
   }
   .page-col {
-    width: 90%;
-    max-width: 1400px;
-    min-width: 320px;
-    background: white;
-    min-height: 100vh;
+    width: 90%; max-width: 1400px; min-width: 320px;
+    background: white; min-height: 100vh;
   }
 
-  /* ═══════════════════════════════════
-     MAIN
-  ═══════════════════════════════════ */
   #about-main { padding: 40px 0 80px; }
 
   section { padding: 56px 0; border-bottom: 1px solid #e5e7eb; }
@@ -519,7 +532,6 @@ import Layout from '../../layouts/Layout.astro';
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; margin: 16px 0 20px; }
   .info-item { display: flex; flex-direction: column; gap: 2px; }
   .info-item.full-width { grid-column: 1 / -1; }
-
   .info-key  { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
   .info-val  { font-size: 15px; color: #111827; font-weight: 500; }
   .info-val.highlight-green { color: #059669; }
@@ -530,95 +542,56 @@ import Layout from '../../layouts/Layout.astro';
   .skills-inline { display: flex; flex-direction: column; gap: 10px; }
   .skills-label  { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
   .skills-badges { display: flex; flex-wrap: wrap; gap: 6px; }
-
   .skill-badge { font-size: 12px; padding: 3px 11px; border-radius: 999px; font-weight: 500; }
   .skill-badge.lang      { background: #f9fafb; color: #374151; border: 1px solid #e5e7eb; }
   .skill-badge.framework { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
   .skill-badge.tool      { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
 
   /* ═══════════════════════════════════
-     VERTICAL TIMELINE — left spine, all cards right
+     TIMELINE
   ═══════════════════════════════════ */
-  .tl-legend {
-    display: flex; gap: 12px; align-items: center; margin-bottom: 32px;
-  }
-
+  .tl-legend { display: flex; gap: 12px; align-items: center; margin-bottom: 32px; }
   .col-pill {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 600; padding: 5px 14px;
-    border-radius: 999px;
+    font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 999px;
   }
   .col-pill.academic { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
   .col-pill.work     { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
-
-  .pill-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-  }
+  .pill-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .pill-dot.academic-dot { background: #7c3aed; }
   .pill-dot.work-dot     { background: #059669; }
 
-  /* Timeline list */
-  .vtimeline {
-    list-style: none; margin: 0; padding: 0;
-    display: flex; flex-direction: column;
-  }
+  .vtimeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 
-  /* Each row: narrow spine column + card column */
   .tl-item {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    gap: 0 20px;
-    align-items: stretch;
+    display: grid; grid-template-columns: 32px 1fr;
+    gap: 0 20px; align-items: stretch;
   }
 
-  /* ── Spine ── */
   .tl-spine {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: center;
+    position: relative; flex-shrink: 0;
   }
-
-  .spine-line {
-    width: 2px;
-    flex: 1;
-    min-height: 16px;
-  }
-
-  /* Academic items: purple spine line */
+  .spine-line { width: 2px; flex: 1; min-height: 16px; }
   .tl-item.academic .spine-line { background: #ddd6fe; }
-  /* Work items: green spine line */
   .tl-item.work     .spine-line { background: #bbf7d0; }
-
   .spine-line.hidden { background: transparent; }
 
-  /* Dot */
   .tl-dot {
-    width: 13px; height: 13px;
-    border-radius: 50%;
-    border: 2.5px solid white;
-    flex-shrink: 0;
-    box-shadow: 0 0 0 1.5px currentColor;
-    z-index: 1;
+    width: 13px; height: 13px; border-radius: 50%;
+    border: 2.5px solid white; flex-shrink: 0;
+    box-shadow: 0 0 0 1.5px currentColor; z-index: 1;
   }
-
   .tl-item.academic .tl-dot { background: #7c3aed; color: #7c3aed; }
   .tl-item.work     .tl-dot { background: #059669; color: #059669; }
 
-  /* ── Card ── */
   .tl-card {
-    padding: 16px 0 20px;
-    /* Colored left border to reinforce the type */
-    padding-left: 16px;
-    border-left: 3px solid transparent;
-    margin: 4px 0;
+    padding: 14px 0 18px 16px;
+    border-left: 3px solid transparent; margin: 4px 0;
     transition: border-color 0.2s;
   }
-
   .tl-item.academic .tl-card { border-left-color: #ddd6fe; }
   .tl-item.work     .tl-card { border-left-color: #bbf7d0; }
-
   .tl-item.academic:hover .tl-card { border-left-color: #7c3aed; }
   .tl-item.work:hover     .tl-card { border-left-color: #059669; }
 
@@ -626,14 +599,12 @@ import Layout from '../../layouts/Layout.astro';
     font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
     display: block; margin-bottom: 5px; font-weight: 600;
   }
-
   .tl-item.academic .tl-date { color: #7c3aed; }
   .tl-item.work     .tl-date { color: #059669; }
 
   .tl-role { font-size: 15px; font-weight: 700; color: #111827; margin: 0 0 3px; }
   .tl-org  { font-size: 13px; color: #6b7280; margin: 0 0 7px; }
   .tl-desc { font-size: 13px; line-height: 1.65; color: #374151; margin: 0 0 10px; }
-
   .tl-tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .tl-tags span {
     font-size: 11px; padding: 2px 8px; border-radius: 999px;
@@ -655,6 +626,7 @@ import Layout from '../../layouts/Layout.astro';
   .pub-venue { font-size: 13px; color: #9ca3af; font-style: italic; margin: 0 0 10px; }
   .pub-links { display: flex; gap: 12px; }
   .pub-link {
+    display: inline-flex; align-items: center; gap: 4px;
     font-size: 12px; color: #374151; text-decoration: none;
     border-bottom: 1px solid #d1d5db; padding-bottom: 1px;
     transition: color 0.15s, border-color 0.15s;
@@ -675,17 +647,46 @@ import Layout from '../../layouts/Layout.astro';
 
   .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
   .project-header h3 { font-size: 15px; font-weight: 700; color: #111827; margin: 0; line-height: 1.3; }
-  .icon-link { color: #d1d5db; transition: color 0.15s; display: flex; align-items: center; flex-shrink: 0; }
-  .icon-link:hover { color: #374151; }
 
-  .project-desc { font-size: 14px; line-height: 1.7; color: #6b7280; margin: 0; flex: 1; }
+  .project-badge {
+    font-size: 10px; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+    flex-shrink: 0; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+  }
+  .badge-research { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+  .badge-nda      { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+  .badge-ongoing   { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .badge-completed { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+  .project-desc { font-size: 14px; line-height: 1.7; color: #374151; margin: 0; }
+
+  .project-contrib {
+    font-size: 13px; line-height: 1.65; color: #374151; margin: 0;
+    padding: 8px 10px; background: #f0fdf4; border-radius: 6px;
+    border-left: 3px solid #bbf7d0;
+  }
+  .contrib-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #166534; margin-right: 6px;
+  }
+
+  .project-learnt {
+    font-size: 13px; line-height: 1.65; color: #6b7280; margin: 0;
+    padding: 8px 10px; background: #f9fafb; border-radius: 6px;
+    border-left: 3px solid #e5e7eb;
+  }
+  .learnt-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #9ca3af; margin-right: 6px;
+  }
+
   .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
   .project-stack span {
     font-size: 11px; padding: 2px 9px; border-radius: 999px;
     background: #f9fafb; color: #374151; border: 1px solid #e5e7eb;
   }
   .project-link {
-    font-size: 12px; color: #374151; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 14px; color: #374151; text-decoration: none;
     border-bottom: 1px solid #d1d5db; padding-bottom: 1px; width: fit-content; margin-top: auto;
     transition: color 0.15s, border-color 0.15s;
   }
@@ -699,11 +700,9 @@ import Layout from '../../layouts/Layout.astro';
   .contact-row {
     display: flex; align-items: center; gap: 16px; padding: 18px 0;
     border-bottom: 1px solid #e5e7eb; text-decoration: none; color: #111827;
-    transition: background 0.15s;
   }
   .contact-row:last-child { border-bottom: none; }
   .contact-row:hover .contact-row-val { color: #059669; }
-
   .contact-row-icon {
     width: 36px; height: 36px; border-radius: 8px; background: #f3f4f6; color: #374151;
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -711,7 +710,7 @@ import Layout from '../../layouts/Layout.astro';
   .contact-row-body { flex: 1; }
   .contact-row-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin: 0 0 2px; }
   .contact-row-val   { font-size: 15px; font-weight: 500; color: #374151; margin: 0; transition: color 0.15s; }
-  .contact-row-arrow { font-size: 16px; color: #d1d5db; }
+  .contact-row-arrow { color: #d1d5db; flex-shrink: 0; }
 
   /* ═══════════════════════════════════
      RESPONSIVE
