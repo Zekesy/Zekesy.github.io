@@ -84,25 +84,11 @@ const games = allBlogs
 
   <script type="module">
     import { Renderer3D } from "/src/scripts/rendering.js";
-    import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
+    import { triangulate, parseOBJ, normalizeMesh, loadMeshJSON } from "/src/scripts/mesh.js";
 
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        // Fetch the OBJ file
-        const response = await fetch('/src/assets/models/game.obj');
-        //const response = await fetch('/src/assets/models/spinningTop.obj');
-        if (!response.ok) {
-          throw new Error(`Failed to load OBJ file: ${response.status}`);
-        }
-        
-        const objContent = await response.text();
-        
-        // Parse and prepare the mesh
-        const parsedMesh = parseOBJ(objContent);
-        const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
-        const clapperMesh = triangulate(normalizedMesh);
-
-        console.log('Loaded clapperboard:', clapperMesh); // Debug
+        const mesh = await loadMeshJSON('/src/assets/game.json');
 
         const FPS = 15;
         const gameCanvases = document.querySelectorAll('[id^="canvas-"]');
@@ -119,7 +105,7 @@ const games = allBlogs
             
             renderer.clear({r: 0, g: 0, b: 0, a: 0});
             
-            renderer.render(clapperMesh, {
+            renderer.render(mesh, {
               rotation: {x: uprightAngle , y: gameAngle, z: 0},
               translation: {x: 0, y: 0, z: 6},
               scale: 1

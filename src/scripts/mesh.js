@@ -67,7 +67,14 @@ export function triangulate(mesh) {
   };
 }
 
-
+export async function loadMeshJSON(url) {
+  const response = await fetch(url);
+  const mesh = await response.json();
+  
+  console.log(`Loaded mesh: ${mesh.metadata.vertexCount} vertices, ${mesh.metadata.faceCount} faces`);
+  
+  return mesh;
+}
 /**
  * Parse OBJ file format and return mesh
  */

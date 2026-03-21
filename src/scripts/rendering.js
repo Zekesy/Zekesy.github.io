@@ -17,8 +17,8 @@ export class Renderer3D {
   }
   
   resizeCanvas() {
-    this.canvas.width = window.innerWidth * 0.3;
-    this.canvas.height = window.innerHeight * 0.3;
+    this.canvas.width = window.innerWidth * 0.25;
+    this.canvas.height = window.innerHeight * 0.25;
     this.initBuffers();
   }
   

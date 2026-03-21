@@ -18,15 +18,15 @@ const tvshows = allBlogs
     <h1 class="text-5xl font-bold text-black mb-8 text-left">Coming Soon!</h1>
     <div class="w-[80%] mx-auto">
     <!-- show Grid -->
-    <div class="show-grid mb-12">
-      {tvshows.map((show, index) => (
-        <a href={show.link} class="show-item">
-          <canvas id={`canvas-${index}`} class="show-canvas"></canvas>
-          <h3 class="show-title">{show.title}</h3>
-          <h4 class="show-date">{show.pubDate}</h4>
-        </a>
-      ))}
-    </div>
+    <!-- <div class="show-grid mb-12"> -->
+    <!--   {tvshows.map((show, index) => ( -->
+    <!--     <a href={show.link} class="show-item"> -->
+    <!--       <canvas id={`canvas-${index}`} class="show-canvas"></canvas> -->
+    <!--       <h3 class="show-title">{show.title}</h3> -->
+    <!--       <h4 class="show-date">{show.pubDate}</h4> -->
+    <!--     </a> -->
+    <!--   ))} -->
+    <!-- </div> -->
     </div>
   <style>
     .show-grid {
@@ -82,28 +82,13 @@ const tvshows = allBlogs
     }
   </style>
 
-  <!-- <script type="module">
+  <script type="module">
     import { Renderer3D } from "/src/scripts/rendering.js";
-    import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
+    import { triangulate, parseOBJ, normalizeMesh, loadMeshJSON } from "/src/scripts/mesh.js";
 
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        // Fetch the OBJ file
-        const response = await fetch('/src/assets/models/katara.obj');
-        //const response = await fetch('/src/assets/models/spinningTop.obj');
-        if (!response.ok) {
-          throw new Error(`Failed to load OBJ file: ${response.status}`);
-        }
-        
-        const objContent = await response.text();
-        
-        // Parse and prepare the mesh
-        const parsedMesh = parseOBJ(objContent);
-        const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
-        const clapperMesh = triangulate(normalizedMesh);
-
-        console.log('Loaded clapperboard:', clapperMesh); // Debug
-
+        const mesh = await loadMeshJSON('/src/assets/katara.json');
         const FPS = 15;
         const showCanvases = document.querySelectorAll('[id^="canvas-"]');
 
@@ -119,7 +104,7 @@ const tvshows = allBlogs
             
             renderer.clear({r: 0, g: 0, b: 0, a: 0});
             
-            renderer.render(clapperMesh, {
+            renderer.render(mesh, {
               rotation: {x: uprightAngle , y: showAngle, z: 0},
               translation: {x: 0, y: 0, z: 6},
               scale: 1
@@ -135,7 +120,7 @@ const tvshows = allBlogs
         console.error('Error loading clapperboard model:', error);
       }
     }); 
-  </script> -->
+  </script> 
 
 
 </BlogLayout>

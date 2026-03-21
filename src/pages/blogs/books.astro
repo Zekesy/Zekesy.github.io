@@ -83,8 +83,8 @@ const books = allBlogs
 
   <script type="module">
     import { Renderer3D } from "/src/scripts/rendering.js";
-    import { triangulate, parseOBJ, normalizeMesh } from "/src/scripts/mesh.js";
-
+    import { triangulate, parseOBJ, normalizeMesh, loadMeshJSON } from "/src/scripts/mesh.js";
+    
     window.addEventListener("DOMContentLoaded", async () => {
       try {
         // Fetch the OBJ file
@@ -97,12 +97,11 @@ const books = allBlogs
         const objContent = await response.text();
         
         // Parse and prepare the mesh
-        const parsedMesh = parseOBJ(objContent);
-        const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
-        const clapperMesh = triangulate(normalizedMesh);
+        // const parsedMesh = parseOBJ(objContent);
+        // const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
+        // const clapperMesh = triangulate(normalizedMesh);
 
-        console.log('Loaded clapperboard:', clapperMesh); // Debug
-
+        const mesh = await loadMeshJSON('/src/assets/book.json');
         const FPS = 15;
         const bookCanvases = document.querySelectorAll('[id^="canvas-"]');
 
@@ -114,11 +113,11 @@ const books = allBlogs
           let uprightAngle = -Math.PI / 2;
           function animatebook() {
             const dt = 1 / FPS;
-            bookAngle += Math.PI * dt * 0.2;
+            bookAngle += Math.PI * dt * 0.1;
             
             renderer.clear({r: 0, g: 0, b: 0, a: 0});
             
-            renderer.render(clapperMesh, {
+            renderer.render(mesh, {
               rotation: {x: uprightAngle , y: bookAngle, z: 0},
               translation: {x: 0, y: 0, z: 6},
               scale: 1
