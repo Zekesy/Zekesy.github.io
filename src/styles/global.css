@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 @plugin "daisyui";
 
 
@@ -14,23 +13,24 @@
     align-items: center;
 }
 
-h2 {
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-}
+.article-body p,
+.blog-body p  { margin-bottom: 1.5rem; }
+.article-body h2,
+.blog-body h2 { font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem; }
+.article-body h3,
+.blog-body h3 { font-size: 1.4rem; margin-top: 2rem; margin-bottom: 0.75rem; }
 
-h3 {
-  font-size: 1.4rem;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-}
 
-p {
-  margin-bottom: 1.5rem;
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
 }
-
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 6px;
+}
 /* Create a custom animation */
 @keyframes move-out {
   from {

@@ -81,13 +81,13 @@ const animes = allBlogs
     }
   </style>
 
-  <script type="module">
-    import { Renderer3D } from "/src/scripts/rendering.js";
-    import { triangulate, parseOBJ, normalizeMesh, loadMeshJSON } from "/src/scripts/mesh.js";
+  <script>
+    import { Renderer3D } from "../../scripts/rendering.js";
+    import { loadMeshJSON } from "../../scripts/mesh.js";
 
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        const mesh = await loadMeshJSON('/src/assets/jollyroger.json');
+        const mesh = await loadMeshJSON('/jollyroger.json');
         const FPS = 15;
         const animeCanvases = document.querySelectorAll('[id^="canvas-"]');
 

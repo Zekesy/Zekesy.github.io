@@ -82,13 +82,13 @@ const games = allBlogs
     }
   </style>
 
-  <script type="module">
-    import { Renderer3D } from "/src/scripts/rendering.js";
-    import { triangulate, parseOBJ, normalizeMesh, loadMeshJSON } from "/src/scripts/mesh.js";
+  <script>
+    import { Renderer3D } from "../../scripts/rendering.js";
+    import { loadMeshJSON } from "../../scripts/mesh.js";
 
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        const mesh = await loadMeshJSON('/src/assets/game.json');
+        const mesh = await loadMeshJSON('/game.json');
 
         const FPS = 15;
         const gameCanvases = document.querySelectorAll('[id^="canvas-"]');

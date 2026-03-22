@@ -9,173 +9,169 @@ import Globe  from "@lucide/astro/icons/globe";
 const projects = await getCollection('projects');
 ---
 
-<Layout>
-  <NavBar />
-  <div class="projects-page">
-    <div class="page-col">
-      <main id="projects-main">
+<Layout title="Zeke Sy — Projects">
+  <!-- Skeleton -->
+  <div id="page-skeleton" class="skeleton-wrapper" aria-hidden="true">
+    <div class="sk-nav skeleton"></div>
+    <div class="sk-hero">
+      <div class="skeleton sk-line w-20 h-2"></div>
+      <div class="skeleton sk-line w-32 h-8 mt-2"></div>
+      <div class="skeleton sk-line w-80 h-3 mt-3"></div>
+    </div>
+    <div class="sk-grid">
+      {[...Array(4)].map(() => (
+        <div class="sk-card">
+          <div class="skeleton sk-line w-full h-5"></div>
+          <div class="skeleton sk-line w-full h-3 mt-3"></div>
+          <div class="skeleton sk-line w-4/5 h-3 mt-1"></div>
+          <div class="skeleton sk-line w-3/5 h-3 mt-1"></div>
+          <div class="sk-tags">
+            <div class="skeleton sk-tag"></div>
+            <div class="skeleton sk-tag"></div>
+            <div class="skeleton sk-tag"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
 
-        <section id="projects-hero">
-          <p class="section-label">Selected Work</p>
-          <h1 class="page-heading">Projects</h1>
-          <p class="page-intro">A collection of research and professional projects spanning computer vision, full-stack web, mobile health, and robotics.</p>
-        </section>
+  <!-- Real content -->
+  <div id="page-content" class="page-hidden">
+    <div class="projects-page">
+      <div class="page-col">
+        <NavBar />
+        <main id="projects-main">
 
-        <section id="projects-list">
-          {projects.length === 0 ? (
-            <p class="empty-state">No projects yet — check back soon.</p>
-          ) : (
-            <div class="projects-grid">
-              {projects.map((project) => (
-                <div class="project-card">
+          <section id="projects-hero">
+            <p class="section-label">Selected Work</p>
+            <h1 class="page-heading">Projects</h1>
+            <p class="page-intro">A collection of research and professional projects spanning computer vision, full-stack web, mobile health, and robotics.</p>
+          </section>
 
-                  <h2 class="project-title">{project.data.title}</h2>
-
-                  {project.data.description && (
-                    <p class="project-desc">{project.data.description}</p>
-                  )}
-
-                  <div class="project-footer">
-                    {project.data.tags && project.data.tags.length > 0 && (
-                      <div class="project-tags">
-                        {project.data.tags.map((tag: string, i: number) => (
-                          <span class={`skill-badge ${
-                            i % 3 === 0 ? 'badge-lang' :
-                            i % 3 === 1 ? 'badge-framework' :
-                            'badge-tool'
-                          }`}>{tag}</span>
-                        ))}
-                      </div>
+          <section id="projects-list">
+            {projects.length === 0 ? (
+              <p class="empty-state">No projects yet — check back soon.</p>
+            ) : (
+              <div class="projects-grid">
+                {projects.map((project) => (
+                  <div class="project-card">
+                    <h2 class="project-title">{project.data.title}</h2>
+                    {project.data.description && (
+                      <p class="project-desc">{project.data.description}</p>
                     )}
-
-                    <div class="project-links">
-                      {project.data.github_link && (
-                        <a href={project.data.github_link} target="_blank" class="proj-link">
-                          <Github size={13} /> GitHub ↗
-                        </a>
+                    <div class="project-footer">
+                      {project.data.tags && project.data.tags.length > 0 && (
+                        <div class="project-tags">
+                          {project.data.tags.map((tag: string, i: number) => (
+                            <span class={`skill-badge ${i % 3 === 0 ? 'badge-lang' : i % 3 === 1 ? 'badge-framework' : 'badge-tool'}`}>{tag}</span>
+                          ))}
+                        </div>
                       )}
-                      {project.data.ref_link && (
-                        <a href={project.data.ref_link} target="_blank" class="proj-link">
-                          <Globe size={13} /> Website ↗
-                        </a>
-                      )}
-                      {!project.data.github_link && !project.data.ref_link && (
-                        <span class="proj-link disabled">NDA</span>
-                      )}
+                      <div class="project-links">
+                        {project.data.github_link && (
+                          <a href={project.data.github_link} target="_blank" class="proj-link">
+                            <Github size={13} /> GitHub ↗
+                          </a>
+                        )}
+                        {project.data.ref_link && (
+                          <a href={project.data.ref_link} target="_blank" class="proj-link">
+                            <Globe size={13} /> Website ↗
+                          </a>
+                        )}
+                        {!project.data.github_link && !project.data.ref_link && (
+                          <span class="proj-link disabled">NDA</span>
+                        )}
+                      </div>
                     </div>
                   </div>
+                ))}
+              </div>
+            )}
+          </section>
 
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-      </main>
+        </main>
+      </div>
     </div>
   </div>
 </Layout>
 
-<style>
-  .projects-page {
-    width: 100%; min-height: 100vh; background: white;
-    display: flex; justify-content: center;
-  }
-  .page-col {
-    width: 90%; max-width: 1400px; min-width: 320px;
-    background: white; min-height: 100vh;
-  }
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('page-skeleton')!.style.display = 'none';
+    document.getElementById('page-content')!.classList.remove('page-hidden');
+  });
+</script>
 
+<style>
+  .page-hidden { visibility: hidden; }
+
+  /* Skeleton */
+  .skeleton-wrapper { width: 90%; max-width: 1400px; margin: 0 auto; padding: 20px 0; }
+  .sk-nav  { height: 48px; width: 100%; margin-bottom: 32px; }
+  .sk-hero { margin-bottom: 32px; }
+  .sk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .sk-card { padding: 20px 0; border-bottom: 1px solid #f0f0f0; display: flex; flex-direction: column; }
+  .sk-card:nth-child(odd)  { padding-right: 40px; border-right: 1px solid #f0f0f0; }
+  .sk-card:nth-child(even) { padding-left: 40px; }
+  .sk-line { width: 100%; border-radius: 4px; }
+  .sk-tags { display: flex; gap: 6px; margin-top: 12px; }
+  .sk-tag  { width: 60px; height: 20px; border-radius: 999px; }
+  .w-20  { width: 80px; }
+  .w-32  { width: 128px; }
+  .w-80  { width: 320px; }
+  .w-full { width: 100%; }
+  .w-4\/5 { width: 80%; }
+  .w-3\/5 { width: 60%; }
+  .h-2   { height: 8px; }
+  .h-3   { height: 12px; }
+  .h-5   { height: 20px; }
+  .h-8   { height: 32px; }
+  .mt-1  { margin-top: 4px; }
+  .mt-2  { margin-top: 8px; }
+  .mt-3  { margin-top: 12px; }
+
+  /* Page */
+  .projects-page { width: 100%; min-height: 100vh; background: white; display: flex; justify-content: center; }
+  .page-col { width: 90%; max-width: 1400px; min-width: 320px; background: white; min-height: 100vh; }
   #projects-main { padding: 28px 0 80px; }
 
-  /* ── sections ── */
   section { padding: 28px 0; border-bottom: 1px solid #e5e7eb; }
   section:first-child { padding-top: 0; padding-bottom: 20px; }
   section:last-child  { border-bottom: none; padding-bottom: 0; }
 
-  /* ── hero ── */
-  .section-label {
-    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: #9ca3af; display: block; margin-bottom: 4px;
-  }
-  .page-heading {
-    font-size: clamp(24px, 3vw, 34px);
-    font-weight: 700; color: #111827; margin: 0 0 8px; line-height: 1.2;
-  }
-  .page-intro {
-    font-size: 14px; line-height: 1.65; color: #6b7280;
-    max-width: 560px; margin: 0;
-  }
+  .section-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #9ca3af; display: block; margin-bottom: 4px; }
+  .page-heading  { font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: #111827; margin: 0 0 8px; line-height: 1.2; }
+  .page-intro    { font-size: 14px; line-height: 1.65; color: #6b7280; max-width: 560px; margin: 0; }
 
-  /* ── grid ── */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-  }
-
-  .project-card {
-    padding: 20px 0;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex; flex-direction: column; gap: 8px;
-  }
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .project-card  { padding: 20px 0; border-bottom: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 8px; }
   .project-card:nth-child(odd)  { padding-right: 40px; border-right: 1px solid #e5e7eb; }
   .project-card:nth-child(even) { padding-left: 40px; }
   .project-card:nth-last-child(-n+2) { border-bottom: none; }
   .project-card:last-child { border-bottom: none; }
 
-  /* ── title ── */
-  .project-title {
-    font-size: clamp(15px, 1.6vw, 18px);
-    font-weight: 700; color: #111827; margin: 0; line-height: 1.35;
-  }
+  .project-title { font-size: clamp(15px, 1.6vw, 18px); font-weight: 700; color: #111827; margin: 0; line-height: 1.35; }
+  .project-desc  { font-size: 13px; line-height: 1.65; color: #6b7280; margin: 0; }
+  .project-footer { margin-top: 4px; display: flex; flex-direction: column; gap: 10px; }
+  .project-tags  { display: flex; flex-wrap: wrap; gap: 5px; }
 
-  /* ── description ── */
-  .project-desc {
-    font-size: 13px; line-height: 1.65; color: #6b7280; margin: 0;
-  }
-
-  /* ── footer ── */
-  .project-footer {
-    margin-top: 4px;
-    display: flex; flex-direction: column; gap: 10px;
-  }
-
-  /* ── tags ── */
-  .project-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-  .skill-badge {
-    font-size: 11px; padding: 3px 10px; border-radius: 999px; font-weight: 500;
-  }
+  .skill-badge     { font-size: 11px; padding: 3px 10px; border-radius: 999px; font-weight: 500; }
   .badge-lang      { background: #f9fafb; color: #374151; border: 1px solid #e5e7eb; }
   .badge-framework { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
   .badge-tool      { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
 
-  /* ── links ── */
   .project-links { display: flex; gap: 12px; }
-  .proj-link {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 13px; font-weight: 600; color: #111827;
-    text-decoration: none; border-bottom: 1px solid #d1d5db;
-    padding-bottom: 1px; width: fit-content;
-    transition: color 0.15s, border-color 0.15s;
-  }
+  .proj-link { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: #111827; text-decoration: none; border-bottom: 1px solid #d1d5db; padding-bottom: 1px; width: fit-content; transition: color 0.15s, border-color 0.15s; }
   .proj-link:hover { color: #059669; border-color: #059669; }
-  .proj-link.disabled {
-    color: #d1d5db; border-color: #e5e7eb; pointer-events: none;
-    font-style: italic; font-weight: 500;
-  }
+  .proj-link.disabled { color: #d1d5db; border-color: #e5e7eb; pointer-events: none; font-style: italic; font-weight: 500; }
+  .empty-state { font-size: 15px; color: #9ca3af; font-style: italic; padding: 40px 0; }
 
-  .empty-state {
-    font-size: 15px; color: #9ca3af; font-style: italic; padding: 40px 0;
-  }
-
-  /* ── responsive ── */
   @media (max-width: 800px) {
     .page-col { width: 94%; }
     #projects-main { padding: 20px 0 60px; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .project-card:nth-child(odd)  { padding-right: 0; border-right: none; border-bottom: 1px solid #e5e7eb; }
-    .project-card:nth-child(even) { padding-left: 0; }
+    .projects-grid, .sk-grid { grid-template-columns: 1fr; }
+    .project-card:nth-child(odd), .sk-card:nth-child(odd) { padding-right: 0; border-right: none; border-bottom: 1px solid #e5e7eb; }
+    .project-card:nth-child(even), .sk-card:nth-child(even) { padding-left: 0; }
     .project-card:last-child { border-bottom: none; }
     section { padding: 24px 0; }
   }

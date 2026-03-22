@@ -86,8 +86,7 @@ const projects = allProjects.map(entry => ({
     .project-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
-      justify-content: center;
+      gap: 4px: center;
       margin-top: 4px;
     }
 
@@ -101,13 +100,13 @@ const projects = allProjects.map(entry => ({
     }
   </style>
 
-  <script type="module">
-    import { Renderer3D } from "/src/scripts/rendering.js";
-    import { triangulate, parseOBJ, normalizeMesh, loadMeshJSON } from "/src/scripts/mesh.js";
+  <script>
+    import { Renderer3D } from "../../scripts/rendering.js";
+    import { loadMeshJSON } from "../../scripts/mesh.js";
 
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        const folderMesh = await loadMeshJSON('/src/assets/folder.json');
+        const folderMesh = await loadMeshJSON('/folder.json');
 
         const FPS = 15;
         const projectCanvases = document.querySelectorAll('[id^="canvas-"]');

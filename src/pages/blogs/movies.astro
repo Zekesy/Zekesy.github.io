@@ -83,13 +83,13 @@ const movies = allBlogs
     }
   </style>
 
-  <script type="module">
-    import { Renderer3D } from "/src/scripts/rendering.js";
-    import { triangulate, parseOBJ, normalizeMesh, loadMeshJSON } from "/src/scripts/mesh.js";
+  <script>
+    import { Renderer3D } from "../../scripts/rendering.js";
+    import { loadMeshJSON } from "../../scripts/mesh.js";
   
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        const mesh = await loadMeshJSON('/src/assets/clapperboard.json');
+        const mesh = await loadMeshJSON('/clapperboard.json');
         const FPS = 15;
         const movieCanvases = document.querySelectorAll('[id^="canvas-"]');
 
