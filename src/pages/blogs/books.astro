@@ -61,7 +61,7 @@ const books = allBlogs
     }
 
     .book-item:hover .book-title {
-      color: #ffffff;
+      color: #333;
     }
 
     .book-canvas {
@@ -87,20 +87,6 @@ const books = allBlogs
     
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        // Fetch the OBJ file
-        const response = await fetch('/src/assets/models/book.obj');
-        //const response = await fetch('/src/assets/models/spinningTop.obj');
-        if (!response.ok) {
-          throw new Error(`Failed to load OBJ file: ${response.status}`);
-        }
-        
-        const objContent = await response.text();
-        
-        // Parse and prepare the mesh
-        // const parsedMesh = parseOBJ(objContent);
-        // const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
-        // const clapperMesh = triangulate(normalizedMesh);
-
         const mesh = await loadMeshJSON('/src/assets/book.json');
         const FPS = 15;
         const bookCanvases = document.querySelectorAll('[id^="canvas-"]');

@@ -81,7 +81,7 @@ const projects = allProjects.map(entry => ({
       transition: color 0.3s ease;
     }
 
-    .project-item:hover .project-title { color: #111; }
+    .project-item:hover .project-title { color: #333; }
 
     .project-tags {
       display: flex;
@@ -107,16 +107,6 @@ const projects = allProjects.map(entry => ({
 
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        const response = await fetch('/src/assets/models/folder.obj');
-        if (!response.ok) throw new Error(`Failed to load OBJ: ${response.status}`);
-        // const parsedMesh = parseOBJ(await response.text());
-        // const normalizedMesh = normalizeMesh(parsedMesh, 2.5);
-        // const folderMesh = triangulate(normalizedMesh);
-        //
-        // folderMesh.faceColors = null;
-        // folderMesh.colors = null;
-        // folderMesh.color = { r: 217, g: 166, b: 51 };
-        
         const folderMesh = await loadMeshJSON('/src/assets/folder.json');
 
         const FPS = 15;

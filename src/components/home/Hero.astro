@@ -1,5 +1,11 @@
 ---
-// Hero.astro
+// Hero.astro - CORRECTED version
+import { Image } from 'astro:assets';
+
+// Import from src/assets/ for automatic optimization
+import slide1 from '/src/assets/hero/slide1.jpg';
+import slide2 from '/src/assets/hero/slide2.jpg';
+import slide3 from '/src/assets/hero/slide3.jpg';
 ---
 
 <div id="hero">
@@ -7,14 +13,13 @@
         <div class="text-section">
             <h1>Nice to meet you!</h1>
             <p class="hero-description">
-                <p class="hero-description">
                 I am a person of many interests, and this website reflects that. 
                 Some pages are here to showcase my work as a software engineer, 
-                while others are 2oro like a personal log — projects, ideas, passions, 
+                while others are more like a personal log — projects, ideas, passions, 
                 and random updates along the way. So yeah, the vibe might change 
-                from page to page, but that’s intentional.
+                from page to page, but that's intentional.
             </p>
-            <a href="/about/about" class="about-btn">
+            <a href="/about/about" class="about-btn" data-astro-prefetch="hover">
                 About Me
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14"/>
@@ -32,11 +37,38 @@
                 </button>
 
                 <div class="carousel-images" id="carouselImages">
-                    <!-- Placeholder images - replace with your actual images -->
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop" alt="Slide 1" class="carousel-image active" />
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=400&fit=crop" alt="Slide 2" class="carousel-image" />
-                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=400&fit=crop" alt="Slide 3" class="carousel-image" />
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=400&fit=crop" alt="Slide 4" class="carousel-image" />
+                    <!-- FIRST image: Use Astro Image component with eager loading -->
+                    <Image 
+                        src={slide1}
+                        alt="Slide 1" 
+                        class="carousel-image active"
+                        loading="eager"
+                        fetchpriority="high"
+                        width={400}
+                        height={400}
+                        quality={100}
+                    />
+                    
+                    <!-- OTHER images: lazy loading -->
+                    <Image 
+                        src={slide2} 
+                        alt="Slide 2" 
+                        class="carousel-image"
+                        loading="lazy"
+                        width={400}
+                        height={400}
+                        quality={100}
+                    />
+                    
+                    <Image 
+                        src={slide3}
+                        alt="Slide 3" 
+                        class="carousel-image"
+                        loading="lazy"
+                        width={400}
+                        height={400}
+                        quality={100}
+                    />
                 </div>
 
                 <button class="carousel-btn next" id="nextBtn" aria-label="Next image">
@@ -54,7 +86,7 @@
 <script>
     let currentSlide = 0;
     let autoPlayInterval: number;
-    const images = document.querySelectorAll('.carousel-image');
+    const images = document.querySelectorAll<HTMLImageElement>('.carousel-image');
     const dotsContainer = document.getElementById('carouselDots');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -93,7 +125,7 @@
     }
 
     function startAutoPlay() {
-        autoPlayInterval = setInterval(nextSlide, 4000); // Change every 4 seconds
+        autoPlayInterval = setInterval(nextSlide, 4000);
     }
 
     function resetAutoPlay() {
@@ -212,6 +244,7 @@
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        background: #f3f4f6;
     }
 
     .carousel-image {
@@ -290,7 +323,6 @@
         background: #aaa;
     }
 
-    /* Responsive Design */
     @media (max-width: 768px) {
         .hero-content {
             grid-template-columns: 1fr;
