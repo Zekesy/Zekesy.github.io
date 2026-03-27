@@ -4,21 +4,23 @@ pubDate: 2026-02-29
 updatedDate: 2026-02-29
 rating: "10.0"
 --- 
+
+--- 
+
 # Warcraft III Reforged: The Greatest Villain Origin Story in Gaming (And I Helped)
 
 I came back to Warcraft III: Reforged expecting nostalgia. What I got was a slow-building moral crisis, an involuntary master class in RTS strategy, and the uncomfortable realization that I am, apparently, totally fine committing war crimes if the mission timer is ticking.
 
 Let me explain.
 
----
+![World Of Warcraft III](../../../assets/blog/games/Wow3.jpg  "medium")
+
 
 ## A Childhood Game I Was Too Young to Understand
 
 I played Warcraft III as a kid but never finished it. At the time I had the attention span of a peon with a head injury, and the story went completely over my head. Coming back now, with years of StarCraft II and Dota 2 under my belt, everything clicked, and it is *so* much better than I remembered.
 
 One of the first things that hit me was just how much DNA Warcraft III passed on to Dota 2. Characters, spells, items — they're all here in their original form, like some kind of proto-MOBA fossil record. Phantom Assassin? The Sentinel hero. Invoker? Kael'thas himself. Playing through the campaign felt like visiting the ancestral homeland of every hero I've spammed in ranked for years. Deeply humbling, and also slightly embarrassing given how long it took me to make that connection.
-
----
 
 ## Arthas: A Man on a Very Committed Downward Trajectory
 
@@ -30,7 +32,7 @@ The story of Arthas isn't a story about evil corrupting a hero. It's a story abo
 
 What makes it work so brilliantly is that you're *playing* as him. Every atrocity has a loading screen and an objective marker. The game never lets you forget that **you're the one doing this**.
 
-And the list of atrocities keeps growing. He purges his own capital. He burns his ships to strand his men and force them to keep fighting — then blames the mercenaries he hired to do it, getting his own soldiers to kill them. He takes the Lich King's cursed sword despite Muradin warning him repeatedly not to, and then proceeds to kill Muradin immediately after — a man who helped him every step of the way, who literally participated in burning those ships with him. Just disposed of. Because the sword was more important.
+And the list of atrocities keeps growing. He purges his own capital. He burns his ships to strand his men and force them to keep fighting  then blames the mercenaries he hired to do it, getting his own soldiers to kill them. He takes the Lich King's cursed sword despite Muradin warning him repeatedly not to, and then proceeds to kill Muradin immediately after, a man who helped him every step of the way, who literally participated in burning those ships with him. Just disposed of. Because the sword was more important.
 
 I was in a state of constant disbelief completing these missions. It's one thing to watch a character slowly turn evil in a film. It's another thing entirely to be the one clicking the buttons, completing the objectives, and watching the cutscene aftermath. No other medium can do that.
 
@@ -39,7 +41,7 @@ I was in a state of constant disbelief completing these missions. It's one thing
 
 Nothing in gaming has made me feel quite like the Stratholme mission.
 
-The setup: a city's grain supply has been tainted with a plague that turns people into undead. The population is already infected. Arthas' solution — purge the city before they turn.
+The setup: a city's grain supply has been tainted with a plague that turns people into undead. The population is already infected. Arthas' solution, purge the city before they turn.
 
 Jaina and Uther refuse. They walk away. The game gives you a moment to sit with that.
 
@@ -65,15 +67,12 @@ I cannot stress how unusual this is. Every game tells you that progress is linea
 
 It's the kind of design decision that sounds insane in a meeting and then turns out to be the most memorable moment in the whole game.
 
----
 
 ## Every Mission Is Doing Something Different 
 
 The mission design in Warcraft III is wildly varied and never gets stale. One mission you're playing MOBA-style with a handful of heroes. The next you're escaping your own capital alone as Arthas, chased by enemies with no base, no reinforcements, just vibes and a Frostmourne. Then suddenly you're managing three bases across two continents and someone has set the difficulty to "please stop."
 
 The Night Elves' uproot mechanic, buildings that detach and walk immediately gave me SC2 flashbacks. As someone who spent most of their childhood watching Zerg creep across maps, seeing Blizzard play with that same idea of mobile, biological infrastructure was a little surreal. Honestly, the design DNA between the two games is everywhere once you start looking.
-
----
 
 ## The Outcasts, the Tragedy, and Why Illidan Deserved Better
 
@@ -88,8 +87,6 @@ The final staircase scene, Arthas ascending alone, reflecting on every choice th
 When he fuses with the Lich King at the top, the Scourge claims victory and the credits roll.
 
 There is no catharsis. The villain wins. The heroes are scattered or dead or worse. And you sit there thinking: *I completed every mission. I won. Why does this feel terrible?*
-
----
 
 ## Final Verdict: A Story That Uses the Medium Properly
 
@@ -109,6 +106,5 @@ It might even make you agree with him, in the moment.
 
 And then you reach the top of the staircase, and you realize what that means.
 
----
 
 *10/10. Would commit atrocities again.*

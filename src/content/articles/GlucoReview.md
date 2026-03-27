@@ -80,7 +80,7 @@ GlucoReview was my introduction to engineering in a regulated environment, and i
 - **Role-based design clarifies product thinking.** Designing for distinct roles forces you to be precise about what each user actually needs, which leads to cleaner interfaces and a more coherent system overall.
 - **Regulated projects require disciplined requirements.** When the stakes involve personal health data, vague requirements are a liability. Precise specification upfront saves significant rework downstream.
 
-Building a healthcare platform as a solo full-stack developer, under real compliance constraints, in a technology stack I was learning for the first time, was one of the more stretching experiences of my development as an engineer. The combination of breadth, frontend, backend, security, compliance, and depth within each area gave me a foundation I expect to draw on for a long time.
+Building a healthcare platform as a full-stack developer, under real compliance constraints, in a technology stack I was learning for the first time, was one of the more stretching experiences of my development as an engineer. The combination of breadth, frontend, backend, security, compliance, and depth within each area gave me a foundation I expect to draw on for a long time.
 
 ---
 

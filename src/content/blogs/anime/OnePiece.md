@@ -5,11 +5,16 @@ updated: 2025-03-21
 rating: "10.0"
 --- 
 
-# One Piece
+--- 
+
 
 What can I say about One Piece that hasn't already been said?
 
 If you've seen the photos on the home page, you might already have a good guess at how I feel about it. It's my favourite anime of all time, and that spot will probably be cemented permanently once it actually finishes, I hope it never does (I'm ready for Two Piece).
+
+
+![One Piece](../../../assets/blog/anime/StrawHatsSpread.webp)
+
 
 ## A Late Convert
 

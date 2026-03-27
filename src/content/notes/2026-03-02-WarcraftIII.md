@@ -2,7 +2,7 @@
 title: "I finally finished Warcraft III..."
 pubDate: 2026-03-02
 updatedDate: 2026-03-02
-description: "2026-03-02"
+description: ""
 type: blog
 hashtags: ["Games", "Childhood","RTS"]
 content_path: "games/warcraftiii"

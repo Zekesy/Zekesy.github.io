@@ -4,13 +4,16 @@ pubDate: 2026-01-26
 updatedDate: 2026-01-26
 rating: "9.3"
 --- 
-# House of Suns by Alastair Reynolds
+
+--- 
 
 Sci-fi books have been a recent passion of mine. I've always loved the genre across other mediums, but books were a blind spot I hadn't really explored until recently.
 
 When scouring the internet for must-read sci-fi novels, specifically ones that were relatively short and didn't require me to read an entire series or absorb a mountain of lore just to understand what was happening, Alastair Reynolds came up more often than not. House of Suns stood out immediately because it was a single, self-contained story. No homework required. Just pick it up and go.
 
 I can safely say every recommendation was right.
+
+![House of Suns](../../../assets/blog/books/HouseOfSuns.jpeg "medium")
 
 ## A Story That Earns Its Ending
 

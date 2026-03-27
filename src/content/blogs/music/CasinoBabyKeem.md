@@ -4,9 +4,12 @@ pubDate: 2026-02-23
 updatedDate: 2026-02-23
 rating: "8.8"
 ---
-# Casino by Baby Keem (2026)
+
+---
 
 Honestly, I was never the biggest Baby Keem fan going into this. I'd listened to Melodic Blue and his features with Kendrick, and songs like Orange Soda had been in my rotation for years. But I always boxed him in. I thought of him as a rapper, a good one, but a rapper. Casino changed that completely.
+
+![Casino By Baby Keem](../../../assets/blog/music/BabyKeemCasino.png "medium")
 
 ## More Than Just a Rapper
 

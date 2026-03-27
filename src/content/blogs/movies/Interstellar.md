@@ -5,9 +5,11 @@ updatedDate: 2026-02-21
 rating: "10.0"
 ---
 
-# Interstellar (2014)
+--- 
 
 Interstellar is the first movie that genuinely changed my life. It was my entry point into sci-fi as a genre, and it remains one of the most emotionally affecting things I've ever watched. The drama, the action, the romance, the triumph, the science, it all comes together into something I consider a perfect film. Some of the quotes from this movie are ones I still carry with me today.
+
+![Interstellar](../../../assets/blog/movies/InterstellarFilmPoster.jpg "medium")
 
 ## Science as a Foundation for Emotion
 
@@ -32,6 +34,8 @@ The film then earns that idea completely. Cooper's love for his daughter is lite
 It's a Christopher Nolan film, so the cinematography is predictably stunning, but even by his standards Interstellar is something special. The black hole visualisation in particular has been referenced and copied so many times since the film came out that I've lost count, though I genuinely don't mind it since every time I see it I'm immediately transported back to watching this film for the first time. The planet surfaces, the shots in space, the sense of scale throughout, it all serves a film that absolutely needs to feel grand.
 
 And then there's Hans Zimmer. The man never misses, but the Interstellar score might be his best work. The organ-driven theme carries so much weight that even now, years later, hearing it brings everything flooding back instantly. It's the kind of soundtrack that doesn't just accompany a film but becomes inseparable from it.
+
+![Blackhole]("../../../assets/blog/movies/blackholeInterstellar.jpg" "medium")
 
 ## Final Thoughts
 

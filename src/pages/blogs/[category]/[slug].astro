@@ -25,11 +25,11 @@ const { Content } = await render(entry);
 <BlogContentLayout title={entry.data.title} color="#dbeafe">
   <div class="max-w-7xl mx-auto px-4 py-8">
     <a href={`/blogs/${category}`} class="back-btn">← Back to Movies</a>
-    <h1 class="text-4xl font-bold mt-6 mb-2">{entry.data.title}</h1>
+    <h1 class="blog-title">{entry.data.title}</h1>
     <p class="text-sm text-gray-500 mb-2">
       {entry.data.pubDate.toLocaleDateString()}
     </p>
-    <article class="prose prose-lg max-w-none mt-8 [&>p]:mb-6">
+    <article class="article-body">
       <Content />
     </article>
     <h2 class="text-xl font-bold mt-4 mb-8">Rating: {entry.data.rating} / 10</h2>
@@ -46,6 +46,71 @@ const { Content } = await render(entry);
   }
   .back-btn:hover {
     color: #000;
+  }
+
+  .blog-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    color: #2e3440;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+ 
+  .blog-date {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0 0 4px;
+  }
+ 
+  .divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 1.5rem 0 4rem;
+  }
+ 
+  .blog-rating {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2e3440;
+    margin: 2rem 0 0;
+  }
+ 
+  /* ─── body typography ─── */
+  .article-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #2e3440;
+  }
+ 
+  .article-body :global(p) { margin: 0 0 1.4em; }
+ 
+  .article-body :global(h2) {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2e3440;
+    margin: 3rem 0 1rem;
+  }
+  .article-body :global(h3) {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2e3440;
+    margin: 2rem 0 0.75rem;
+  }
+ 
+  .article-body :global(strong) { color: #2e3440; }
+  .article-body :global(em)     { color: #4c566a; }
+ 
+  .article-body :global(a) {
+    color: #2e3440;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s;
+  }
+
+  .article-body :global(hr) {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 1rem 0;  /* increase this */
   }
 
 </style>

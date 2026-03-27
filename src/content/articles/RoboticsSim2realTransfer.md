@@ -13,6 +13,8 @@ I was severely mistaken.
 
 I had the opportunity to work as the sole engineer on the sim-to-real section of the pipeline at Eyes Japan, and what started as one part of a larger project quickly became its own beast. As I realized just how large and critical this work would be, I eventually grew into the role of leading a small sim-to-real team. This is the story of that project, the problems, the breakthroughs, the two-day demo crunch, and everything I learned along the way.
 
+![SO101 Arm](../../assets/articles/so101.webp "medium")
+
 ## Starting from Zero
 
 I want to be upfront: I had no prior experience with Isaac Sim, Isaac Lab, reinforcement learning, ROS2, or robotics of any kind. Everything I know about this domain, I learned on this project.
