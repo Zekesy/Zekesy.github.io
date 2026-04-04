@@ -88,7 +88,7 @@ const books = allBlogs
   window.addEventListener("DOMContentLoaded", async () => {
     try {
       const mesh = await loadMeshJSON('/book.json');
-      const fps = 15;
+      const fps = 12;
       const bookCanvases = document.querySelectorAll('[id^="canvas-"]');
 
       bookCanvases.forEach((canvas, index) => {

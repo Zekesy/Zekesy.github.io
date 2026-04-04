@@ -88,7 +88,7 @@ const animes = allBlogs
     window.addEventListener("DOMContentLoaded", async () => {
       try {
         const mesh = await loadMeshJSON('/jollyroger.json');
-        const FPS = 15;
+        const FPS = 12;
         const animeCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         animeCanvases.forEach((canvas, index) => {

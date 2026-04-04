@@ -90,7 +90,7 @@ const movies = allBlogs
     window.addEventListener("DOMContentLoaded", async () => {
       try {
         const mesh = await loadMeshJSON('/clapperboard.json');
-        const FPS = 15;
+        const FPS = 12;
         const movieCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         movieCanvases.forEach((canvas, index) => {

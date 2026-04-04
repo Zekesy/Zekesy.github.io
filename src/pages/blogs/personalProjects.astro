@@ -108,7 +108,7 @@ const projects = allProjects.map(entry => ({
       try {
         const folderMesh = await loadMeshJSON('/folder.json');
 
-        const FPS = 15;
+        const FPS = 12;
         const projectCanvases = document.querySelectorAll('[id^="canvas-"]');
 
         projectCanvases.forEach((canvas, index) => {
