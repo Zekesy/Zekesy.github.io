@@ -5,9 +5,11 @@ updatedDate: 2026-03-28
 rating: "10.0"
 ---
 
---- 
+---
 
 12 Angry Men is one of the most unique films I have ever seen. The premise is simple: a jury of twelve men must decide the fate of an eighteen year old boy accused of killing his father. Almost the entire runtime takes place in a single, cramped room. While that might sound boring, it is a masterclass in exposition, screenplay, and editing. These elements combine to keep the movie feeling dynamic. As the audience, we become the thirteenth member of the jury. We are slowly convinced as new information comes to light. Just like the jurors, we start to doubt our initial verdict as the story progresses.
+
+![12AngryMen](../../../assets/blog/movies/12AngryMen.jpg "medium")
 
 ## Exposition and Writing
 
@@ -16,8 +18,6 @@ The writing in this movie is exceptional. It is a rare case where "tell, don't s
 ## Screenplay and Staging
 
 The screenplay is incredibly intentional. Even with twelve men in one room, the movement of the characters feels fresh. A standout moment is the scene involving the prejudiced juror who bases his verdict on the defendant's race and upbringing. As he rambles about his biases and generalizes immigrants as violent, the other jurors silently leave the table one by one. This non verbal rejection is a powerful piece of storytelling. It signifies their refusal to listen to his hate without a single word being spoken. This is a perfect example of how the screenplay adds texture to the story through blocking and movement.
-
-
 
 ## Cinematography and Editing
 
