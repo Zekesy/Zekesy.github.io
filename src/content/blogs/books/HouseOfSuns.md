@@ -5,7 +5,7 @@ updatedDate: 2026-01-26
 rating: "9.3"
 --- 
 
---- 
+---
 
 Sci-fi books have been a recent passion of mine. I've always loved the genre across other mediums, but books were a blind spot I hadn't really explored until recently.
 
