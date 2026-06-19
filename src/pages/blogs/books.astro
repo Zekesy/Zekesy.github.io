@@ -5,6 +5,7 @@ import {getCollection} from "astro:content";
 const allBlogs = await getCollection("blog");
 const books = allBlogs
   .filter(entry => entry.id.startsWith('books/'))
+  .sort((a, b) => b.data.pubDate - a.data.pubDate)
   .map(entry => ({
     title: entry.data.title,
     pubDate: entry.data.pubDate.toLocaleDateString("sv-SE"),
