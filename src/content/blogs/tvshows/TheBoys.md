@@ -7,6 +7,8 @@ rating: "8.5"
 
 The final curtain has officially closed. With Season 5 wrapping up the main storyline in 2026, a massive, bloody chapter in TV history comes to an end. It’s been wild journey, and I wanted to lock down my immediate, unfiltered thoughts while the finale is still fresh.
 
+![The Boys](../../../assets/blog/tvshows/TheBoys.jpg  "medium")
+
 ## The Season 5 Review: A Disappointing Finish
 
 Right off the bat: Season 5 was, unfortunately, a letdown.

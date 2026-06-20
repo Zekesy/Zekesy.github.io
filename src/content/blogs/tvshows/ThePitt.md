@@ -9,6 +9,8 @@ rating: "9.7"
 
 Somehow, it strips away the tired tropes and gives us something completely visceral. S2 picks up exactly where S1 picks off with just another single day of work.
 
+![The Pitt](../../../assets/blog/tvshows/ThePitt.jpg  "small")
+
 ## The 15-Hour Gimmick That Actually Works
 
 What sets *The Pitt* apart is its structural brilliance. The entire 15-episode first season chronicles a single, grueling 15-hour ER shift at a Pittsburgh teaching hospital, running essentially in real-time (one episode equals one hour).

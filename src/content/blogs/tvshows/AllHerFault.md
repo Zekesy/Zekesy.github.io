@@ -11,6 +11,8 @@ The first episode instantly sets it up as a massive, high-stakes puzzle. Natural
 
 I could not have been more wrong.
 
+![All Her Fault](../../../assets/blog/tvshows/AllHerFault.jpg  "medium")
+
 ## Twists on Twists (and Overanalyzing Everything)
 
 The entire joy of *All Her Fault* is the desperate, frantic game of trying to guess who did it. To be completely honest, I was changing my prime suspect after almost every single episode.
