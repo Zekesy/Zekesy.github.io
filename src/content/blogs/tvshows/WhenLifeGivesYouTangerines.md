@@ -7,13 +7,15 @@ rating: "10.0"
 
 I was amazed and shocked at how good this show turned out to be. When I first saw that IU was cast as the main character, I honestly thought it was going to be a pretty cliché K-drama using her as the main selling point just to draw in her massive existing fanbase. Man, I could not have been more wrong.
 
+![When Life Gives You Tangerines](../../../assets/blog/tvshows/WhenLifeGivesYouTangerines.png  "medium")
+
 ## A Story About Life, Family and Resilience
 
 While it is a love story, it definitely was not the cheesy romance show I was expecting. Instead, I got an incredible story about life itself, covering love for your partner, your family, how trauma can be passed down, and how fractured relationships can actually be rebuilt. It was just insanely grounded in realism. I really felt so many of the emotional moments because they are, unfortunately, things that almost everyone will go through at some point. It captures losing your parents, losing a partner, seeing your kids grow up and make you proud, watching your parents grow old and weaker, struggling with finances, and seeing parents sacrifice their own dreams for their children. There are just so many moments in this show where I am sure almost anyone will find something they can personally relate to. It really portrayed the ups and downs of life, showing how this ebb and flow is normal and how the little things shared with the people you love are what truly make life worth living.
 
 I also really liked the non linear storytelling. Jumping back and forth across different eras worked great, especially getting to see an older version of the main couple. Showing an elderly couple's romance as a central plot is something that almost never happens in K-dramas, and it added such a unique depth to the narrative.
 
-## Nuanced Portrayal of Love
+## Nuanced Portrayals of l
 
 I absolutely loved how the show portrayed all different forms of love, not just romantic. The familial love shown is something I am blessed enough to relate to in my own life. A parent's love for their children is on full display here through their countless sacrifices and giving up their own dreams. To me, when you willingly put someone else's needs above your own without expecting anything in return, that is true love, whether it is in family, friendship, or romance.
 

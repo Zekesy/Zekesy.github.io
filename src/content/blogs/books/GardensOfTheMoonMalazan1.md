@@ -7,6 +7,8 @@ rating: "8.8"
 
 Having spent most of my reading journey rooted in sci fi, taking on *Gardens of the Moon* was a massive leap into the fantasy genre. I am not completely sure if I would recommend it as an entry point for absolute beginners, but it was an incredible start to my own fantasy voyage.
 
+![Garden Of the Moon](../../../assets/blog/books/GardenOfTheMoon.jpg  "medium")
+
 ## World Building
 
 The Malazan series is legendary for its sheer scale. With ten massive volumes in total, finishing book one made me realize that I have barely scratched the surface.

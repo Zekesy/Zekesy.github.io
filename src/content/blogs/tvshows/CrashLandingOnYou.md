@@ -7,6 +7,8 @@ rating: "7.0"
 
 I haven't watched many K-dramas, but *Crash Landing on You* was a light, fun, and entertaining experience overall.
 
+![Crash Landing On You](../../../assets/blog/tvshows/CrashLandingOnYou.png  "medium")
+
 ## Premise and World Building
 
 The core setup of a South Korean heiress accidentally paragliding into North Korea is delightfully absurd, but it creates a unique sandbox for a romance story. While I cannot speak to the accuracy of its portrayal of North Korea, using the stark cultural and political contrast between the two countries as a backdrop led to great comedic moments and fascinating character interactions.
