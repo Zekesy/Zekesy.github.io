@@ -6,6 +6,8 @@ rating: "8.8"
 ---
 I have not watched a ton of black and white films, but every single one I have checked out so far has been a hit. The Apartment is a fascinating movie. It is marketed as a romantic comedy, but underneath the wit is a surprisingly dark, cynical look at corporate culture and relationships that fortunately lands on a genuinely heartwarming note.
 
+![The Apartment](../../../assets/blog/movies/TheApartment.jpg  "small")
+
 ## Is It Really Just a Comedy?
 
 While the movie is classified as a rom com, there is a heavy, dark undertone running through the whole story that I personally could not ignore. Corporate ladder climbing and marital infidelity form the backbone of the premise. C.C. Baxter lets his married bosses use his apartment for their secret affairs in exchange for favorable performance reviews and promotions. On the surface, the early situations lead to funny, chaotic misunderstandings as Baxter juggles their schedules, but the reality behind those jokes is pretty grim.
