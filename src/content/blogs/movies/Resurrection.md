@@ -1,4 +1,3 @@
-
 ---
 
 title: "Resurrection Bi Gan (2025)"
